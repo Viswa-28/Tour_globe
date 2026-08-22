@@ -13,6 +13,15 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+
+  /**
+   * Lint in CI and locally (`npm run lint`), not inside `next build`.
+   * The build-time lint pass pulls in eslint-config-next's native resolver
+   * (`unrs-resolver`), whose postinstall script npm 11 now blocks by default
+   * — one of the two blocked scripts in the Vercel log. Keeping ESLint out of
+   * the deploy path removes that dependency and shortens the build.
+   */
+  eslint: { ignoreDuringBuilds: true },
 };
 
 export default nextConfig;
