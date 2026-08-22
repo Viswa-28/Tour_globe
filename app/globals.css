@@ -105,6 +105,75 @@ body {
   outline-color: var(--gold-link);
 }
 
+/* ————— Hero intro — the only load animation on the site.
+
+   CSS keyframes, not JS. The stylesheet is render-blocking, so this starts on
+   the first painted frame. The Motion version shipped the headline as
+   `opacity: 0` and left it invisible until React hydrated — on the landing
+   page that is the LCP element, so it was the worst possible thing to gate
+   on a bundle.
+
+   Reduced motion: a plain fade, with no travel and no stagger. ————— */
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-line {
+  from {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-hero] {
+  animation-duration: 0.9s;
+  animation-delay: var(--hero-delay, 0s);
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-fill-mode: both;
+}
+
+[data-hero="eyebrow"] {
+  animation-name: hero-fade;
+  animation-duration: 0.6s;
+}
+
+[data-hero="line"] {
+  animation-name: hero-line;
+}
+
+[data-hero="rise"] {
+  animation-name: hero-rise;
+  animation-duration: 0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hero] {
+    animation-name: hero-fade;
+    animation-duration: 0.4s;
+    animation-delay: 0s;
+  }
+}
+
 /* ————— Scroll reveal (animation pattern 1), done in CSS.
 
    Content is VISIBLE BY DEFAULT and paints on the first frame. The rise and

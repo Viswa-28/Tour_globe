@@ -194,9 +194,11 @@ The export is a design comp, not production code. Do not copy it verbatim.
 
 ## Animation
 
-**Hero (Motion):** on load, eyebrow fades, headline lines rise out of their
-masks in a 70ms stagger, paragraph and CTAs follow. The only load animation
-on the site.
+**Hero (CSS keyframes, not JS):** on load, eyebrow fades, headline lines rise
+out of their masks in a 70ms stagger, paragraph and CTAs follow. The only
+load animation on the site. It must stay CSS — the `<h1>` is the landing
+page's LCP element, and a JS-driven version ships it as `opacity: 0` and
+hides it until hydration.
 
 **Everywhere else (Motion), four patterns. Do not add a fifth:**
 

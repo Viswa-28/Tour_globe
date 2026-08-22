@@ -1,23 +1,23 @@
-"use client";
-
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { m, useReducedMotion } from "motion/react";
 import { Marquee } from "@/components/Marquee";
 import { COMPANY } from "@/lib/site";
 
 /**
  * Hero — the only load animation on the site: the eyebrow fades, the two
- * headline lines rise out of their masks in a 70ms stagger, then the
- * paragraph and CTAs follow.
+ * headline lines rise out of their masks 70ms apart, then the paragraph and
+ * CTAs follow.
  *
- * Runs on Motion rather than GSAP. GSAP was carrying ~50KB for this one
- * sequence; Motion is already in the bundle for every other animation, so
- * the timeline was ported and GSAP dropped.
+ * There is no JavaScript here. The sequence is CSS keyframes on
+ * `[data-hero]` (see globals.css), so it begins on the first painted frame
+ * rather than waiting for React. This was a Motion timeline, which shipped
+ * all five elements as `opacity: 0` — including the `<h1>`, the landing
+ * page's LCP element — leaving the hero blank until hydration finished.
+ * That is seconds against the dev server and a bad LCP on a slow connection.
  *
- * Reduced motion: offsets collapse to zero so nothing travels, but the fade
- * still runs — a real fallback rather than a dead page. `m` comes from the
- * LazyMotion provider, so only the DOM feature set is loaded.
+ * Being JS-free also makes this a server component, so none of it reaches
+ * the client bundle.
  *
  * Background: /public/images/hero.avif, re-encoded from the 1.9MB source PNG
  * (claude.md § Performance) and served through next/image.
@@ -25,17 +25,11 @@ import { COMPANY } from "@/lib/site";
  * before launch, imageSource + imageLicence recorded.
  */
 
-// Approximates GSAP's power3.out.
-const EASE = [0.215, 0.61, 0.355, 1] as const;
+/** Stagger, as a CSS custom property the keyframes read. */
+const delay = (seconds: number) =>
+  ({ "--hero-delay": `${seconds}s` }) as CSSProperties;
 
 export function Hero() {
-  const reduced = useReducedMotion();
-
-  /** Start state for a masked headline line, a rising block, or a plain fade. */
-  const from = (offset: string | number = 0) =>
-    reduced ? { opacity: 0 } : { opacity: 0, y: offset };
-  const to = { opacity: 1, y: 0 };
-
   return (
     <section
       data-ground="dark"
@@ -63,55 +57,38 @@ export function Hero() {
           to spare; keeping it tight stops the headline overflowing the 94vh
           hero and sliding under the header on laptop-height viewports. */}
       <div className="relative mx-auto w-full max-w-6xl px-5 pb-12 pt-28 md:px-8 md:pb-16 md:pt-32">
-        <m.p
-          className="eyebrow text-gold"
-          initial={from()}
-          animate={to}
-          transition={{ duration: 0.6, ease: EASE }}
-        >
+        <p data-hero="eyebrow" className="eyebrow text-gold">
           Travel counselling &amp; consultancy · Madurai, Tamil Nadu
-        </m.p>
+        </p>
 
         <h1 className="h1 mt-6 max-w-4xl">
           <span className="block overflow-hidden">
-            <m.span
-              className="block"
-              initial={from("110%")}
-              animate={to}
-              transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
-            >
+            <span data-hero="line" className="block" style={delay(0.15)}>
               Catapulting our focus
-            </m.span>
+            </span>
           </span>
           <span className="block overflow-hidden">
-            <m.span
-              className="block"
-              initial={from("110%")}
-              animate={to}
-              transition={{ duration: 0.9, delay: 0.32, ease: EASE }}
-            >
+            <span data-hero="line" className="block" style={delay(0.22)}>
               towards <em className="text-gold">Quality Tourism</em>
-            </m.span>
+            </span>
           </span>
         </h1>
 
-        <m.p
+        <p
+          data-hero="rise"
           className="body-copy mt-8 max-w-xl text-on-navy-mut"
-          initial={from(20)}
-          animate={to}
-          transition={{ duration: 0.6, delay: 0.62, ease: EASE }}
+          style={delay(0.45)}
         >
           We at &ldquo;Tourglobe&rdquo; are a premium Tourism consultancy
           organization aiming on increasing exponentially Tourist income and
           outflow. Our focus is diversifying Tourist&rsquo;s interest towards
           concentrated Tourism areas
-        </m.p>
+        </p>
 
-        <m.div
+        <div
+          data-hero="rise"
           className="mt-10 flex flex-wrap gap-4"
-          initial={from(20)}
-          animate={to}
-          transition={{ duration: 0.6, delay: 0.69, ease: EASE }}
+          style={delay(0.52)}
         >
           <Link
             href="/#enquire"
@@ -125,7 +102,7 @@ export function Hero() {
           >
             {COMPANY.email}
           </a>
-        </m.div>
+        </div>
       </div>
 
       <Marquee />

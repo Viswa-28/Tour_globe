@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Fraunces, Archivo } from "next/font/google";
 import "./globals.css";
 import { COMPANY, SITE_URL } from "@/lib/site";
@@ -83,6 +84,10 @@ export default function RootLayout({
         <LenisProvider>
           <MotionProvider>{children}</MotionProvider>
         </LenisProvider>
+        {/* Real-user Core Web Vitals. Only reports on Vercel; inert locally.
+            Gives us the LCP number claude.md's <2.5s-on-4G target needs,
+            measured on real devices rather than this machine. */}
+        <SpeedInsights />
       </body>
     </html>
   );
