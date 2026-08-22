@@ -16,7 +16,7 @@ someone is travelling, not *where*.
 
 | Layer | Choice | Why |
 |---|---|---|
-| Framework | **Next.js 15**, App Router, `output: 'export'` | Static HTML is the best SEO substrate; no server needed |
+| Framework | **Next.js 15**, App Router, full SSG | Static HTML is the best SEO substrate. Not `output: 'export'` — that cannot run the enquiry Route Handler. Every page is still prerendered; see next.config.ts |
 | Styling | **Tailwind CSS v4** | Tokens as CSS vars, no runtime cost |
 | All animation | **Motion** (`motion/react`) in `LazyMotion` | Hero intro, reveals, tab transitions, hovers |
 | Smooth scroll | **Lenis** — desktop only | Native momentum is better on touch |
@@ -26,7 +26,9 @@ someone is travelling, not *where*.
 
 ```bash
 npm run dev
-npm run build          # emits ./out
+npm run build          # emits ./.next — NOT ./out.
+                       # Vercel's Output Directory must be left at the
+                       # Next.js default. Setting it to "out" fails the deploy.
 npm run lint
 npx sanity dev
 ```
