@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* ————— Design tokens — lifted from the export, contrast failures corrected.
+   One rule: gold on navy, brown or gold-ink on cream. ————— */
+:root {
+  /* dark grounds */
+  --navy: #0f1e2e;
+  --navy-soft: #243447;
+  --gold: #c8924a; /* accent on DARK only — 6.16:1 on navy */
+  --gold-hover: #d9a25b;
+  --gold-link: #e8c9a0; /* links on navy — 10.67:1 */
+  --on-navy: #f8f6f2;
+  --on-navy-mut: #bfc3c8; /* 9.52:1 */
+
+  /* light grounds */
+  --cream: #f8f6f2;
+  --sand: #fbf8f4;
+  --sand-deep: #f4efe8;
+  --ink: #1c1c1c;
+  --ink-body: #3a3a38; /* 10.77:1 */
+  --brown: #70452f; /* accent on LIGHT — 7.54:1 */
+  --gold-ink: #8a5e1e; /* gold-ish accent that passes on light — 5.26:1 */
+  --rule: #e2d9ce; /* hairlines — decorative, never text */
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-soft: var(--navy-soft);
+  --color-gold: var(--gold);
+  --color-gold-hover: var(--gold-hover);
+  --color-gold-link: var(--gold-link);
+  --color-on-navy: var(--on-navy);
+  --color-on-navy-mut: var(--on-navy-mut);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-sand-deep: var(--sand-deep);
+  --color-ink: var(--ink);
+  --color-ink-body: var(--ink-body);
+  --color-brown: var(--brown);
+  --color-gold-ink: var(--gold-ink);
+  --color-rule: var(--rule);
+
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-archivo);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--sand);
+  color: var(--ink-body);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-size: clamp(16px, 1.15vw, 18px);
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ————— Typography scale (from the export) ————— */
+.h1 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(52px, 7.2vw, 104px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(34px, 3.6vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.h1 em,
+.h2 em,
+.display-em {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.body-copy {
+  max-width: 62ch;
+}
+
+/* ————— Non-negotiable: visible focus ring on every interactive element ————— */
+:focus-visible {
+  outline: 2px solid var(--gold-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+[data-ground="dark"] :focus-visible,
+.on-dark :focus-visible {
+  outline-color: var(--gold-link);
+}
+
+/* ————— Scroll reveal (animation pattern 1), done in CSS.
+
+   Content is VISIBLE BY DEFAULT and paints on the first frame. The rise and
+   fade layer on top only where the browser supports scroll-driven
+   animations, and run on the compositor with no main-thread work.
+
+   This was a Motion `whileInView`, which shipped every revealed block as
+   `opacity: 0` and un-hid it after React hydrated. That left the category
+   grids blank until the whole JS bundle had downloaded and hydrated — ~7s
+   against the dev server's 5MB, and a bad LCP on a slow connection. Nothing
+   essential may wait on hydration.
+
+   Browsers without `animation-timeline` take the @supports fallback: the
+   content simply appears, with no animation. ————— */
+[data-reveal] {
+  opacity: 1;
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      /* `cover`, not `entry`: an `entry` range is measured against the
+         element's own height, so a tall block would sit half-faded while
+         you were already reading the top of it. */
+      animation-range: cover var(--reveal-from, 0%) cover var(--reveal-to, 18%);
+    }
+  }
+}
+
+/* ————— Marquee — CSS transform only, duplicated track, pausable ————— */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  will-change: transform;
+  animation: marquee-scroll 42s linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track,
+.marquee[data-paused="true"] .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ————— Reduced motion: real fallback, not just "off".
+   Marquee becomes a static, wrapping list; smooth scroll goes native. ————— */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .marquee {
+    white-space: normal;
+  }
+  .marquee-track {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+  .marquee-track[aria-hidden="true"] {
+    display: none; /* hide the duplicate track when static */
+  }
+  .marquee-pause {
+    display: none; /* nothing is moving; the control is meaningless */
+  }
+}
