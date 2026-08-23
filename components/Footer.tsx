@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { COMPANY, WHATSAPP_URL } from "@/lib/site";
 
 /**
@@ -84,10 +85,28 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-on-navy/15 pt-7 text-xs uppercase tracking-[0.08em] text-on-navy-mut">
-          {/* TODO(client): Privacy Policy and Terms must be live and linked
-              here before launch. */}
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-on-navy/15 pt-7 text-xs uppercase tracking-[0.08em] text-on-navy-mut">
           <p>© {year} Tourglobe · Buenas Memorias</p>
+          <nav aria-label="Legal">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+              <li>
+                <Link
+                  href="/privacy"
+                  className="underline-offset-4 hover:text-on-navy hover:underline"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="underline-offset-4 hover:text-on-navy hover:underline"
+                >
+                  Terms of Use
+                </Link>
+              </li>
+            </ul>
+          </nav>
           <p>Madurai · Tamil Nadu · India</p>
         </div>
       </div>

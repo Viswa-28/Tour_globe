@@ -105,6 +105,79 @@ body {
   outline-color: var(--gold-link);
 }
 
+/* ————— Long-form legal copy (Privacy, Terms) ————— */
+.legal-prose {
+  max-width: 68ch;
+}
+
+.legal-prose h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.legal-prose h3 {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-prose p,
+.legal-prose li {
+  color: var(--ink-body);
+}
+
+.legal-prose p {
+  margin-bottom: 1rem;
+}
+
+.legal-prose ul {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.legal-prose li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.legal-prose li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-ink);
+}
+
+.legal-prose a {
+  color: var(--brown);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-prose dt {
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 1rem;
+}
+
+.legal-prose dd {
+  color: var(--ink-body);
+  margin: 0;
+}
+
 /* ————— Hero intro — the only load animation on the site.
 
    CSS keyframes, not JS. The stylesheet is render-blocking, so this starts on
