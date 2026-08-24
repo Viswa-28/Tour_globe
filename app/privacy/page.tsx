@@ -111,8 +111,13 @@ export default function PrivacyPolicyPage() {
           <strong>Vercel</strong> — hosts the website and processes requests.
         </li>
         <li>
-          <strong>Google Workspace / our email provider</strong> —{" "}
-          <Pending>confirm the email provider that receives enquiries</Pending>
+          <strong>Our email provider</strong> — hosts the{" "}
+          <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> mailbox where
+          enquiries arrive.{" "}
+          <Pending>
+            name the provider hosting this mailbox — Google Workspace, Zoho,
+            Microsoft 365 or similar
+          </Pending>
         </li>
       </ul>
       <p>

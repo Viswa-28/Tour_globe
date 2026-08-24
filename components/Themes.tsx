@@ -56,8 +56,8 @@ export function Themes() {
                 </li>
               );
             })}
-            {/* Spans the row so 12 themes never leave an orphan cell. */}
-            <li className="flex items-center bg-sand-deep px-6 py-7 md:col-span-2 lg:col-span-3">
+            {/* 11 themes + this one = 12 cells, an exact 3 x 4 grid. */}
+            <li className="flex items-center bg-sand-deep px-6 py-7">
               <span className="font-[family-name:var(--font-fraunces)] text-xl text-brown">
                 &amp; Much more
               </span>

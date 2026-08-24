@@ -71,16 +71,20 @@ export function formatDuration(nights: number, days: number): string {
 }
 
 /**
- * The 11 themes from the export's "Aspiration & focus" grid, in order,
- * plus "Wild life" (12).
+ * 11 themes. Based on the export's "Aspiration & focus" grid, with three
+ * client changes since:
  *
- * TODO(client): "Wild life" is NOT in the approved export grid, but the
- * product catalogue lists nine wildlife programmes, so the theme has to
- * exist for them to live under. Confirm the name and its position.
- * The catalogue also calls two themes by different names than the export —
- * "Pilgrimage & Divine" (export: "Pilgrimage Tourism") and "Beaches &
- * Waterfront" (export: "Beaches & water front"). The export wording is used
- * here because it is the approved design. Confirm which should win.
+ * - "Pilgrimage Tourism" → "Pilgrimage & Divine", matching the product
+ *   catalogue heading (2026-08-24).
+ * - "Wellness" and "Yoga" merged into "Wellness & Yoga" (2026-08-24).
+ * - "Wild life" added — not in the approved export grid, but the catalogue
+ *   lists nine wildlife programmes that need somewhere to live.
+ *
+ * Still 11 themes plus "& Much more", so the homepage grid stays a clean
+ * 3 x 4 with no orphan cell.
+ *
+ * TODO(client): the catalogue writes "Beaches & Waterfront" where the export
+ * says "Beaches & water front". The export wording stands until confirmed.
  */
 export const CATEGORIES: Category[] = [
   {
@@ -92,8 +96,10 @@ export const CATEGORIES: Category[] = [
     order: 1,
   },
   {
-    name: "Pilgrimage Tourism",
-    slug: "pilgrimage-tourism",
+    // Renamed from the export's "Pilgrimage Tourism" to match the client's
+    // product catalogue heading (confirmed 2026-08-24).
+    name: "Pilgrimage & Divine",
+    slug: "pilgrimage-divine",
     descriptor: "Sacred routes and places of devotion",
     intro:
       "Pilgrimages planned with care for ritual, timing and rest — whether a family darshan circuit or a longer route walked over several days.",
@@ -140,11 +146,13 @@ export const CATEGORIES: Category[] = [
     order: 7,
   },
   {
-    name: "Wellness",
-    slug: "wellness",
-    descriptor: "Rest, treatment and time to recover",
+    // "Wellness" and "Yoga" were separate themes in the export; merged at the
+    // client's request (2026-08-24).
+    name: "Wellness & Yoga",
+    slug: "wellness-yoga",
+    descriptor: "Rest, practice and time to recover",
     intro:
-      "Retreats and treatment stays where the programme, practitioners and pace are checked before you commit — rest that is actually restful.",
+      "Retreats, treatment stays and practice-led travel — schools, teachers and programmes checked before you commit, at a pace that leaves room for the rest of the country.",
     order: 8,
   },
   {
@@ -167,20 +175,12 @@ export const CATEGORIES: Category[] = [
     order: 10,
   },
   {
-    name: "Yoga",
-    slug: "yoga",
-    descriptor: "Practice, teachers and the places they teach in",
-    intro:
-      "Practice-led travel — schools, teachers and retreats matched to your style and level, with room in the day for the rest of the country.",
-    order: 11,
-  },
-  {
     name: "Wild life",
     slug: "wild-life",
     descriptor: "Parks, reserves and the animals that live in them",
     intro:
       "Safaris and reserve stays timed to the season and the sightings, with drives planned across zones and days rather than left to one lucky morning.",
-    order: 12,
+    order: 11,
   },
 ];
 
@@ -555,7 +555,7 @@ export const PLACES: Place[] = [
     itinerary: ["Gaya", "Rajgir", "Nalanda"],
     nights: 3,
     days: 4,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Puri",
@@ -564,7 +564,7 @@ export const PLACES: Place[] = [
     itinerary: ["Bhubaneswar", "Puri"],
     nights: 3,
     days: 4,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Lhasa",
@@ -573,7 +573,7 @@ export const PLACES: Place[] = [
     itinerary: ["Everest Base camp", "Manasarovar", "Lhasa"],
     nights: 4,
     days: 5,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Hampi",
@@ -582,7 +582,7 @@ export const PLACES: Place[] = [
     itinerary: ["Mangalore", "Udupi", "Badami caves", "Hampi"],
     nights: 6,
     days: 7,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Madurai",
@@ -591,7 +591,7 @@ export const PLACES: Place[] = [
     itinerary: ["Rameswaram", "Kanyakumari", "Madurai"],
     nights: 5,
     days: 6,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Assisi",
@@ -600,7 +600,7 @@ export const PLACES: Place[] = [
     itinerary: ["Rome", "Assisi"],
     nights: 5,
     days: 6,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     // Client spelling "Angkor Watt" (conventionally "Angkor Wat").
@@ -610,7 +610,7 @@ export const PLACES: Place[] = [
     itinerary: ["Siem Reap", "Angkor Thom", "Ta Prohm", "Angkor watt"],
     nights: 4,
     days: 5,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Mt. Nebo",
@@ -619,7 +619,7 @@ export const PLACES: Place[] = [
     itinerary: ["Aqaba", "Wadi Rum", "Petra", "Nebo"],
     nights: 4,
     days: 5,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
   {
     name: "Camino de Santiago",
@@ -628,7 +628,7 @@ export const PLACES: Place[] = [
     itinerary: ["Madrid", "Santiago"],
     nights: 5,
     days: 6,
-    categorySlug: "pilgrimage-tourism",
+    categorySlug: "pilgrimage-divine",
   },
 ];
 

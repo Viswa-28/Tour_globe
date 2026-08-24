@@ -83,57 +83,57 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
     note: "Frame resembles Chureito Pagoda and Mount Fuji — ~350km from Kyoto and not on this Osaka/Nara/Kyoto route. Regenerate as a Kyoto or Nara subject.",
   },
 
-  // ——————————————————————— Pilgrimage Tourism ———————————————————————
+  // ——————————————————————— Pilgrimage & Divine ———————————————————————
   // README sensitivity note: these are active places of worship, not
   // scenery. A synthetic image of a sacred site reads worse than a synthetic
   // landscape. Bodh Gaya, Puri, Lhasa and Assisi are called out by name as
   // needing licensed photography and client confirmation before launch.
-  "pilgrimage-tourism/gaya": {
+  "pilgrimage-divine/gaya": {
     src: `${D}/mahabodhi-temple-bodh-gaya-india.jpg`,
     alt: "The Mahabodhi temple at Bodh Gaya, India",
     exact: true,
     note: "Sacred site — README requires licensed photography and client confirmation before launch.",
   },
-  "pilgrimage-tourism/puri": {
+  "pilgrimage-divine/puri": {
     src: `${D}/jagannath-temple-puri-india.jpg`,
     alt: "The Jagannath temple at Puri, India",
     exact: true,
     note: "Sacred site — README requires licensed photography and client confirmation before launch.",
   },
-  "pilgrimage-tourism/lhasa": {
+  "pilgrimage-divine/lhasa": {
     src: `${D}/potala-palace-lhasa-tibet.jpg`,
     alt: "The Potala Palace above Lhasa, Tibet",
     exact: true,
     note: "Sacred site — README requires licensed photography and client confirmation before launch.",
   },
-  "pilgrimage-tourism/hampi": {
+  "pilgrimage-divine/hampi": {
     src: `${D}/vittala-temple-hampi-india.jpg`,
     alt: "The Vittala temple complex at Hampi, India",
     exact: true,
   },
-  "pilgrimage-tourism/assisi": {
+  "pilgrimage-divine/assisi": {
     src: `${D}/basilica-of-saint-francis-assisi-italy.jpg`,
     alt: "The Basilica of Saint Francis at Assisi, Italy",
     exact: true,
     note: "Sacred site — README requires licensed photography and client confirmation before launch.",
   },
-  "pilgrimage-tourism/angkor-watt": {
+  "pilgrimage-divine/angkor-watt": {
     src: `${D}/angkor-wat-siem-reap-cambodia.jpg`,
     alt: "Angkor Wat reflected in its moat at sunrise, Cambodia",
     exact: true,
   },
-  "pilgrimage-tourism/mt-nebo": {
+  "pilgrimage-divine/mt-nebo": {
     src: `${D}/al-khazneh-petra-jordan.jpg`,
     alt: "Al-Khazneh, the rock-cut Treasury at Petra, Jordan",
     exact: true,
     note: "Petra is on this Aqaba/Wadi Rum/Petra/Nebo route.",
   },
-  "pilgrimage-tourism/camino-de-santiago": {
+  "pilgrimage-divine/camino-de-santiago": {
     src: `${D}/camino-de-santiago-spain.jpg`,
     alt: "A waymarked pilgrim path through open country on the Camino de Santiago, Spain",
     exact: true,
   },
-  "pilgrimage-tourism/madurai": {
+  "pilgrimage-divine/madurai": {
     src: `${D}/dravidian-temple-tank-tamil-nadu.jpg`,
     alt: "A Dravidian temple gopuram rising above its water tank",
     exact: false,

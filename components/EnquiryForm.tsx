@@ -67,6 +67,9 @@ export function EnquiryForm() {
         body: JSON.stringify({
           ...data,
           elapsedMs: Date.now() - startedAt.current,
+          // Which page they enquired from — tells a counsellor whether this
+          // came off a specific programme or the homepage.
+          sourcePath: window.location.pathname + window.location.hash,
         }),
       });
       setStatus(res.ok ? "sent" : "error");

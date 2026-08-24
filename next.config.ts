@@ -22,6 +22,37 @@ const nextConfig: NextConfig = {
    * the deploy path removes that dependency and shortens the build.
    */
   eslint: { ignoreDuringBuilds: true },
+
+  /**
+   * Theme slugs changed on 2026-08-24: "Pilgrimage Tourism" was renamed, and
+   * "Wellness" and "Yoga" were merged. `dynamicParams = false` makes the old
+   * paths hard 404s, so redirect them — cheap insurance for any preview link
+   * or sitemap submission that already pointed at them.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/product/pilgrimage-tourism",
+        destination: "/product/pilgrimage-divine",
+        permanent: true,
+      },
+      {
+        source: "/product/pilgrimage-tourism/:place",
+        destination: "/product/pilgrimage-divine/:place",
+        permanent: true,
+      },
+      {
+        source: "/product/wellness",
+        destination: "/product/wellness-yoga",
+        permanent: true,
+      },
+      {
+        source: "/product/yoga",
+        destination: "/product/wellness-yoga",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
