@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { COMPANY } from "@/lib/site";
+import {
+  EMAIL_RE,
+  FIELD_LIMITS,
+  MAX_BODY_BYTES,
+  hasUsableContact,
+  type EnquiryField,
+} from "@/lib/enquiry";
 
 /**
  * Enquiry endpoint — the site's only conversion, so losing one is the worst
@@ -35,7 +42,54 @@ type Enquiry = {
   sourcePath: string;
 };
 
-const EMAIL_RE = /\S+@\S+\.\S+/;
+/** Nothing here may hang: a stuck sink must not hold the request open. */
+function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
+  return Promise.race([
+    p,
+    new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms),
+    ),
+  ]);
+}
+
+/**
+ * Best-effort per-IP rate limit.
+ *
+ * In-memory, so on serverless it is per-instance rather than global — a
+ * distributed flood could still get through. It is still worth having: it
+ * stops the common case, a single script hammering the endpoint, at zero
+ * cost and with no extra service. Fluid Compute keeps instances warm and
+ * shared, which makes it more effective here than on cold-start-per-request
+ * platforms.
+ *
+ * If abuse ever becomes real, swap this for Vercel KV / Upstash so the
+ * counter is shared across instances.
+ */
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX_PER_WINDOW = 5;
+const recentHits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const cutoff = now - RATE_WINDOW_MS;
+
+  // Prune stale keys so the map cannot grow without bound.
+  for (const [key, times] of recentHits) {
+    const live = times.filter((t) => t > cutoff);
+    if (live.length === 0) recentHits.delete(key);
+    else recentHits.set(key, live);
+  }
+
+  const times = recentHits.get(ip) ?? [];
+  if (times.length >= RATE_MAX_PER_WINDOW) return true;
+  recentHits.set(ip, [...times, now]);
+  return false;
+}
+
+function clientIp(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  return fwd?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
+}
 
 async function sendEmail(e: Enquiry): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -49,29 +103,35 @@ async function sendEmail(e: Enquiry): Promise<void> {
   if (!from) throw new Error("ENQUIRY_FROM_EMAIL is not set");
 
   const dash = (v: string) => v || "—";
-  const { error } = await new Resend(apiKey).emails.send({
-    from,
-    to,
-    // Hitting Reply should reach the traveller. When they gave only a phone
-    // number — common, since the form deliberately does not require both —
-    // fall back to the real shared inbox rather than leaving Reply-To unset:
-    // otherwise Reply goes to ENQUIRY_FROM_EMAIL, which is only a sending
-    // identity and may not be a mailbox at all, so the reply would bounce.
-    replyTo: EMAIL_RE.test(e.email) ? e.email : COMPANY.email,
-    subject: `Enquiry from ${e.name} — tourglobe.in`,
-    text: [
-      `Name: ${e.name}`,
-      `Phone / WhatsApp: ${dash(e.phone)}`,
-      `Email: ${dash(e.email)}`,
-      `Travelling around: ${dash(e.destination)}`,
-      `Number of travellers: ${dash(e.travellers)}`,
-      `What they're planning: ${dash(e.planning)}`,
-      `Anything specific: ${dash(e.details)}`,
-      ``,
-      `Enquired from: ${dash(e.sourcePath)}`,
-      `Received: ${e.receivedAt}`,
-    ].join("\n"),
-  });
+  const body = [
+    `Name: ${e.name}`,
+    `Phone / WhatsApp: ${dash(e.phone)}`,
+    `Email: ${dash(e.email)}`,
+    `Travelling around: ${dash(e.destination)}`,
+    `Number of travellers: ${dash(e.travellers)}`,
+    `What they're planning: ${dash(e.planning)}`,
+    `Anything specific: ${dash(e.details)}`,
+    ``,
+    `Enquired from: ${dash(e.sourcePath)}`,
+    `Received: ${e.receivedAt}`,
+  ].join("\n");
+
+  const { error } = await withTimeout(
+    new Resend(apiKey).emails.send({
+      from,
+      to,
+      // Hitting Reply should reach the traveller. When they gave only a phone
+      // number — common, since the form deliberately does not require both —
+      // fall back to the real shared inbox rather than leaving Reply-To unset:
+      // otherwise Reply goes to ENQUIRY_FROM_EMAIL, which is only a sending
+      // identity and may not be a mailbox at all, so the reply would bounce.
+      replyTo: EMAIL_RE.test(e.email) ? e.email : COMPANY.email,
+      subject: `Enquiry from ${e.name} — tourglobe.in`,
+      text: body,
+    }),
+    8000,
+    "Resend",
+  );
   if (error) throw error;
 }
 
@@ -95,19 +155,104 @@ async function appendToSheet(e: Enquiry): Promise<void> {
   }
 }
 
+/**
+ * GET /api/enquiry — configuration health check.
+ *
+ * When the form fails on a deployment the visitor only sees "Could not send
+ * your enquiry", and the real reason sits in the server log. This reports
+ * what the running deployment actually has configured so the cause is
+ * obvious without digging.
+ *
+ * Deliberately leaks nothing: the API key is reported as a boolean, never a
+ * value. The addresses are already public — info@tourglobe.in is in the
+ * footer and the JSON-LD.
+ */
+export async function GET() {
+  const from = process.env.ENQUIRY_FROM_EMAIL?.trim() || null;
+  const toOverride = process.env.ENQUIRY_TO_EMAIL?.trim() || null;
+  const to = toOverride || COMPANY.email;
+
+  // The sandbox sender only reaches the address that owns the Resend account,
+  // so pairing it with any other recipient always fails.
+  const sandboxSender = from === "onboarding@resend.dev";
+  const problems: string[] = [];
+  if (!process.env.RESEND_API_KEY) problems.push("RESEND_API_KEY is not set");
+  if (!from) problems.push("ENQUIRY_FROM_EMAIL is not set");
+  if (sandboxSender && to === COMPANY.email) {
+    problems.push(
+      "ENQUIRY_FROM_EMAIL is Resend's sandbox sender, which can only deliver to the address that owns the Resend account. Either set ENQUIRY_TO_EMAIL to that address, or verify tourglobe.in at resend.com/domains and send from a tourglobe.in address.",
+    );
+  }
+  // Resend recommends verifying a subdomain (send.tourglobe.in) rather than
+  // the root, so the marketing sender cannot damage the reputation of the
+  // mailbox the business actually reads. Accept either.
+  const fromDomain = from?.split("@")[1]?.toLowerCase() ?? "";
+  const onOwnDomain =
+    fromDomain === "tourglobe.in" || fromDomain.endsWith(".tourglobe.in");
+  if (from && !sandboxSender && !onOwnDomain) {
+    problems.push(
+      `ENQUIRY_FROM_EMAIL (${from}) is neither the sandbox sender nor an address on tourglobe.in.`,
+    );
+  }
+
+  return NextResponse.json({
+    environment: process.env.NODE_ENV,
+    resendKeyPresent: Boolean(process.env.RESEND_API_KEY),
+    from,
+    to,
+    toIsDefault: !toOverride,
+    sheetConfigured: Boolean(process.env.SHEETS_WEBHOOK_URL),
+    ready: problems.length === 0,
+    problems,
+  });
+}
+
 export async function POST(req: Request) {
+  // 1. Refuse an oversized body before parsing it, so a large payload cannot
+  //    be turned into work for this function.
+  const declaredLength = Number(req.headers.get("content-length") ?? 0);
+  if (declaredLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Request too large." }, { status: 413 });
+  }
+
+  // 2. Rate limit before any parsing or I/O.
+  const ip = clientIp(req);
+  if (isRateLimited(ip)) {
+    console.warn(`Enquiry rate limit hit by ${ip}`);
+    return NextResponse.json(
+      { error: "Too many enquiries from this connection. Please wait a minute." },
+      { status: 429, headers: { "Retry-After": "60" } },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
-    body = await req.json();
+    const raw = await req.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: "Request too large." }, { status: 413 });
+    }
+    body = JSON.parse(raw);
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+      throw new Error("not an object");
+    }
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
-  const field = (k: string) => String(body[k] ?? "").trim();
+  // Truncate rather than reject: the caps are far beyond any real enquiry,
+  // so anything hitting them is abuse — but truncating means an over-long
+  // paste can never cost a genuine enquiry either.
+  const field = (k: EnquiryField) => {
+    const value = String(body[k] ?? "").trim();
+    if (value.length <= FIELD_LIMITS[k]) return value;
+    console.warn(`Enquiry field "${k}" truncated from ${value.length} chars`);
+    return value.slice(0, FIELD_LIMITS[k]);
+  };
 
   // Honeypot filled or form submitted inhumanly fast → pretend success.
   const elapsedMs = Number(body.elapsedMs ?? 0);
-  if (field("company") !== "" || (elapsedMs > 0 && elapsedMs < 3000)) {
+  const honeypot = String(body.company ?? "").trim();
+  if (honeypot !== "" || (elapsedMs > 0 && elapsedMs < 3000)) {
     return NextResponse.json({ ok: true });
   }
 
@@ -125,7 +270,7 @@ export async function POST(req: Request) {
 
   if (
     enquiry.name.length < 2 ||
-    (enquiry.phone.length < 6 && !EMAIL_RE.test(enquiry.email))
+    !hasUsableContact(enquiry.phone, enquiry.email)
   ) {
     return NextResponse.json(
       { error: "Name and a phone number or email are required." },
