@@ -52,7 +52,12 @@ async function sendEmail(e: Enquiry): Promise<void> {
   const { error } = await new Resend(apiKey).emails.send({
     from,
     to,
-    replyTo: EMAIL_RE.test(e.email) ? e.email : undefined,
+    // Hitting Reply should reach the traveller. When they gave only a phone
+    // number — common, since the form deliberately does not require both —
+    // fall back to the real shared inbox rather than leaving Reply-To unset:
+    // otherwise Reply goes to ENQUIRY_FROM_EMAIL, which is only a sending
+    // identity and may not be a mailbox at all, so the reply would bounce.
+    replyTo: EMAIL_RE.test(e.email) ? e.email : COMPANY.email,
     subject: `Enquiry from ${e.name} — tourglobe.in`,
     text: [
       `Name: ${e.name}`,
@@ -145,6 +150,25 @@ export async function POST(req: Request) {
   }
 
   if (!emailed && !stored) {
+    // Local development with nothing configured: print the enquiry to the
+    // terminal and treat it as delivered, so the form — validation, success
+    // state, the lot — can be exercised without credentials.
+    //
+    // Deliberately narrow. It requires a non-production build AND that no
+    // sink is configured at all, so once a real key is present a genuine
+    // delivery failure still surfaces as an error instead of hiding here.
+    const nothingConfigured = !process.env.RESEND_API_KEY && !sheetConfigured;
+    if (process.env.NODE_ENV !== "production" && nothingConfigured) {
+      console.info(
+        `\n[dev] No delivery configured (see .env.local). Enquiry captured here instead:\n${JSON.stringify(
+          enquiry,
+          null,
+          2,
+        )}\n`,
+      );
+      return NextResponse.json({ ok: true, emailed: false, stored: false });
+    }
+
     // Last resort: make the enquiry recoverable from the Vercel logs rather
     // than dropping it silently.
     console.error("ENQUIRY LOST — both sinks failed:", JSON.stringify(enquiry));
