@@ -4,95 +4,107 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { WHATSAPP_URL } from "@/lib/site";
-import { FIELD_LIMITS, hasUsableContact, EMAIL_RE } from "@/lib/enquiry";
+import {
+  FIELD_LIMITS,
+  validateEnquiry,
+  type FieldErrors,
+} from "@/lib/enquiry";
 
-type ErrorKey = "name" | "contact" | "planning";
-type Errors = Partial<Record<ErrorKey, string>>;
-
-/** The input a given error should send focus to. */
-const FOCUS_TARGET: Record<ErrorKey, string> = {
-  name: "name",
-  contact: "phone",
-  planning: "planning",
-};
+/** Which input a given error should send focus to, in reading order. */
+const FOCUS_ORDER: { key: keyof FieldErrors; input: string }[] = [
+  { key: "name", input: "name" },
+  { key: "phone", input: "phone" },
+  { key: "email", input: "email" },
+  { key: "contact", input: "phone" },
+  { key: "travellers", input: "travellers" },
+  { key: "planning", input: "planning" },
+];
 
 /**
  * The only conversion on the site, so it is built to lose nothing.
  *
- * - Real <label> on every field, never placeholder-only
- * - Phone OR email — never both required
- * - Inline validation on blur, not on keystroke
- * - Errors are linked to their input with aria-describedby, and a failed
- *   submit moves focus to the first one, so the reason is announced rather
- *   than just the fact that something is wrong
- * - Success replaces the form in place and takes focus, so it is announced
- * - Honeypot + timing check; no CAPTCHA (claude.md: it costs conversions)
- * - maxLength mirrors the server's caps in lib/enquiry.ts
+ * Validation behaviour follows the convention people expect from a good
+ * form:
+ *   - nothing is flagged while you are still typing in a fresh field;
+ *   - a field is checked when you leave it;
+ *   - once a field HAS an error, it re-checks on every keystroke, so the
+ *     message disappears the moment you fix it rather than nagging until the
+ *     next blur;
+ *   - submitting checks everything and moves focus to the first problem.
+ *
+ * The rules themselves live in lib/enquiry.ts and are shared with the route
+ * handler, so the browser and the server can never disagree.
  */
 export function EnquiryForm() {
   const [status, setStatus] = useState<
     "idle" | "sending" | "sent" | "error" | "rateLimited"
   >("idle");
-  const [errors, setErrors] = useState<Errors>({});
+  const [errors, setErrors] = useState<FieldErrors>({});
+  /** Fields the user has finished with — only these may show an error. */
+  const [touched, setTouched] = useState<Set<string>>(new Set());
   const startedAt = useRef(Date.now());
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
 
-  // Move focus to the confirmation so keyboard and screen-reader users are
-  // taken to it, rather than left on a button that no longer exists.
   useEffect(() => {
     if (status === "sent") successRef.current?.focus();
   }, [status]);
 
-  const validate = (form: HTMLFormElement, only?: string): Errors => {
-    const data = new FormData(form);
-    const get = (k: string) => String(data.get(k) ?? "").trim();
-    const next: Errors = { ...errors };
-
-    const check = (key: ErrorKey, ok: boolean, msg: string) => {
-      // When validating one field on blur, leave the others alone — except
-      // that phone and email jointly decide the single "contact" error.
-      const relevant =
-        !only ||
-        only === key ||
-        (key === "contact" && (only === "phone" || only === "email"));
-      if (!relevant) return;
-      if (ok) delete next[key];
-      else next[key] = msg;
+  const readFields = (form: HTMLFormElement) => {
+    const d = new FormData(form);
+    const get = (k: string) => String(d.get(k) ?? "");
+    return {
+      name: get("name"),
+      phone: get("phone"),
+      email: get("email"),
+      travellers: get("travellers"),
+      planning: get("planning"),
     };
+  };
 
-    check("name", get("name").length > 1, "Please tell us your name.");
-    check(
-      "contact",
-      hasUsableContact(get("phone"), get("email")),
-      get("email") && !EMAIL_RE.test(get("email"))
-        ? "That email address doesn't look right — or leave it blank and give us a phone number."
-        : "A phone number or an email — whichever you prefer.",
-    );
-    check(
-      "planning",
-      get("planning").length > 0,
-      "A line about what you're planning helps us reply usefully.",
-    );
+  const recheck = (form: HTMLFormElement) => {
+    const all = validateEnquiry(readFields(form));
+    setErrors(all);
+    return all;
+  };
 
-    setErrors(next);
-    return next;
+  /** Show an error only for fields the user has already left. */
+  const visible = (key: keyof FieldErrors): string | undefined => {
+    if (!errors[key]) return undefined;
+    if (key === "contact") {
+      return touched.has("phone") || touched.has("email")
+        ? errors.contact
+        : undefined;
+    }
+    return touched.has(key) ? errors[key] : undefined;
+  };
+
+  const onBlur = (field: string) => () => {
+    setTouched((t) => new Set(t).add(field));
+    if (formRef.current) recheck(formRef.current);
+  };
+
+  // Only re-check while typing if this field is already showing a problem —
+  // otherwise we would flag a half-typed email on the second keystroke.
+  const onChange = (field: string) => () => {
+    if (!touched.has(field)) return;
+    if (formRef.current) recheck(formRef.current);
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const remaining = validate(form);
+    const all = recheck(form);
 
-    if (Object.keys(remaining).length > 0) {
-      // Send focus to the first problem so its message is read out.
-      const firstKey = (["name", "contact", "planning"] as ErrorKey[]).find(
-        (k) => remaining[k],
-      );
-      if (firstKey) {
-        form.querySelector<HTMLInputElement>(
-          `[name="${FOCUS_TARGET[firstKey]}"]`,
-        )?.focus();
+    if (Object.keys(all).length > 0) {
+      // Everything is now eligible to display, and focus goes to the first
+      // problem so its message is announced.
+      setTouched(new Set(["name", "phone", "email", "travellers", "planning"]));
+      const first = FOCUS_ORDER.find((f) => all[f.key]);
+      if (first) {
+        form
+          .querySelector<HTMLInputElement>(`[name="${first.input}"]`)
+          ?.focus();
       }
       return;
     }
@@ -106,13 +118,29 @@ export function EnquiryForm() {
         body: JSON.stringify({
           ...data,
           elapsedMs: Date.now() - startedAt.current,
-          // Which page they enquired from — tells a counsellor whether this
-          // came off a specific programme or the homepage.
           sourcePath: window.location.pathname + window.location.hash,
         }),
       });
-      if (res.ok) setStatus("sent");
-      else setStatus(res.status === 429 ? "rateLimited" : "error");
+
+      if (res.ok) {
+        setStatus("sent");
+        return;
+      }
+      if (res.status === 429) {
+        setStatus("rateLimited");
+        return;
+      }
+      // The server may have caught something the browser did not.
+      const payload = await res.json().catch(() => null);
+      if (res.status === 400 && payload?.fields) {
+        setErrors(payload.fields as FieldErrors);
+        setTouched(
+          new Set(["name", "phone", "email", "travellers", "planning"]),
+        );
+        setStatus("idle");
+        return;
+      }
+      setStatus("error");
     } catch {
       setStatus("error");
     }
@@ -141,11 +169,36 @@ export function EnquiryForm() {
   const inputCls =
     "mt-2 w-full rounded-lg border border-rule bg-cream px-4 py-3 text-ink placeholder:text-ink-body/50 aria-[invalid=true]:border-brown";
   const errCls = "mt-1 text-sm text-brown";
-  const blur = (field: string) => () => {
-    if (formRef.current) validate(formRef.current, field);
+
+  /** Everything an input needs to be wired up correctly and accessibly. */
+  const field = (name: string, errKey: keyof FieldErrors = name as keyof FieldErrors) => {
+    const message = visible(errKey);
+    return {
+      id: name,
+      name,
+      className: inputCls,
+      maxLength: FIELD_LIMITS[name as keyof typeof FIELD_LIMITS],
+      onBlur: onBlur(name),
+      onChange: onChange(name),
+      "aria-invalid": Boolean(message),
+      "aria-describedby": message ? `${name}-error` : undefined,
+    };
   };
-  /** Point an input at its error message so the reason gets announced. */
-  const describedBy = (key: ErrorKey) => (errors[key] ? `${key}-error` : undefined);
+
+  const Message = ({
+    name,
+    errKey,
+  }: {
+    name: string;
+    errKey?: keyof FieldErrors;
+  }) => {
+    const message = visible(errKey ?? (name as keyof FieldErrors));
+    return message ? (
+      <p id={`${name}-error`} className={errCls}>
+        {message}
+      </p>
+    ) : null;
+  };
 
   return (
     <form ref={formRef} onSubmit={onSubmit} noValidate>
@@ -166,23 +219,8 @@ export function EnquiryForm() {
           <label htmlFor="name" className={labelCls}>
             Name <span aria-hidden="true">*</span>
           </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            autoComplete="name"
-            maxLength={FIELD_LIMITS.name}
-            className={inputCls}
-            onBlur={blur("name")}
-            aria-invalid={!!errors.name}
-            aria-describedby={describedBy("name")}
-          />
-          {errors.name && (
-            <p id="name-error" className={errCls}>
-              {errors.name}
-            </p>
-          )}
+          <input type="text" required autoComplete="name" {...field("name")} />
+          <Message name="name" />
         </div>
 
         <div>
@@ -190,16 +228,12 @@ export function EnquiryForm() {
             Phone / WhatsApp
           </label>
           <input
-            id="phone"
-            name="phone"
             type="tel"
             autoComplete="tel"
-            maxLength={FIELD_LIMITS.phone}
-            className={inputCls}
-            onBlur={blur("phone")}
-            aria-invalid={!!errors.contact}
-            aria-describedby={describedBy("contact")}
+            placeholder="+91 95000 78189"
+            {...field("phone")}
           />
+          <Message name="phone" />
         </div>
 
         <div>
@@ -209,19 +243,12 @@ export function EnquiryForm() {
               (optional if phone given)
             </span>
           </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            maxLength={FIELD_LIMITS.email}
-            className={inputCls}
-            onBlur={blur("email")}
-            aria-invalid={!!errors.contact}
-            aria-describedby={describedBy("contact")}
-          />
-          {errors.contact && (
-            <p id="contact-error" className={errCls}>
+          <input type="email" autoComplete="email" {...field("email")} />
+          <Message name="email" />
+          {/* The "give us at least one way to reach you" message belongs
+              under the pair, not under either field alone. */}
+          {visible("contact") && (
+            <p id="phone-error" className={errCls}>
               {errors.contact}
             </p>
           )}
@@ -246,13 +273,12 @@ export function EnquiryForm() {
             Number of travellers
           </label>
           <input
-            id="travellers"
-            name="travellers"
             type="text"
             inputMode="numeric"
-            maxLength={FIELD_LIMITS.travellers}
-            className={inputCls}
+            placeholder="2"
+            {...field("travellers")}
           />
+          <Message name="travellers" />
         </div>
 
         <div>
@@ -260,22 +286,12 @@ export function EnquiryForm() {
             What you&apos;re planning <span aria-hidden="true">*</span>
           </label>
           <input
-            id="planning"
-            name="planning"
             type="text"
             required
-            maxLength={FIELD_LIMITS.planning}
-            className={inputCls}
             placeholder="A honeymoon, a pilgrimage, a conference…"
-            onBlur={blur("planning")}
-            aria-invalid={!!errors.planning}
-            aria-describedby={describedBy("planning")}
+            {...field("planning")}
           />
-          {errors.planning && (
-            <p id="planning-error" className={errCls}>
-              {errors.planning}
-            </p>
-          )}
+          <Message name="planning" />
         </div>
 
         <div className="md:col-span-2">
@@ -292,8 +308,6 @@ export function EnquiryForm() {
         </div>
       </div>
 
-      {/* Announced when it appears, and offers a route that does not depend
-          on the thing that just failed. */}
       <div aria-live="polite">
         {status === "error" && (
           <p className="mt-6 text-brown">
@@ -341,9 +355,6 @@ export function EnquiryForm() {
         </p>
       </div>
 
-      {/* Required by DPDP / GDPR practice: tell people what happens to the
-          personal details they are about to hand over, at the point they
-          hand them over. */}
       <p className="mt-6 text-sm text-ink-body">
         <span aria-hidden="true">*</span> Required. We use your details only to
         reply to this enquiry — see our{" "}

@@ -5,7 +5,7 @@ import {
   EMAIL_RE,
   FIELD_LIMITS,
   MAX_BODY_BYTES,
-  hasUsableContact,
+  validateEnquiry,
   type EnquiryField,
 } from "@/lib/enquiry";
 
@@ -268,12 +268,16 @@ export async function POST(req: Request) {
     sourcePath: field("sourcePath"),
   };
 
-  if (
-    enquiry.name.length < 2 ||
-    !hasUsableContact(enquiry.phone, enquiry.email)
-  ) {
+  // The same rules the browser applied — re-run here, because the browser is
+  // not a security boundary and anyone can POST straight to this endpoint.
+  // Field-keyed messages go back so the form can show each beside its input.
+  const fieldErrors = validateEnquiry(enquiry);
+  if (Object.keys(fieldErrors).length > 0) {
     return NextResponse.json(
-      { error: "Name and a phone number or email are required." },
+      {
+        error: "Please check the highlighted fields.",
+        fields: fieldErrors,
+      },
       { status: 400 },
     );
   }
