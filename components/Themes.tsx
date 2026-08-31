@@ -3,15 +3,14 @@ import { CATEGORIES, getPlacesForCategory } from "@/lib/data";
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Section 3 — Aspiration & focus. Sand ground, the export's 11 themes plus
- * "& Much more", laid out as a hairline grid (1px gaps over a rule-coloured
- * backing).
+ * Section 3 — Aspiration & focus. Sand ground, nine live themes as a
+ * hairline grid (1px gaps over a rule-coloured backing).
  *
  * Ported deliberately, not copied (claude.md § Fix list):
  * - Tiles are links, not <div>s.
  * - The 01–11 numbering is dropped — the order carries no meaning.
  * - The eyebrow is --brown, not --gold: gold on cream measures 2.54:1.
- * - Columns pinned 1 / 2 / 3 so the 12 cells never leave an orphan row.
+ * - Columns pinned 1 / 2 / 3 so nine items fill a 3 x 3 with no orphan.
  */
 export function Themes() {
   return (
@@ -56,12 +55,6 @@ export function Themes() {
                 </li>
               );
             })}
-            {/* 11 themes + this one = 12 cells, an exact 3 x 4 grid. */}
-            <li className="flex items-center bg-sand-deep px-6 py-7">
-              <span className="font-[family-name:var(--font-fraunces)] text-xl text-brown">
-                &amp; Much more
-              </span>
-            </li>
           </ul>
         </Reveal>
       </div>

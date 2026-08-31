@@ -51,6 +51,16 @@ const nextConfig: NextConfig = {
         destination: "/product/wellness-yoga",
         permanent: true,
       },
+      {
+        source: "/product/architectural-significance",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/product/astrology-natural-science",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };

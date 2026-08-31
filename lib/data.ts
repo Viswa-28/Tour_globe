@@ -71,17 +71,15 @@ export function formatDuration(nights: number, days: number): string {
 }
 
 /**
- * 11 themes. Based on the export's "Aspiration & focus" grid, with three
- * client changes since:
+ * 9 themes on the homepage (a clean 3 x 3). Based on the export's
+ * "Aspiration & focus" grid, with later client changes:
  *
- * - "Pilgrimage Tourism" → "Pilgrimage & Divine", matching the product
- *   catalogue heading (2026-08-24).
+ * - "Pilgrimage Tourism" → "Pilgrimage & Divine" (2026-08-24).
  * - "Wellness" and "Yoga" merged into "Wellness & Yoga" (2026-08-24).
- * - "Wild life" added — not in the approved export grid, but the catalogue
- *   lists nine wildlife programmes that need somewhere to live.
- *
- * Still 11 themes plus "& Much more", so the homepage grid stays a clean
- * 3 x 4 with no orphan cell.
+ * - "Wild life" added from the product catalogue.
+ * - Architectural significance, Astrology & Natural Science, and
+ *   "& Much more" removed (2026-08-31) — no programmes, and the client
+ *   marked them off the grid.
  *
  * TODO(client): the catalogue writes "Beaches & Waterfront" where the export
  * says "Beaches & water front". The export wording stands until confirmed.
@@ -130,20 +128,12 @@ export const CATEGORIES: Category[] = [
     order: 5,
   },
   {
-    name: "Architectural significance",
-    slug: "architectural-significance",
-    descriptor: "Buildings worth crossing a country for",
-    intro:
-      "Palaces, forts, places of worship and modern landmarks — sequenced so each building explains something about the one before it.",
-    order: 6,
-  },
-  {
     name: "Rock cut caves & Temples",
     slug: "rock-cut-caves-and-temples",
     descriptor: "Sanctuaries carved out of living stone",
     intro:
       "Cave sanctuaries and monolithic temples cut directly from rock — visited with the light and the timings that make the carving readable.",
-    order: 7,
+    order: 6,
   },
   {
     // "Wellness" and "Yoga" were separate themes in the export; merged at the
@@ -153,17 +143,7 @@ export const CATEGORIES: Category[] = [
     descriptor: "Rest, practice and time to recover",
     intro:
       "Retreats, treatment stays and practice-led travel — schools, teachers and programmes checked before you commit, at a pace that leaves room for the rest of the country.",
-    order: 8,
-  },
-  {
-    // TODO(client): proposed rename to "Astronomy & Sacred Sciences" is NOT
-    // yet approved — the export's name stands until it is.
-    name: "Astrology & Natural Science",
-    slug: "astrology-natural-science",
-    descriptor: "Observatories, dark skies and old ways of reading them",
-    intro:
-      "Historic observatories, dark-sky country and traditions of reading the heavens — for travellers curious about how cultures made sense of the sky.",
-    order: 9,
+    order: 7,
   },
   {
     // Client spelling. claude.md flags "Archeology" → "Archaeology".
@@ -172,7 +152,7 @@ export const CATEGORIES: Category[] = [
     descriptor: "Ruins, excavations and ancient cities",
     intro:
       "For travellers drawn to what the ground remembers — excavated cities, rock-cut monuments and museum collections — sequenced so each site builds on the last.",
-    order: 10,
+    order: 8,
   },
   {
     name: "Wild life",
@@ -180,7 +160,7 @@ export const CATEGORIES: Category[] = [
     descriptor: "Parks, reserves and the animals that live in them",
     intro:
       "Safaris and reserve stays timed to the season and the sightings, with drives planned across zones and days rather than left to one lucky morning.",
-    order: 11,
+    order: 9,
   },
 ];
 
