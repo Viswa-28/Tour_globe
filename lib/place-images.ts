@@ -300,6 +300,224 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
     exact: false,
     note: "README: deliberately unnamed. Gaur are resident around Masinagudi and Bandipur.",
   },
+
+  // ——————————————————————— Culinary Hotspots ———————————————————————
+  "culinary-hotspots/tokyo": {
+    src: `${D}/tokyo-sushi-counter.png`,
+    alt: "Sushi being prepared at a counter",
+    exact: false,
+    note: "AI placeholder. Frame suggests Tokyo dining; alt names no venue.",
+  },
+  "culinary-hotspots/paris": {
+    src: `${D}/paris-cafe.png`,
+    alt: "A pavement cafe with coffee and pastry",
+    exact: false,
+    note: "AI placeholder. Cafe scene for Paris; venue is not identifiable.",
+  },
+  "culinary-hotspots/rome-and-tuscany": {
+    src: `${D}/tuscany-vineyard.png`,
+    alt: "Vines and a farmhouse on a rolling hillside",
+    exact: false,
+    note: "AI placeholder. Tuscany is on this route; the estate is not named.",
+  },
+  "culinary-hotspots/bangkok": {
+    src: `${D}/bangkok-riverside.png`,
+    alt: "Boats and riverside buildings along a city waterway",
+    exact: false,
+    note: "AI placeholder. Riverside Bangkok-style scene; alt names no place.",
+  },
+  "culinary-hotspots/istanbul": {
+    src: `${D}/istanbul-bosphorus.png`,
+    alt: "A mosque and waterfront along a strait at dusk",
+    exact: false,
+    note: "AI placeholder. Bosphorus is on this route; landmark ID is unverified.",
+  },
+  "culinary-hotspots/barcelona": {
+    src: `${D}/barcelona-park-guell.png`,
+    alt: "A mosaic terrace overlooking a city",
+    exact: false,
+    note: "AI placeholder. Frame resembles Park Güell; treat as unverified until launch photography.",
+  },
+  "culinary-hotspots/marrakech": {
+    src: `${D}/marrakech-souk.png`,
+    alt: "Spice and produce stalls in a covered market",
+    exact: false,
+    note: "AI placeholder. Souk is on this itinerary; the market is not named.",
+  },
+  "culinary-hotspots/hanoi": {
+    src: `${D}/hanoi-street-food.png`,
+    alt: "Street-food stalls along a busy evening road",
+    exact: false,
+    note: "AI placeholder. Street food is on this itinerary; location is unnamed.",
+  },
+  "culinary-hotspots/kerala": {
+    src: `${D}/kerala-backwaters.png`,
+    alt: "A houseboat on palm-lined backwaters",
+    exact: false,
+    note: "AI placeholder. Alleppey is on this route; the stretch is unnamed.",
+  },
+
+  // ——————————————————————— Wellness & Yoga ———————————————————————
+  "wellness-yoga/rishikesh": {
+    src: `${D}/rishikesh-ganges-meditation.png`,
+    alt: "Meditation beside a river in hill country",
+    exact: false,
+    note: "AI placeholder. Ganga is on this itinerary; the ghats are unnamed.",
+  },
+  "wellness-yoga/bali": {
+    src: `${D}/balinese-temple-meditation.png`,
+    alt: "Meditation on stone steps at a temple gate",
+    exact: false,
+    note: "AI placeholder. Bali temple setting; the sanctuary is unnamed.",
+  },
+  "wellness-yoga/kerala": {
+    src: `${D}/kerala-backwaters-yoga.png`,
+    alt: "Yoga on a houseboat deck among palms",
+    exact: false,
+    note: "AI placeholder. Kerala backwaters fit the programme; location unnamed.",
+  },
+  "wellness-yoga/ubud": {
+    src: `${D}/bali-jungle-yoga.png`,
+    alt: "Yoga in a forest clearing",
+    exact: false,
+    note: "AI placeholder. Jungle retreats are on this itinerary; site unnamed.",
+  },
+  "wellness-yoga/chiang-mai": {
+    src: `${D}/infinity-pool-yoga.png`,
+    alt: "A yoga pose at the edge of a pool",
+    exact: false,
+    note: "AI placeholder. Generic wellness frame, not a Chiang Mai site.",
+  },
+  "wellness-yoga/bhutan": {
+    src: `${D}/himalayan-mountain-meditation.png`,
+    alt: "Meditation facing a snow-capped mountain range",
+    exact: false,
+    note: "AI placeholder. Himalayan subject fits Bhutan; peak is unnamed.",
+  },
+  "wellness-yoga/sri-lanka": {
+    src: `${D}/ayurvedic-shirodhara.png`,
+    alt: "An Ayurvedic oil treatment in a quiet room",
+    exact: false,
+    note: "AI placeholder. Ayurveda is on this itinerary; clinic is unnamed.",
+  },
+  "wellness-yoga/pokhara": {
+    src: `${D}/phewa-lake-pokhara-nepal.jpg`,
+    alt: "Wooden boats on Phewa Lake below the Annapurna range, Nepal",
+    exact: true,
+  },
+  "wellness-yoga/sedona": {
+    src: `${D}/sedona-red-rock-meditation.png`,
+    alt: "Meditation facing red rock cliffs",
+    exact: false,
+    note: "AI placeholder. Red rocks are on this itinerary; the viewpoint is unnamed.",
+  },
+
+  // ——————————————————————— History & Archeology ———————————————————————
+  "history-archeology/petra": {
+    src: `${D}/al-khazneh-petra-jordan.jpg`,
+    alt: "Al-Khazneh, the rock-cut Treasury at Petra, Jordan",
+    exact: true,
+  },
+  "history-archeology/rome": {
+    src: `${D}/roman-forum.png`,
+    alt: "Ruined columns and paving in an ancient forum",
+    exact: false,
+    note: "AI placeholder. The Roman Forum is on this itinerary; frame is unverified.",
+  },
+  "history-archeology/egypt": {
+    src: `${D}/pyramids-sphinx-giza-egypt.jpg`,
+    alt: "The Great Sphinx with the pyramids of Giza behind it, Egypt",
+    exact: true,
+  },
+  "history-archeology/athens-and-delphi": {
+    src: `${D}/acropolis-athens.png`,
+    alt: "A classical temple on a rocky hill above a city",
+    exact: false,
+    note: "AI placeholder. Acropolis is on this itinerary; frame is unverified.",
+  },
+  "history-archeology/istanbul-and-cappadocia": {
+    src: `${D}/ephesus-library-celsus.png`,
+    alt: "The two-storey facade of an ancient library",
+    exact: false,
+    note: "AI placeholder. Ephesus is on this itinerary; building ID is unverified.",
+  },
+  "history-archeology/angkor": {
+    src: `${D}/angkor-wat-siem-reap-cambodia.jpg`,
+    alt: "Angkor Wat reflected in its moat at sunrise, Cambodia",
+    exact: true,
+  },
+  "history-archeology/machu-picchu": {
+    src: `${D}/machu-picchu.png`,
+    alt: "Stone terraces on a mountain ridge above cloud forest",
+    exact: false,
+    note: "AI placeholder. Machu Picchu is the programme; frame is unverified.",
+  },
+  "history-archeology/hampi": {
+    src: `${D}/vittala-temple-hampi-india.jpg`,
+    alt: "The Vittala temple complex at Hampi, India",
+    exact: true,
+  },
+  "history-archeology/mohenjo-daro-and-taxila": {
+    src: `${D}/mohenjo-daro.png`,
+    alt: "Sun-baked brick ruins of an excavated city",
+    exact: false,
+    note: "AI placeholder. Indus Valley ruins; site ID is unverified.",
+  },
+
+  // ——————————————————————— Rock cut caves & Temples ———————————————————————
+  "rock-cut-caves-and-temples/ajanta-and-ellora": {
+    src: `${D}/ellora-kailasa-temple.png`,
+    alt: "A temple carved down into living rock",
+    exact: false,
+    note: "AI placeholder. Ellora is on this route; the frame is unverified.",
+  },
+  "rock-cut-caves-and-temples/elephanta-caves": {
+    src: `${D}/elephanta-caves-trimurti.png`,
+    alt: "A three-headed stone sculpture in a rock-cut cave",
+    exact: false,
+    note: "AI placeholder. Elephanta is the programme; the relief is unverified.",
+  },
+  "rock-cut-caves-and-temples/mahabalipuram": {
+    src: `${D}/ajanta-caves-buddha.png`,
+    alt: "A seated Buddha carved in a cave sanctuary",
+    exact: false,
+    note: "AI placeholder. Frame is a cave Buddha, not Mahabalipuram shore temples.",
+  },
+  "rock-cut-caves-and-temples/badami": {
+    src: `${D}/ellora-caves-entrance.png`,
+    alt: "The pillared entrance of a rock-cut cave",
+    exact: false,
+    note: "AI placeholder. Cave-temple entrance; not a verified Badami frame.",
+  },
+  "rock-cut-caves-and-temples/dambulla": {
+    src: `${D}/ajanta-painted-cave.png`,
+    alt: "Painted figures on the walls of a cave shrine",
+    exact: false,
+    note: "AI placeholder. Painted cave subject fits Dambulla; site is unverified.",
+  },
+  "rock-cut-caves-and-temples/petra": {
+    src: `${D}/al-khazneh-petra-jordan.jpg`,
+    alt: "Al-Khazneh, the rock-cut Treasury at Petra, Jordan",
+    exact: true,
+  },
+  "rock-cut-caves-and-temples/abu-simbel-and-luxor": {
+    src: `${D}/abu-simbel.png`,
+    alt: "Colossal seated figures cut into a cliff face",
+    exact: false,
+    note: "AI placeholder. Abu Simbel is on this route; frame is unverified.",
+  },
+  "rock-cut-caves-and-temples/longmen-grottoes": {
+    src: `${D}/longmen-grottoes-buddha.png`,
+    alt: "A monumental Buddha carved into a cliff",
+    exact: false,
+    note: "AI placeholder. Longmen is the programme; frame is unverified.",
+  },
+  "rock-cut-caves-and-temples/cappadocia": {
+    src: `${D}/cappadocia-cave-dwellings.png`,
+    alt: "Cave dwellings cut into pale volcanic cones",
+    exact: false,
+    note: "AI placeholder. Cappadocia cave dwellings; village is unnamed.",
+  },
 };
 
 export function getPlaceImage(place: Place): PlaceImage | undefined {
