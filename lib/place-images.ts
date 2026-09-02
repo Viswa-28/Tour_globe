@@ -302,59 +302,63 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
   },
 
   // ——————————————————————— Culinary Hotspots ———————————————————————
-  "culinary-hotspots/tokyo": {
+  // Re-keyed 2026-09-02 for the client's fresh place list (see lib/data.ts).
+  // Barcelona, Marrakech, Hanoi and the old culinary-hotspots/kerala entry
+  // were dropped along with those places; their frames went unused with
+  // them rather than being force-fit onto an unrelated destination.
+  "culinary-hotspots/japan": {
     src: `${D}/tokyo-sushi-counter.png`,
     alt: "Sushi being prepared at a counter",
     exact: false,
     note: "AI placeholder. Frame suggests Tokyo dining; alt names no venue.",
   },
-  "culinary-hotspots/paris": {
+  "culinary-hotspots/france": {
     src: `${D}/paris-cafe.png`,
     alt: "A pavement cafe with coffee and pastry",
     exact: false,
     note: "AI placeholder. Cafe scene for Paris; venue is not identifiable.",
   },
-  "culinary-hotspots/rome-and-tuscany": {
+  "culinary-hotspots/italy": {
     src: `${D}/tuscany-vineyard.png`,
     alt: "Vines and a farmhouse on a rolling hillside",
     exact: false,
     note: "AI placeholder. Tuscany is on this route; the estate is not named.",
   },
-  "culinary-hotspots/bangkok": {
+  "culinary-hotspots/thailand": {
     src: `${D}/bangkok-riverside.png`,
     alt: "Boats and riverside buildings along a city waterway",
     exact: false,
     note: "AI placeholder. Riverside Bangkok-style scene; alt names no place.",
   },
-  "culinary-hotspots/istanbul": {
+  "culinary-hotspots/turkey": {
     src: `${D}/istanbul-bosphorus.png`,
     alt: "A mosque and waterfront along a strait at dusk",
     exact: false,
     note: "AI placeholder. Bosphorus is on this route; landmark ID is unverified.",
   },
-  "culinary-hotspots/barcelona": {
-    src: `${D}/barcelona-park-guell.png`,
-    alt: "A mosaic terrace overlooking a city",
-    exact: false,
-    note: "AI placeholder. Frame resembles Park Güell; treat as unverified until launch photography.",
+  // Added 2026-09-02, outside the original 45-frame AI set — these read as
+  // genuine photography, not AI-generated. TODO(client): confirm source and
+  // licence before launch (claude.md requires imageSource/imageLicence on
+  // every image; unlike the 45-frame set above, these have neither yet).
+  "culinary-hotspots/lima": {
+    src: `${D}/lima-peru-food.png`,
+    alt: "Ceviche and a pisco sour on a table overlooking Lima's coastal cliffs at sunset",
+    exact: true,
   },
-  "culinary-hotspots/marrakech": {
-    src: `${D}/marrakech-souk.png`,
-    alt: "Spice and produce stalls in a covered market",
-    exact: false,
-    note: "AI placeholder. Souk is on this itinerary; the market is not named.",
+  "culinary-hotspots/uae": {
+    src: `${D}/dubai-arabic-food.png`,
+    alt: "Arabic coffee and dates with the Dubai skyline, including Burj Khalifa, at dusk",
+    exact: true,
   },
-  "culinary-hotspots/hanoi": {
-    src: `${D}/hanoi-street-food.png`,
-    alt: "Street-food stalls along a busy evening road",
-    exact: false,
-    note: "AI placeholder. Street food is on this itinerary; location is unnamed.",
+  "culinary-hotspots/tamil-nadu": {
+    src: `${D}/tamil-temple-thali.png`,
+    alt: "A banana-leaf thali in front of a temple gopuram",
+    exact: true,
   },
-  "culinary-hotspots/kerala": {
-    src: `${D}/kerala-backwaters.png`,
-    alt: "A houseboat on palm-lined backwaters",
-    exact: false,
-    note: "AI placeholder. Alleppey is on this route; the stretch is unnamed.",
+  "culinary-hotspots/rajasthan": {
+    src: `${D}/rajasthan-thali.png`,
+    alt: "A Rajasthani thali overlooking a hilltop fort at sunset",
+    exact: true,
   },
 
   // ——————————————————————— Wellness & Yoga ———————————————————————
@@ -471,7 +475,7 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
     note: "AI placeholder. Indus Valley ruins; site ID is unverified.",
   },
 
-  // ——————————————————————— Rock cut caves & Temples ———————————————————————
+  // ——————————————————————— Rock-cut and Caves ———————————————————————
   "rock-cut-caves-and-temples/ajanta-and-ellora": {
     src: `${D}/ellora-kailasa-temple.png`,
     alt: "A temple carved down into living rock",

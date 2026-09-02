@@ -7,11 +7,11 @@
  * - CATEGORIES, SERVICES, COMMITMENTS: verbatim from the client's design
  *   export (`Tourglobe Hero.dc.html`). Do not reword.
  * - PLACES: verbatim from the client's product catalogue (2026-08-22; the
- *   Wellness & Yoga set was replaced wholesale with a fresher client list on
- *   2026-09-02 — see the comment at that section). Destination, country,
- *   itinerary stops and duration are exactly as supplied. No descriptions
- *   have been written for them — the client has not supplied any, and
- *   claude.md forbids inventing them.
+ *   Wellness & Yoga and Culinary Hotspots sets were each replaced wholesale
+ *   with a fresher client list on 2026-09-02 — see the comments at those
+ *   sections). Destination, country, itinerary stops and duration are
+ *   exactly as supplied. No descriptions have been written for them — the
+ *   client has not supplied any, and claude.md forbids inventing them.
  * - Client spellings preserved deliberately: "Archeology", "Angkor Watt",
  *   "Katmandu", "Gold coast", "Siesta beach", "Thimpu". Flagged, not
  *   corrected.
@@ -133,7 +133,7 @@ export const CATEGORIES: Category[] = [
     order: 5,
   },
   {
-    name: "Rock cut caves & Temples",
+    name: "Rock-cut and Caves",
     slug: "rock-cut-caves-and-temples",
     descriptor: "Sanctuaries carved out of living stone",
     intro:
@@ -622,84 +622,79 @@ export const PLACES: Place[] = [
     categorySlug: "pilgrimage-divine",
   },
 
-  // ——— Culinary Hotspots (2026-08-31) ———
+  // ——— Culinary Hotspots (client's full list supplied 2026-09-02, replacing
+  // the previous 2026-08-31 set entirely) ———
   {
-    name: "Tokyo",
-    slug: "tokyo",
-    country: "Japan",
-    itinerary: ["Tokyo", "Tsukiji", "Mount Fuji"],
+    name: "Lima",
+    slug: "lima",
+    country: "Peru",
+    itinerary: ["Maido", "Ceviche", "Pisco"],
     nights: 4,
     days: 5,
     categorySlug: "culinary-hotspots",
   },
   {
-    name: "Paris",
-    slug: "paris",
-    country: "France",
-    itinerary: ["Paris", "Versailles", "French cuisine"],
-    nights: 4,
-    days: 5,
-    categorySlug: "culinary-hotspots",
-  },
-  {
-    name: "Rome & Tuscany",
-    slug: "rome-and-tuscany",
-    country: "Italy",
-    itinerary: ["Rome", "Florence", "Tuscany"],
+    name: "Japan",
+    slug: "japan",
+    itinerary: ["Osaka", "Kyoto", "Tokyo"],
     nights: 5,
     days: 6,
     categorySlug: "culinary-hotspots",
   },
   {
-    name: "Bangkok",
-    slug: "bangkok",
-    country: "Thailand",
-    itinerary: ["Bangkok", "Ayutthaya", "Thai cuisine"],
+    name: "France",
+    slug: "france",
+    itinerary: ["Paris"],
     nights: 4,
     days: 5,
     categorySlug: "culinary-hotspots",
   },
   {
-    name: "Istanbul",
-    slug: "istanbul",
-    country: "Turkey",
-    itinerary: ["Istanbul", "Bosphorus", "Turkish cuisine"],
+    name: "Italy",
+    slug: "italy",
+    itinerary: ["Tuscany", "Amalfi", "Rome"],
+    nights: 5,
+    days: 6,
+    categorySlug: "culinary-hotspots",
+  },
+  {
+    name: "Thailand",
+    slug: "thailand",
+    itinerary: ["Ayutthaya", "Pattaya", "Bangkok"],
     nights: 4,
     days: 5,
     categorySlug: "culinary-hotspots",
   },
   {
-    name: "Barcelona",
-    slug: "barcelona",
-    country: "Spain",
-    itinerary: ["Barcelona", "Catalonia", "Mediterranean cuisine"],
+    name: "UAE",
+    slug: "uae",
+    itinerary: ["Dubai", "Sharjah"],
     nights: 4,
     days: 5,
     categorySlug: "culinary-hotspots",
   },
   {
-    name: "Marrakech",
-    slug: "marrakech",
-    country: "Morocco",
-    itinerary: ["Marrakech", "souks", "Moroccan cuisine"],
+    name: "Turkey",
+    slug: "turkey",
+    itinerary: ["Bursa", "Istanbul"],
     nights: 4,
     days: 5,
     categorySlug: "culinary-hotspots",
   },
   {
-    name: "Hanoi",
-    slug: "hanoi",
-    country: "Vietnam",
-    itinerary: ["Hanoi", "street food", "Halong Bay"],
-    nights: 4,
-    days: 5,
-    categorySlug: "culinary-hotspots",
-  },
-  {
-    name: "Kerala",
-    slug: "kerala",
+    name: "Tamil Nadu",
+    slug: "tamil-nadu",
     country: "India",
-    itinerary: ["Kochi", "Alleppey", "traditional Kerala cuisine"],
+    itinerary: ["Madurai", "Tirunelveli", "Kanyakumari"],
+    nights: 5,
+    days: 6,
+    categorySlug: "culinary-hotspots",
+  },
+  {
+    name: "Rajasthan",
+    slug: "rajasthan",
+    country: "India",
+    itinerary: ["Jaipur", "Jodhpur", "Udaipur"],
     nights: 5,
     days: 6,
     categorySlug: "culinary-hotspots",
@@ -869,7 +864,7 @@ export const PLACES: Place[] = [
     categorySlug: "history-archeology",
   },
 
-  // ——— Rock cut caves & Temples (2026-08-31) ———
+  // ——— Rock-cut and Caves (2026-08-31) ———
   {
     name: "Ajanta & Ellora",
     slug: "ajanta-and-ellora",
