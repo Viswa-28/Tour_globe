@@ -66,6 +66,5 @@ export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${enco
  */
 export const CO_BRANDS = [
   { name: "Tourindias.com", url: "https://www.tourindias.com" },
-  { name: "Pathfinders.in", url: "https://www.pathfinders.in" },
-  { name: "Zerospacekreativ", url: "" },
+  { name: "Vayoura.com", url: "https://www.vayoura.com" },
 ] as const;

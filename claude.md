@@ -326,7 +326,7 @@ Use only these.
   Nagamalaipudukottai, Madurai, Tamil Nadu 625 019
 - +91 95000 78189 · +91 93334 93333 · info@tourglobe.in · www.tourglobe.in
 - Tagline in the export: "Buenas Memorias" — **confirm this is intentional**
-- Co-brands: Tourindias.com, Pathfinders.in, Zerospacekreativ
+- Co-brands: Tourindias.com, Vayoura.com
 - Services: Tours — Outbound, Incoming, Domestic; MICE; Events; Vehicle
   Rentals; Destination Weddings; Concept Holidays
 - 11 themes as listed in Aspiration & Focus, plus "& much more"
