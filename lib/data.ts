@@ -7,14 +7,16 @@
  * - CATEGORIES, SERVICES, COMMITMENTS: verbatim from the client's design
  *   export (`Tourglobe Hero.dc.html`). Do not reword.
  * - PLACES: verbatim from the client's product catalogue (2026-08-22; the
- *   Wellness & Yoga and Culinary Hotspots sets were each replaced wholesale
- *   with a fresher client list on 2026-09-02 — see the comments at those
- *   sections). Destination, country, itinerary stops and duration are
- *   exactly as supplied. No descriptions have been written for them — the
- *   client has not supplied any, and claude.md forbids inventing them.
+ *   Wellness & Yoga, Culinary Hotspots, Rock-cut and Caves, and History &
+ *   Archeology sets were each replaced wholesale with a fresher client list
+ *   on 2026-09-02 — see the comments at those sections). Destination,
+ *   country, itinerary stops and duration are exactly as supplied. No
+ *   descriptions have been written for them — the client has not supplied
+ *   any, and claude.md forbids inventing them.
  * - Client spellings preserved deliberately: "Archeology", "Angkor Watt",
- *   "Katmandu", "Gold coast", "Siesta beach", "Thimpu". Flagged, not
- *   corrected.
+ *   "Katmandu", "Gold coast", "Siesta beach", "Thimpu", "Nha Ke Bang",
+ *   "Longmen Grottos" (elsewhere spelled "Grottoes"), "Seam Reap",
+ *   "Edinburg". Flagged, not corrected.
  * - `descriptor` / `intro` on each category are OUR copy, written only
  *   because the category pages need an intro line. TODO(client).
  */
@@ -782,168 +784,165 @@ export const PLACES: Place[] = [
     categorySlug: "wellness-yoga",
   },
 
-  // ——— History & Archeology (2026-08-31) ———
+  // ——— History & Archeology (client's full list supplied 2026-09-02,
+  // replacing the previous 2026-08-31 set entirely) ———
   {
-    name: "Petra",
-    slug: "petra",
-    country: "Jordan",
-    itinerary: ["Petra", "Wadi Rum", "Jerash"],
-    nights: 4,
-    days: 5,
-    categorySlug: "history-archeology",
-  },
-  {
-    name: "Rome",
-    slug: "rome",
-    country: "Italy",
-    itinerary: ["Colosseum", "Roman Forum", "Pompeii"],
-    nights: 4,
-    days: 5,
-    categorySlug: "history-archeology",
-  },
-  {
-    name: "Egypt",
-    slug: "egypt",
-    itinerary: ["Cairo", "Giza", "Luxor", "Valley of the Kings"],
+    name: "Italy",
+    slug: "italy",
+    itinerary: ["Vatican", "Rome", "Pisa", "Venice"],
     nights: 5,
     days: 6,
     categorySlug: "history-archeology",
   },
   {
-    name: "Athens & Delphi",
-    slug: "athens-and-delphi",
-    country: "Greece",
-    itinerary: ["Acropolis", "Delphi", "Ancient Athens"],
+    name: "Peru",
+    slug: "peru",
+    itinerary: ["Lima", "Cusco", "Machu Picchu"],
+    nights: 6,
+    days: 7,
+    categorySlug: "history-archeology",
+  },
+  {
+    // Client wrote "Seam Reap" — preserved verbatim per this file's
+    // convention (see FACT STATUS above), not corrected to "Siem Reap".
+    name: "Cambodia",
+    slug: "cambodia",
+    itinerary: ["Seam Reap", "Angkor Wat", "Phnom Penh"],
     nights: 4,
     days: 5,
     categorySlug: "history-archeology",
   },
   {
-    name: "Istanbul & Cappadocia",
-    slug: "istanbul-and-cappadocia",
-    country: "Turkey",
-    itinerary: ["Hagia Sophia", "Ephesus", "Cappadocia"],
+    // Client listed "Jordan" itself as a third itinerary stop alongside
+    // Petra and Jerash — kept exactly as supplied. TODO(client): confirm
+    // whether that's meant to be a specific place (e.g. Amman).
+    name: "Jordan",
+    slug: "jordan",
+    itinerary: ["Petra", "Jerash", "Jordan"],
+    nights: 4,
+    days: 5,
+    categorySlug: "history-archeology",
+  },
+  {
+    name: "Greece",
+    slug: "greece",
+    itinerary: ["Delphi", "Santorini", "Athens"],
     nights: 5,
     days: 6,
     categorySlug: "history-archeology",
   },
   {
-    name: "Angkor",
-    slug: "angkor",
-    country: "Cambodia",
-    itinerary: ["Angkor Wat", "Angkor Thom", "Ta Prohm"],
-    nights: 4,
-    days: 5,
+    name: "Morocco",
+    slug: "morocco",
+    itinerary: ["Volubilis", "Rabat", "Casablanca"],
+    nights: 6,
+    days: 7,
     categorySlug: "history-archeology",
   },
   {
-    name: "Machu Picchu",
-    slug: "machu-picchu",
-    country: "Peru",
-    itinerary: ["Cusco", "Sacred Valley", "Machu Picchu"],
+    name: "United Kingdom",
+    slug: "united-kingdom",
+    itinerary: ["London", "Stonehenge", "Bath"],
     nights: 5,
     days: 6,
     categorySlug: "history-archeology",
   },
   {
-    name: "Hampi",
-    slug: "hampi",
-    country: "India",
-    itinerary: ["Vijayanagara ruins", "temples", "ancient monuments"],
-    nights: 4,
-    days: 5,
+    // Client wrote "Edinburg" — preserved verbatim, not corrected to
+    // "Edinburgh".
+    name: "Scotland",
+    slug: "scotland",
+    itinerary: ["Edinburg", "Glasgow"],
+    nights: 5,
+    days: 6,
     categorySlug: "history-archeology",
   },
   {
-    name: "Mohenjo-daro & Taxila",
-    slug: "mohenjo-daro-and-taxila",
-    country: "Pakistan",
-    itinerary: ["Indus Valley", "Gandharan archaeological heritage"],
+    name: "India",
+    slug: "india",
+    itinerary: ["Agra", "Jaipur", "Delhi"],
     nights: 5,
     days: 6,
     categorySlug: "history-archeology",
   },
 
-  // ——— Rock-cut and Caves (2026-08-31) ———
+  // ——— Rock-cut and Caves (client's full list supplied 2026-09-02,
+  // replacing the previous 2026-08-31 set entirely) ———
   {
-    name: "Ajanta & Ellora",
-    slug: "ajanta-and-ellora",
-    country: "India",
-    itinerary: ["Aurangabad", "Ajanta", "Ellora Caves"],
-    nights: 4,
-    days: 5,
-    categorySlug: "rock-cut-caves-and-temples",
-  },
-  {
-    name: "Elephanta Caves",
-    slug: "elephanta-caves",
-    country: "India",
-    itinerary: ["Mumbai", "Elephanta"],
-    nights: 3,
-    days: 4,
-    categorySlug: "rock-cut-caves-and-temples",
-  },
-  {
-    name: "Mahabalipuram",
-    slug: "mahabalipuram",
-    country: "India",
-    itinerary: ["Chennai", "Mahabalipuram"],
-    nights: 3,
-    days: 4,
-    categorySlug: "rock-cut-caves-and-temples",
-  },
-  {
-    name: "Badami",
-    slug: "badami",
-    country: "India",
-    itinerary: ["Badami", "Aihole", "Pattadakal"],
-    nights: 4,
-    days: 5,
-    categorySlug: "rock-cut-caves-and-temples",
-  },
-  {
-    name: "Dambulla",
-    slug: "dambulla",
-    country: "Sri Lanka",
-    itinerary: ["Dambulla", "Sigiriya", "Kandy"],
-    nights: 4,
-    days: 5,
-    categorySlug: "rock-cut-caves-and-temples",
-  },
-  {
-    name: "Petra",
-    slug: "petra",
-    country: "Jordan",
-    itinerary: ["Petra", "Little Petra", "Wadi Rum"],
-    nights: 4,
-    days: 5,
-    categorySlug: "rock-cut-caves-and-temples",
-  },
-  {
-    name: "Abu Simbel & Luxor",
-    slug: "abu-simbel-and-luxor",
-    country: "Egypt",
-    itinerary: ["Abu Simbel", "Luxor", "Valley of the Kings"],
+    name: "Jordan",
+    slug: "jordan",
+    itinerary: ["Petra", "Wadi Rum", "Jerash", "Amman"],
     nights: 5,
     days: 6,
     categorySlug: "rock-cut-caves-and-temples",
   },
   {
-    name: "Longmen Grottoes",
-    slug: "longmen-grottoes",
-    country: "China",
-    itinerary: ["Luoyang", "Longmen", "Shaolin"],
+    // Client wrote "Nha Ke Bang" — preserved verbatim per this file's
+    // convention (see FACT STATUS above), not expanded to "Phong Nha-Ke
+    // Bang". TODO(client): confirm the full park name.
+    name: "Vietnam",
+    slug: "vietnam",
+    itinerary: ["Son Doong Cave", "Nha Ke Bang", "Dong Hoi", "Ho Chi Minh"],
     nights: 5,
     days: 6,
     categorySlug: "rock-cut-caves-and-temples",
   },
   {
-    name: "Cappadocia",
-    slug: "cappadocia",
-    country: "Turkey",
-    itinerary: ["Göreme", "underground cities", "cave churches"],
+    name: "Sri Lanka",
+    slug: "sri-lanka",
+    itinerary: ["Sigiriya", "Dambulla", "Habarana", "Colombo"],
+    nights: 5,
+    days: 6,
+    categorySlug: "rock-cut-caves-and-temples",
+  },
+  {
+    name: "Egypt",
+    slug: "egypt",
+    itinerary: ["Luxor", "Abu Simbel", "Cairo"],
+    nights: 5,
+    days: 6,
+    categorySlug: "rock-cut-caves-and-temples",
+  },
+  {
+    name: "Turkey",
+    slug: "turkey",
+    itinerary: ["Istanbul", "Cappadocia"],
+    nights: 5,
+    days: 6,
+    categorySlug: "rock-cut-caves-and-temples",
+  },
+  {
+    name: "China",
+    slug: "china",
+    itinerary: ["Zhengzhou", "Shaolin Temple", "Longmen Grottos", "Beijing", "Shanghai"],
+    nights: 6,
+    days: 7,
+    categorySlug: "rock-cut-caves-and-temples",
+  },
+  {
+    name: "Karnataka",
+    slug: "karnataka",
+    country: "India",
+    itinerary: ["Hampi", "Badami", "Aihole"],
+    nights: 5,
+    days: 6,
+    categorySlug: "rock-cut-caves-and-temples",
+  },
+  {
+    name: "India",
+    slug: "india",
+    itinerary: ["Shirdi", "Ajanta", "Ellora"],
     nights: 4,
     days: 5,
+    categorySlug: "rock-cut-caves-and-temples",
+  },
+  {
+    name: "Tamil Nadu",
+    slug: "tamil-nadu",
+    country: "India",
+    itinerary: ["Mahabalipuram", "Sittanavasal", "Madurai", "Chennai"],
+    nights: 5,
+    days: 6,
     categorySlug: "rock-cut-caves-and-temples",
   },
 ];

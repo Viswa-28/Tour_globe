@@ -17,7 +17,7 @@ export function Commitments() {
         <Reveal className="flex-[0_1_280px]">
           <p className="eyebrow text-brown">Paramount importance</p>
           <h2 id="commitments-heading" className="h2 mt-4 text-ink">
-            What we hold <em className="text-brown">ourselves to</em>
+            Demand <em className="text-brown">Excellence</em>
           </h2>
         </Reveal>
 

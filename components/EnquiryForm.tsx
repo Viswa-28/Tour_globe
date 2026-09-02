@@ -376,9 +376,8 @@ export function EnquirySection() {
     >
       <div className="mx-auto max-w-4xl px-5 md:px-8">
         <Reveal>
-          <p className="eyebrow text-brown">Start a conversation</p>
-          <h2 id="enquire-heading" className="h2 mt-4 text-ink">
-            Tell us <em className="text-brown">why</em> you&apos;re travelling
+          <h2 id="enquire-heading" className="h2 text-ink">
+            Need a hand with your <em className="text-brown">holiday</em> plans
           </h2>
           <p className="body-copy mt-5">
             Share a few details and a counsellor will come back to you with a

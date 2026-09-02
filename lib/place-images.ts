@@ -424,110 +424,136 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
   },
 
   // ——————————————————————— History & Archeology ———————————————————————
-  "history-archeology/petra": {
+  // Re-keyed 2026-09-02 for the client's fresh place list (see lib/data.ts).
+  // The old egypt, istanbul-and-cappadocia and mohenjo-daro-and-taxila
+  // entries were dropped along with those places. The real Hampi photo
+  // moved to rock-cut-caves-and-temples/karnataka instead (Hampi is that
+  // programme's itinerary now, not a standalone place here).
+  "history-archeology/jordan": {
     src: `${D}/al-khazneh-petra-jordan.jpg`,
     alt: "Al-Khazneh, the rock-cut Treasury at Petra, Jordan",
     exact: true,
   },
-  "history-archeology/rome": {
+  "history-archeology/italy": {
     src: `${D}/roman-forum.png`,
     alt: "Ruined columns and paving in an ancient forum",
     exact: false,
     note: "AI placeholder. The Roman Forum is on this itinerary; frame is unverified.",
   },
-  "history-archeology/egypt": {
-    src: `${D}/pyramids-sphinx-giza-egypt.jpg`,
-    alt: "The Great Sphinx with the pyramids of Giza behind it, Egypt",
-    exact: true,
-  },
-  "history-archeology/athens-and-delphi": {
+  "history-archeology/greece": {
     src: `${D}/acropolis-athens.png`,
     alt: "A classical temple on a rocky hill above a city",
     exact: false,
     note: "AI placeholder. Acropolis is on this itinerary; frame is unverified.",
   },
-  "history-archeology/istanbul-and-cappadocia": {
-    src: `${D}/ephesus-library-celsus.png`,
-    alt: "The two-storey facade of an ancient library",
-    exact: false,
-    note: "AI placeholder. Ephesus is on this itinerary; building ID is unverified.",
-  },
-  "history-archeology/angkor": {
+  "history-archeology/cambodia": {
     src: `${D}/angkor-wat-siem-reap-cambodia.jpg`,
     alt: "Angkor Wat reflected in its moat at sunrise, Cambodia",
     exact: true,
   },
-  "history-archeology/machu-picchu": {
+  "history-archeology/peru": {
     src: `${D}/machu-picchu.png`,
     alt: "Stone terraces on a mountain ridge above cloud forest",
     exact: false,
     note: "AI placeholder. Machu Picchu is the programme; frame is unverified.",
   },
-  "history-archeology/hampi": {
-    src: `${D}/vittala-temple-hampi-india.jpg`,
-    alt: "The Vittala temple complex at Hampi, India",
+  // Added 2026-09-02, outside the original 45-frame AI set — these read as
+  // genuine photography, not AI-generated. TODO(client): confirm source and
+  // licence before launch (claude.md requires imageSource/imageLicence on
+  // every image; unlike the 45-frame set above, these have neither yet).
+  "history-archeology/morocco": {
+    // Filed by the client as "roman-ruins.png", but this is Volubilis, not
+    // Italy — the arch and column row match Volubilis specifically, and
+    // Morocco's itinerary leads with it. Renamed on move, not reassigned
+    // arbitrarily.
+    src: `${D}/volubilis-ruins-morocco.png`,
+    alt: "The Arch of Caracalla and a row of Corinthian columns at Volubilis, Morocco",
     exact: true,
   },
-  "history-archeology/mohenjo-daro-and-taxila": {
-    src: `${D}/mohenjo-daro.png`,
-    alt: "Sun-baked brick ruins of an excavated city",
-    exact: false,
-    note: "AI placeholder. Indus Valley ruins; site ID is unverified.",
+  "history-archeology/united-kingdom": {
+    src: `${D}/stonehenge.png`,
+    alt: "Stonehenge at sunset",
+    exact: true,
+  },
+  "history-archeology/scotland": {
+    src: `${D}/edinburgh-castle.png`,
+    alt: "Edinburgh Castle on its hill above the city at golden hour",
+    exact: true,
+  },
+  "history-archeology/india": {
+    src: `${D}/taj-mahal.png`,
+    alt: "The Taj Mahal reflected in its pool, Agra",
+    exact: true,
   },
 
   // ——————————————————————— Rock-cut and Caves ———————————————————————
-  "rock-cut-caves-and-temples/ajanta-and-ellora": {
+  // Re-keyed 2026-09-02 for the client's fresh place list (see lib/data.ts).
+  // The old elephanta-caves entry was dropped along with that place; its
+  // frame went unused with it rather than being force-fit elsewhere.
+  "rock-cut-caves-and-temples/india": {
     src: `${D}/ellora-kailasa-temple.png`,
     alt: "A temple carved down into living rock",
     exact: false,
     note: "AI placeholder. Ellora is on this route; the frame is unverified.",
   },
-  "rock-cut-caves-and-temples/elephanta-caves": {
-    src: `${D}/elephanta-caves-trimurti.png`,
-    alt: "A three-headed stone sculpture in a rock-cut cave",
-    exact: false,
-    note: "AI placeholder. Elephanta is the programme; the relief is unverified.",
-  },
-  "rock-cut-caves-and-temples/mahabalipuram": {
+  "rock-cut-caves-and-temples/tamil-nadu": {
     src: `${D}/ajanta-caves-buddha.png`,
     alt: "A seated Buddha carved in a cave sanctuary",
     exact: false,
     note: "AI placeholder. Frame is a cave Buddha, not Mahabalipuram shore temples.",
   },
-  "rock-cut-caves-and-temples/badami": {
-    src: `${D}/ellora-caves-entrance.png`,
-    alt: "The pillared entrance of a rock-cut cave",
-    exact: false,
-    note: "AI placeholder. Cave-temple entrance; not a verified Badami frame.",
+  // Real photo, moved 2026-09-02 from history-archeology/hampi — Hampi
+  // leads this programme's itinerary now rather than standing alone.
+  "rock-cut-caves-and-temples/karnataka": {
+    src: `${D}/vittala-temple-hampi-india.jpg`,
+    alt: "The Vittala temple complex at Hampi, India",
+    exact: true,
   },
-  "rock-cut-caves-and-temples/dambulla": {
+  "rock-cut-caves-and-temples/sri-lanka": {
     src: `${D}/ajanta-painted-cave.png`,
     alt: "Painted figures on the walls of a cave shrine",
     exact: false,
     note: "AI placeholder. Painted cave subject fits Dambulla; site is unverified.",
   },
-  "rock-cut-caves-and-temples/petra": {
+  "rock-cut-caves-and-temples/jordan": {
     src: `${D}/al-khazneh-petra-jordan.jpg`,
     alt: "Al-Khazneh, the rock-cut Treasury at Petra, Jordan",
     exact: true,
   },
-  "rock-cut-caves-and-temples/abu-simbel-and-luxor": {
+  "rock-cut-caves-and-temples/egypt": {
     src: `${D}/abu-simbel.png`,
     alt: "Colossal seated figures cut into a cliff face",
     exact: false,
     note: "AI placeholder. Abu Simbel is on this route; frame is unverified.",
   },
-  "rock-cut-caves-and-temples/longmen-grottoes": {
+  "rock-cut-caves-and-temples/china": {
     src: `${D}/longmen-grottoes-buddha.png`,
     alt: "A monumental Buddha carved into a cliff",
     exact: false,
     note: "AI placeholder. Longmen is the programme; frame is unverified.",
   },
-  "rock-cut-caves-and-temples/cappadocia": {
+  "rock-cut-caves-and-temples/turkey": {
     src: `${D}/cappadocia-cave-dwellings.png`,
     alt: "Cave dwellings cut into pale volcanic cones",
     exact: false,
     note: "AI placeholder. Cappadocia cave dwellings; village is unnamed.",
+  },
+  // Added 2026-09-02, outside the original 45-frame AI set — reads as
+  // genuine photography, not AI-generated. TODO(client): confirm source and
+  // licence before launch (claude.md requires imageSource/imageLicence on
+  // every image).
+  //
+  // FLAGGED, kept at the client's explicit choice: this frame shows a
+  // carved Buddhist cave temple (multiple shrine levels, guardian lions, a
+  // seated Buddha) — visually Ajanta/Ellora-style India, not Vietnam or
+  // Son Doong Cave (a natural cavern with no carved architecture). A
+  // correct Ha Long Bay alternative was tried and reverted in favor of
+  // this one.
+  "rock-cut-caves-and-temples/vietnam": {
+    src: `${D}/ajanta-cave-temple-buddha.png`,
+    alt: "A carved Buddhist cave temple with a seated Buddha and guardian lion statues",
+    exact: false,
+    note: "Client-chosen frame. Depicts an Ajanta/Ellora-style Indian cave temple, not verifiably Vietnam.",
   },
 };
 

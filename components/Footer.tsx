@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EmailLink } from "@/components/EmailLink";
-import { COMPANY, WHATSAPP_URL } from "@/lib/site";
+import { COMPANY } from "@/lib/site";
 
 /**
  * Footer, following the export's three-column layout.
@@ -56,16 +56,6 @@ export function Footer() {
                   email={COMPANY.email}
                   className="text-gold-link underline-offset-4 hover:underline"
                 />
-              </li>
-              <li>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener"
-                  className="text-gold-link underline-offset-4 hover:underline"
-                >
-                  Chat on WhatsApp
-                </a>
               </li>
             </ul>
           </div>
