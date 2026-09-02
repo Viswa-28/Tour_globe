@@ -60,11 +60,10 @@ export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${enco
 )}`;
 
 /**
- * Names are verified (export + claude.md). URLs are inferred from the two
- * names that are domains; Zerospacekreativ has none.
- * TODO(client): confirm all three URLs.
+ * Tourindias.com URL inferred from its name. Vayoaura.com URL confirmed by
+ * the client directly: https://vayoaura.com/
  */
 export const CO_BRANDS = [
   { name: "Tourindias.com", url: "https://www.tourindias.com" },
-  { name: "Vayoura.com", url: "https://www.vayoura.com" },
+  { name: "Vayoaura.com", url: "https://vayoaura.com/" },
 ] as const;

@@ -37,7 +37,7 @@ export function CoBrands() {
                   href={b.url}
                   target="_blank"
                   rel="noopener"
-                  className="group inline-flex items-center gap-2 font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.4vw,30px)] italic leading-tight text-cream/90 transition-colors hover:text-cream focus-visible:text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
+                  className="group inline-flex items-center gap-2 font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.4vw,30px)] font-semibold leading-tight text-cream/90 transition-colors hover:text-cream focus-visible:text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
                 >
                   {b.name}
                   <span

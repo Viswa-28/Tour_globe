@@ -108,7 +108,7 @@ export default async function PlacePage({ params }: Props) {
             {p.country && (
               <p className="eyebrow mt-8 text-gold">{p.country}</p>
             )}
-            <h1 className="mt-4 font-[family-name:var(--font-fraunces)] text-[clamp(44px,6vw,84px)] font-light leading-[1.0] tracking-[-0.02em]">
+            <h1 className="mt-4 font-[family-name:var(--font-fraunces)] text-[clamp(44px,6vw,84px)] font-semibold leading-[1.0] tracking-[-0.02em]">
               <em className="text-gold">{p.name}</em>
             </h1>
             <p className="mt-5 text-lg text-on-navy-mut">{duration}</p>

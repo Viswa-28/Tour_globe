@@ -62,7 +62,7 @@ export function PlaceCard({
         )}
 
         <h3
-          className={`font-[family-name:var(--font-fraunces)] text-[34px] font-light leading-[1.06] tracking-[-0.01em] ${
+          className={`font-[family-name:var(--font-fraunces)] text-[34px] font-semibold leading-[1.06] tracking-[-0.01em] ${
             invert ? "text-on-navy" : "text-ink"
           }`}
         >

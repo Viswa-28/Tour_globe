@@ -114,16 +114,18 @@ Instrument Sans, Fraunces, Archivo — several at full weight ranges. That is
 roughly half a megabyte of fonts. Ship two.
 
 ```
-Display   Fraunces      weights 300, 500 + italic 500
-Body      Archivo       weights 400, 600
+Display   Bricolage Grotesque   weights 400, 600 + italic 600
+Body      Archivo               weights 400, 600
 ```
 
 Load with `next/font/google`, `subsets: ['latin']`, `display: 'swap'`.
 **Delete Montserrat, Poppins, Instrument Serif and Instrument Sans.**
 
-Fraunces is chosen because the design depends on a true italic accent —
-`<em>` in the second half of every heading, in `--gold` on navy or `--brown`
-on cream. Never browser-slanted roman.
+Display face changed from Fraunces to Bricolage Grotesque on 2026-09-02 —
+client asked for a more modern, less-serif title treatment. The italic
+accent requirement carries over unchanged: `<em>` in the second half of
+every heading, in `--gold` on navy or `--brown` on cream, using Bricolage's
+own italic axis. Never browser-slanted roman.
 
 Scale, carried over from the export:
 
@@ -143,15 +145,15 @@ Scale, carried over from the export:
 | 3 | Aspiration & focus | sand | 11 travel themes + "& much more" |
 | 4 | What we handle | navy | 8 services |
 | 5 | Paramount importance | sand-deep | 7 commitments |
-| 6 | Co-brands | brown | Three sister brands |
+| 6 | Co-brands | brown | Two sister brands |
 | 7 | Footer | navy | Logo, contact, address |
 
 One `<h1>` (hero). Every other section needs an `<h2>` — several are missing
 one in the export.
 
 **Category pages:** `/product/[category]` following `Cultural Tourism.dc.html`
-— sand-deep ground, cream cards with country eyebrow, place name in Fraunces
-italic, region list, nights/days footer.
+— sand-deep ground, cream cards with country eyebrow, place name in the
+display face's italic, region list, nights/days footer.
 
 ---
 
@@ -326,7 +328,7 @@ Use only these.
   Nagamalaipudukottai, Madurai, Tamil Nadu 625 019
 - +91 95000 78189 · +91 93334 93333 · info@tourglobe.in · www.tourglobe.in
 - Tagline in the export: "Buenas Memorias" — **confirm this is intentional**
-- Co-brands: Tourindias.com, Vayoura.com
+- Co-brands: Tourindias.com, Vayoaura.com (https://vayoaura.com/)
 - Services: Tours — Outbound, Incoming, Domestic; MICE; Events; Vehicle
   Rentals; Destination Weddings; Concept Holidays
 - 11 themes as listed in Aspiration & Focus, plus "& much more"

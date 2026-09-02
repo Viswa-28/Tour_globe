@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Fraunces, Archivo } from "next/font/google";
+import { Bricolage_Grotesque, Archivo } from "next/font/google";
 import "./globals.css";
-import { COMPANY, SITE_URL } from "@/lib/site";
+import { CO_BRANDS, COMPANY, SITE_URL } from "@/lib/site";
 import { MotionProvider } from "@/components/MotionProvider";
 import { LenisProvider } from "@/components/LenisProvider";
 
-const fraunces = Fraunces({
+// Client-requested swap from Fraunces (2026-09-02): a modern grotesque sans
+// in place of the serif display face. Keeps the --font-fraunces variable
+// name — renaming it would touch the eight files that reference it for no
+// functional gain.
+const fraunces = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["300", "500"],
-  style: ["normal", "italic"],
+  weight: ["400", "600"],
   display: "swap",
   variable: "--font-fraunces",
 });
@@ -64,7 +67,10 @@ const travelAgencyJsonLd = {
     latitude: COMPANY.geo.lat,
     longitude: COMPANY.geo.lng,
   },
-  sameAs: ["https://www.tourindias.com", "https://www.pathfinders.in"],
+  // Derived from CO_BRANDS so this can't drift when a co-brand is added or
+  // removed there (it previously still listed a co-brand dropped from that
+  // list).
+  sameAs: CO_BRANDS.map((b) => b.url),
 };
 
 export default function RootLayout({

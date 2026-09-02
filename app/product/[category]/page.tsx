@@ -98,7 +98,7 @@ export default async function CategoryPage({ params }: Props) {
                   </li>
                 </ol>
               </nav>
-              <h1 className="mt-5 font-[family-name:var(--font-fraunces)] text-[clamp(38px,4.6vw,66px)] font-light leading-[1.02] tracking-[-0.02em] text-navy">
+              <h1 className="mt-5 font-[family-name:var(--font-fraunces)] text-[clamp(38px,4.6vw,66px)] font-semibold leading-[1.02] tracking-[-0.02em] text-navy">
                 {lead && `${lead} `}
                 <em className="text-brown">{tail}</em>
               </h1>
