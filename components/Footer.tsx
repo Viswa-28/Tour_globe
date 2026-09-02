@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { EmailLink } from "@/components/EmailLink";
 import { COMPANY, WHATSAPP_URL } from "@/lib/site";
 
 /**
@@ -51,12 +52,10 @@ export function Footer() {
                 </li>
               ))}
               <li>
-                <a
-                  href={`mailto:${COMPANY.email}`}
+                <EmailLink
+                  email={COMPANY.email}
                   className="text-gold-link underline-offset-4 hover:underline"
-                >
-                  {COMPANY.email}
-                </a>
+                />
               </li>
               <li>
                 <a

@@ -56,9 +56,14 @@ export function Services() {
                     href="/#enquire"
                     className="group flex items-center justify-between gap-6 border-b border-on-navy/15 py-7 transition-colors hover:border-gold"
                   >
-                    <span className="font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.2vw,30px)] font-semibold leading-tight transition-transform duration-300 group-hover:translate-x-2 motion-reduce:group-hover:translate-x-0">
-                      {s.name}
-                      <span className="sr-only"> — enquire</span>
+                    <span className="flex flex-col gap-1 transition-transform duration-300 group-hover:translate-x-2 motion-reduce:group-hover:translate-x-0">
+                      <span className="font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.2vw,30px)] font-semibold leading-tight">
+                        {s.name}
+                        <span className="sr-only"> — enquire</span>
+                      </span>
+                      {s.expansion && (
+                        <span className="text-sm text-on-navy-mut">{s.expansion}</span>
+                      )}
                     </span>
                     <span
                       aria-hidden="true"

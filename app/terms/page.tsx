@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EmailLink } from "@/components/EmailLink";
 import { LegalPage, Pending } from "@/components/LegalPage";
 import { COMPANY, SITE_URL } from "@/lib/site";
 
@@ -171,7 +172,7 @@ export default function TermsPage() {
         <br />
         {COMPANY.phones.join(" · ")}
         <br />
-        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+        <EmailLink email={COMPANY.email} />
       </p>
     </LegalPage>
   );

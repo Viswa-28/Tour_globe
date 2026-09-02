@@ -62,8 +62,11 @@ export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${enco
 /**
  * Tourindias.com URL inferred from its name. Vayoaura.com URL confirmed by
  * the client directly: https://vayoaura.com/
+ * "Rajasthan Specialist" is a specialization credential, not a linked site —
+ * TODO(client): confirm wording and whether it should link anywhere.
  */
 export const CO_BRANDS = [
   { name: "Tourindias.com", url: "https://www.tourindias.com" },
   { name: "Vayoaura.com", url: "https://vayoaura.com/" },
+  { name: "Rajasthan Specialist", url: "" },
 ] as const;

@@ -6,12 +6,15 @@
  * FACT STATUS
  * - CATEGORIES, SERVICES, COMMITMENTS: verbatim from the client's design
  *   export (`Tourglobe Hero.dc.html`). Do not reword.
- * - PLACES: verbatim from the client's product catalogue (2026-08-22).
- *   Destination, country, itinerary stops and duration are exactly as
- *   supplied. No descriptions have been written for them — the client has
- *   not supplied any, and claude.md forbids inventing them.
+ * - PLACES: verbatim from the client's product catalogue (2026-08-22; the
+ *   Wellness & Yoga set was replaced wholesale with a fresher client list on
+ *   2026-09-02 — see the comment at that section). Destination, country,
+ *   itinerary stops and duration are exactly as supplied. No descriptions
+ *   have been written for them — the client has not supplied any, and
+ *   claude.md forbids inventing them.
  * - Client spellings preserved deliberately: "Archeology", "Angkor Watt",
- *   "Katmandu", "Gold coast", "Siesta beach". Flagged, not corrected.
+ *   "Katmandu", "Gold coast", "Siesta beach", "Thimpu". Flagged, not
+ *   corrected.
  * - `descriptor` / `intro` on each category are OUR copy, written only
  *   because the category pages need an intro line. TODO(client).
  */
@@ -62,6 +65,8 @@ export const DESTINATION_IMAGE_PROVENANCE = {
 export type Service = {
   name: string;
   order: number;
+  /** Spelled-out form shown alongside an acronym the visitor may not know. */
+  expansion?: string;
 };
 
 /** "05 Nights / 06 Days" — the format claude.md specifies. */
@@ -169,7 +174,11 @@ export const SERVICES: Service[] = [
   { name: "Tours — Outbound", order: 1 },
   { name: "Tours — Incoming", order: 2 },
   { name: "Tours — Domestic", order: 3 },
-  { name: "MICE", order: 4 },
+  {
+    name: "MICE",
+    order: 4,
+    expansion: "Meetings, Incentives, Conferences & Events",
+  },
   { name: "Events", order: 5 },
   { name: "Vehicle Rentals", order: 6 },
   { name: "Destination Weddings", order: 7 },
@@ -696,21 +705,22 @@ export const PLACES: Place[] = [
     categorySlug: "culinary-hotspots",
   },
 
-  // ——— Wellness & Yoga (2026-08-31) ———
+  // ——— Wellness & Yoga (client's full list supplied 2026-09-02, replacing
+  // the previous 2026-08-31 set entirely) ———
   {
     name: "Rishikesh",
     slug: "rishikesh",
     country: "India",
-    itinerary: ["Yoga", "Ganga", "Himalayan retreat"],
+    itinerary: ["Yoga", "Himalayan retreat"],
     nights: 4,
     days: 5,
     categorySlug: "wellness-yoga",
   },
   {
-    name: "Bali",
-    slug: "bali",
-    country: "Indonesia",
-    itinerary: ["Ubud", "wellness retreats", "meditation"],
+    name: "Ngari Purang",
+    slug: "ngari-purang",
+    country: "Tibet",
+    itinerary: ["Lake Manasarovar", "Thirthapuri", "Mt. Kailash"],
     nights: 5,
     days: 6,
     categorySlug: "wellness-yoga",
@@ -719,33 +729,35 @@ export const PLACES: Place[] = [
     name: "Kerala",
     slug: "kerala",
     country: "India",
-    itinerary: ["Ayurveda", "backwaters", "holistic wellness"],
+    itinerary: ["Kovalam", "Trivandrum"],
+    nights: 4,
+    days: 5,
+    categorySlug: "wellness-yoga",
+  },
+  {
+    // Client listed one Indonesia programme covering both stops, not two
+    // separate Bali/Ubud entries as the previous set had.
+    name: "Indonesia",
+    slug: "indonesia",
+    itinerary: ["Ubud", "Bali"],
     nights: 5,
     days: 6,
     categorySlug: "wellness-yoga",
   },
   {
-    name: "Ubud",
-    slug: "ubud",
-    country: "Indonesia",
-    itinerary: ["Yoga", "meditation", "jungle retreats"],
-    nights: 4,
-    days: 5,
-    categorySlug: "wellness-yoga",
-  },
-  {
-    name: "Chiang Mai",
-    slug: "chiang-mai",
-    country: "Thailand",
-    itinerary: ["Meditation", "temples", "wellness retreats"],
-    nights: 4,
-    days: 5,
+    name: "Thailand",
+    slug: "thailand",
+    itinerary: ["Chiang Mai", "Chiang Rai"],
+    nights: 5,
+    days: 6,
     categorySlug: "wellness-yoga",
   },
   {
     name: "Bhutan",
+    // Client wrote "Thimpu" — preserved verbatim per this file's convention
+    // (see FACT STATUS above), not corrected to "Thimphu".
     slug: "bhutan",
-    itinerary: ["Thimphu", "Paro", "Himalayan mindfulness"],
+    itinerary: ["Paro", "Thimpu", "Punakha"],
     nights: 5,
     days: 6,
     categorySlug: "wellness-yoga",
@@ -753,27 +765,25 @@ export const PLACES: Place[] = [
   {
     name: "Sri Lanka",
     slug: "sri-lanka",
-    itinerary: ["Kandy", "Ayurveda", "coastal wellness"],
+    itinerary: ["Bentota", "Kandy", "Colombo"],
+    nights: 6,
+    days: 7,
+    categorySlug: "wellness-yoga",
+  },
+  {
+    name: "Czech Republic",
+    slug: "czech-republic",
+    itinerary: ["Karlovy Vary", "Prague"],
     nights: 5,
     days: 6,
     categorySlug: "wellness-yoga",
   },
   {
-    name: "Pokhara",
-    slug: "pokhara",
-    country: "Nepal",
-    itinerary: ["Yoga", "meditation", "Himalayan landscapes"],
-    nights: 4,
-    days: 5,
-    categorySlug: "wellness-yoga",
-  },
-  {
-    name: "Sedona",
-    slug: "sedona",
-    country: "USA",
-    itinerary: ["Red rocks", "meditation", "wellness retreats"],
-    nights: 4,
-    days: 5,
+    name: "Jordan",
+    slug: "jordan",
+    itinerary: ["Petra", "Wadi Rum", "Aqaba", "Hammamat Ma'in", "Amman"],
+    nights: 5,
+    days: 6,
     categorySlug: "wellness-yoga",
   },
 

@@ -364,25 +364,24 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
     exact: false,
     note: "AI placeholder. Ganga is on this itinerary; the ghats are unnamed.",
   },
-  "wellness-yoga/bali": {
-    src: `${D}/balinese-temple-meditation.png`,
-    alt: "Meditation on stone steps at a temple gate",
-    exact: false,
-    note: "AI placeholder. Bali temple setting; the sanctuary is unnamed.",
-  },
   "wellness-yoga/kerala": {
     src: `${D}/kerala-backwaters-yoga.png`,
     alt: "Yoga on a houseboat deck among palms",
     exact: false,
     note: "AI placeholder. Kerala backwaters fit the programme; location unnamed.",
   },
-  "wellness-yoga/ubud": {
-    src: `${D}/bali-jungle-yoga.png`,
-    alt: "Yoga in a forest clearing",
+  // Re-keyed from the old wellness-yoga/bali entry (2026-09-02): Bali and
+  // Ubud are now one "Indonesia" programme, so this frame moved with it
+  // rather than being dropped.
+  "wellness-yoga/indonesia": {
+    src: `${D}/balinese-temple-meditation.png`,
+    alt: "Meditation on stone steps at a temple gate",
     exact: false,
-    note: "AI placeholder. Jungle retreats are on this itinerary; site unnamed.",
+    note: "AI placeholder. Bali temple setting; the sanctuary is unnamed.",
   },
-  "wellness-yoga/chiang-mai": {
+  // Re-keyed from the old wellness-yoga/chiang-mai entry (2026-09-02): that
+  // programme is now "Thailand" (Chiang Mai & Chiang Rai).
+  "wellness-yoga/thailand": {
     src: `${D}/infinity-pool-yoga.png`,
     alt: "A yoga pose at the edge of a pool",
     exact: false,
@@ -400,16 +399,24 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
     exact: false,
     note: "AI placeholder. Ayurveda is on this itinerary; clinic is unnamed.",
   },
-  "wellness-yoga/pokhara": {
-    src: `${D}/phewa-lake-pokhara-nepal.jpg`,
-    alt: "Wooden boats on Phewa Lake below the Annapurna range, Nepal",
+  // Added 2026-09-02, outside the original 45-frame AI set — these read as
+  // genuine photography, not AI-generated. TODO(client): confirm source and
+  // licence before launch (claude.md requires imageSource/imageLicence on
+  // every image; unlike the 45-frame set above, these have neither yet).
+  "wellness-yoga/ngari-purang": {
+    src: `${D}/kailash-lake-monk.png`,
+    alt: "A monk meditating beside a lake facing snow-capped Mt. Kailash",
     exact: true,
   },
-  "wellness-yoga/sedona": {
-    src: `${D}/sedona-red-rock-meditation.png`,
-    alt: "Meditation facing red rock cliffs",
-    exact: false,
-    note: "AI placeholder. Red rocks are on this itinerary; the viewpoint is unnamed.",
+  "wellness-yoga/czech-republic": {
+    src: `${D}/prague-yoga.png`,
+    alt: "A woman in a seated yoga pose overlooking Prague and the Vltava river",
+    exact: true,
+  },
+  "wellness-yoga/jordan": {
+    src: `${D}/petra-treasury.png`,
+    alt: "A person seated in meditation facing the Treasury at Petra",
+    exact: true,
   },
 
   // ——————————————————————— History & Archeology ———————————————————————

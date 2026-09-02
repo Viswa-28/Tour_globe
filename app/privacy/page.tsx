@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EmailLink } from "@/components/EmailLink";
 import { LegalPage, Pending } from "@/components/LegalPage";
 import { COMPANY, SITE_URL } from "@/lib/site";
 
@@ -115,7 +116,7 @@ export default function PrivacyPolicyPage() {
             "v=spf1 include:zohomail.com ~all". */}
         <li>
           <strong>Zoho Mail</strong> — hosts the{" "}
-          <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> mailbox where
+          <EmailLink email={COMPANY.email} /> mailbox where
           enquiries arrive.
         </li>
       </ul>
@@ -147,7 +148,7 @@ export default function PrivacyPolicyPage() {
       </ul>
       <p>
         To make any of these requests, email{" "}
-        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> or write to us
+        <EmailLink email={COMPANY.email} /> or write to us
         at the address below. We will respond within a reasonable period.
       </p>
       <p>
@@ -183,7 +184,7 @@ export default function PrivacyPolicyPage() {
         </li>
         <li>
           <strong>Email:</strong>{" "}
-          <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+          <EmailLink email={COMPANY.email} />
         </li>
         <li>
           <strong>Address:</strong> {COMPANY.address.street},{" "}
@@ -209,7 +210,7 @@ export default function PrivacyPolicyPage() {
         <br />
         {COMPANY.phones.join(" · ")}
         <br />
-        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+        <EmailLink email={COMPANY.email} />
       </p>
     </LegalPage>
   );

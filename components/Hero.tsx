@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Marquee } from "@/components/Marquee";
-import { COMPANY } from "@/lib/site";
 
 /**
  * Hero — the only load animation on the site: the eyebrow fades, the two
@@ -96,12 +95,6 @@ export function Hero() {
           >
             Plan my journey
           </Link>
-          <a
-            href={`mailto:${COMPANY.email}`}
-            className="rounded-full border border-on-navy-mut px-7 py-3 font-semibold text-on-navy transition-colors hover:border-on-navy"
-          >
-            {COMPANY.email}
-          </a>
         </div>
       </div>
 

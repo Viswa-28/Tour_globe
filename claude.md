@@ -145,7 +145,7 @@ Scale, carried over from the export:
 | 3 | Aspiration & focus | sand | 11 travel themes + "& much more" |
 | 4 | What we handle | navy | 8 services |
 | 5 | Paramount importance | sand-deep | 7 commitments |
-| 6 | Co-brands | brown | Two sister brands |
+| 6 | Our brands | brown | Two sister sites + one specialization credential |
 | 7 | Footer | navy | Logo, contact, address |
 
 One `<h1>` (hero). Every other section needs an `<h2>` — several are missing
@@ -173,9 +173,10 @@ The export is a design comp, not production code. Do not copy it verbatim.
 - Remove the `01`–`11` and `01`–`08` numbering. The order carries no meaning,
   so numbering is decoration and it clutters the grid.
 - Raw client copy is still live: "mavens," "incompatible theory of ours,"
-  "even-minded people," "agonizing ourselves towards price determinants,"
-  "All smiles to our financiers." Replace with the approved rewrite.
-- "even-minded" is a typo for "like-minded"
+  "agonizing ourselves towards price determinants," "All smiles to our
+  financiers." Replace with the approved rewrite.
+- "even-minded people" (a typo for "like-minded") was in the Co-brands
+  section; removed 2026-09-02 rather than corrected, at the client's request.
 - "Archeology" → "Archaeology"
 - `© 2026` is hardcoded — make it dynamic
 - "Astrology & Natural Science" — proposed rename to "Astronomy & Sacred
@@ -328,7 +329,9 @@ Use only these.
   Nagamalaipudukottai, Madurai, Tamil Nadu 625 019
 - +91 95000 78189 · +91 93334 93333 · info@tourglobe.in · www.tourglobe.in
 - Tagline in the export: "Buenas Memorias" — **confirm this is intentional**
-- Co-brands: Tourindias.com, Vayoaura.com (https://vayoaura.com/)
+- Brands: Tourindias.com, Vayoaura.com (https://vayoaura.com/), and
+  "Rajasthan Specialist" — a specialization credential, not a linked site.
+  TODO(client): confirm exact wording and whether it should link anywhere.
 - Services: Tours — Outbound, Incoming, Domestic; MICE; Events; Vehicle
   Rentals; Destination Weddings; Concept Holidays
 - 11 themes as listed in Aspiration & Focus, plus "& much more"
