@@ -23,7 +23,8 @@ export function Themes() {
         <Reveal>
           <p className="eyebrow text-brown">Aspiration &amp; focus</p>
           <h2 id="themes-heading" className="h2 mt-4 max-w-3xl text-ink">
-            Counselling, consulting, <em className="text-brown">curating</em>
+            Counselling, consulting,{" "}
+            <em className="text-brown">holiday ideas emerge here</em>
           </h2>
         </Reveal>
 

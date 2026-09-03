@@ -2,9 +2,11 @@ import { COMMITMENTS } from "@/lib/data";
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Section 5 — Paramount importance. Sand-deep ground, the export's seven
- * commitments, verbatim. Eyebrow and bullets use --gold-ink rather than
- * --gold: gold is a dark-ground colour only (claude.md non-negotiable #2).
+ * Section 5 — Demand Excellence (formerly "Paramount importance"; the
+ * eyebrow was dropped 2026-09-02). Sand-deep ground, the client's eight
+ * commitments — the export's original seven plus one added 2026-09-02.
+ * Bullets use --gold-ink rather than --gold: gold is a dark-ground colour
+ * only (claude.md non-negotiable #2).
  */
 export function Commitments() {
   return (
@@ -15,8 +17,7 @@ export function Commitments() {
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-start gap-x-16 gap-y-10 px-5 md:px-8">
         <Reveal className="flex-[0_1_280px]">
-          <p className="eyebrow text-brown">Paramount importance</p>
-          <h2 id="commitments-heading" className="h2 mt-4 text-ink">
+          <h2 id="commitments-heading" className="h2 text-ink">
             Demand <em className="text-brown">Excellence</em>
           </h2>
         </Reveal>

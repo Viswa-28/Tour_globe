@@ -144,7 +144,7 @@ Scale, carried over from the export:
 | 2 | Behind this globe | navy + `tent.png` | Cream card overlaps the image, `margin-top: -9vw` |
 | 3 | Aspiration & focus | sand | 11 travel themes + "& much more" |
 | 4 | What we handle | navy | 8 services |
-| 5 | Paramount importance | sand-deep | 7 commitments |
+| 5 | Demand Excellence | sand-deep | 8 commitments |
 | 6 | Our brands | brown | Two sister sites + one specialization credential |
 | 7 | Footer | navy | Logo, contact, address |
 

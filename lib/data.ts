@@ -5,7 +5,8 @@
  *
  * FACT STATUS
  * - CATEGORIES, SERVICES, COMMITMENTS: verbatim from the client's design
- *   export (`Tourglobe Hero.dc.html`). Do not reword.
+ *   export (`Tourglobe Hero.dc.html`). Do not reword. COMMITMENTS gained an
+ *   eighth, client-supplied entry on 2026-09-02, not from that export.
  * - PLACES: verbatim from the client's product catalogue (2026-08-22; the
  *   Wellness & Yoga, Culinary Hotspots, Rock-cut and Caves, and History &
  *   Archeology sets were each replaced wholesale with a fresher client list
@@ -196,6 +197,8 @@ export const COMMITMENTS: string[] = [
   "Standout branding",
   "Memories to our passengers & guests",
   "All smiles to our financiers, board & partners",
+  // Added 2026-09-02, client-supplied — not part of the original export.
+  "We value human connection more than AI",
 ];
 
 /**
