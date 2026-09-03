@@ -545,17 +545,15 @@ export const PLACE_IMAGES: Record<string, PlaceImage> = {
   // licence before launch (claude.md requires imageSource/imageLicence on
   // every image).
   //
-  // FLAGGED, kept at the client's explicit choice: this frame shows a
-  // carved Buddhist cave temple (multiple shrine levels, guardian lions, a
-  // seated Buddha) — visually Ajanta/Ellora-style India, not Vietnam or
-  // Son Doong Cave (a natural cavern with no carved architecture). A
-  // correct Ha Long Bay alternative was tried and reverted in favor of
-  // this one.
+  // Third attempt for this card (2026-09-03) — this one is a genuine match:
+  // the doline skylight, jungle growing inside, and reflective cave floor
+  // are Son Doong Cave's own distinctive character. Two earlier frames (an
+  // Ajanta/Ellora-style Indian cave temple, then Ha Long Bay) were tried and
+  // replaced for not actually depicting Vietnam's Son Doong itinerary.
   "rock-cut-caves-and-temples/vietnam": {
-    src: `${D}/ajanta-cave-temple-buddha.png`,
-    alt: "A carved Buddhist cave temple with a seated Buddha and guardian lion statues",
-    exact: false,
-    note: "Client-chosen frame. Depicts an Ajanta/Ellora-style Indian cave temple, not verifiably Vietnam.",
+    src: `${D}/son-doong-cave-vietnam.jpg`,
+    alt: "Sunlight falling through a collapsed doline into Son Doong Cave, Vietnam, with jungle growing inside and the cave floor reflecting the opening above",
+    exact: true,
   },
 };
 
