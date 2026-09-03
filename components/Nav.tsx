@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { SiteSearch } from "@/components/SiteSearch";
 
 /**
- * Header — logo plus a single CTA, as in the export.
+ * Header — logo, search, and a single CTA, as in the export.
  *
  * NOTE: claude.md non-negotiable #5 says "Nav must exist", treating the
  * export's lack of navigation as a defect to fix. The client asked for the
  * links removed (2026-08-22), so the export wins here. Wayfinding is carried
  * by the logo (→ home), the hero CTAs, the theme tiles, the breadcrumbs on
- * /product pages, and the footer.
+ * /product pages, and the footer. SiteSearch (added 2026-09-03) is a utility
+ * control, not a link list, so it doesn't reopen that decision.
  *
  * Motion pattern 4 — nav background opacity on scroll, done as a CSS colour
  * transition rather than a JS animation.
@@ -55,12 +57,15 @@ export function Nav() {
           />
         </Link>
 
-        <Link
-          href="/#enquire"
-          className="whitespace-nowrap rounded-full bg-gold px-6 py-3 text-sm font-bold text-navy transition-colors hover:bg-gold-hover"
-        >
-          Enquire now
-        </Link>
+        <div className="flex items-center gap-2">
+          <SiteSearch />
+          <Link
+            href="/#enquire"
+            className="whitespace-nowrap rounded-full bg-gold px-6 py-3 text-sm font-bold text-navy transition-colors hover:bg-gold-hover"
+          >
+            Enquire now
+          </Link>
+        </div>
       </nav>
     </header>
   );

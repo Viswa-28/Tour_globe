@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Bricolage_Grotesque, Archivo } from "next/font/google";
 import "./globals.css";
 import { CO_BRANDS, COMPANY, SITE_URL } from "@/lib/site";
 import { MotionProvider } from "@/components/MotionProvider";
 import { LenisProvider } from "@/components/LenisProvider";
+import { BackToTop } from "@/components/BackToTop";
 
 // Client-requested swap from Fraunces (2026-09-02): a modern grotesque sans
 // in place of the serif display face. Keeps the --font-fraunces variable
@@ -90,10 +92,15 @@ export default function RootLayout({
         <LenisProvider>
           <MotionProvider>{children}</MotionProvider>
         </LenisProvider>
+        <BackToTop />
         {/* Real-user Core Web Vitals. Only reports on Vercel; inert locally.
             Gives us the LCP number claude.md's <2.5s-on-4G target needs,
             measured on real devices rather than this machine. */}
         <SpeedInsights />
+        {/* Page-view analytics. Cookie-less by design — matches the Privacy
+            Policy's "this website sets no cookies" claim. Only reports on
+            Vercel; inert locally. */}
+        <Analytics />
       </body>
     </html>
   );

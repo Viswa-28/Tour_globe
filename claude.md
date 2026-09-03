@@ -371,6 +371,7 @@ statistic or response time the client hasn't confirmed.
 - [ ] Every image has a recorded source and licence
 - [ ] `sitemap.xml` and `robots.txt` generated
 - [ ] Search Console verified, sitemap submitted
-- [ ] Analytics firing
+- [x] Analytics firing — @vercel/analytics wired in app/layout.tsx
+      (2026-09-03); confirm it's actually reporting once deployed to Vercel
 - [ ] Enquiry emails confirmed arriving in the client's real inbox
 - [ ] Founding year confirmed, or the claim removed
