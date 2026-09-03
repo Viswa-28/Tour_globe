@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
       lead="What we collect when you enquire, why we collect it, and what we do with it."
     >
       <p>
-        <strong>Last updated:</strong> <Pending>publication date</Pending>
+        <strong>Last updated:</strong> September 3, 2026
       </p>
 
       <p>

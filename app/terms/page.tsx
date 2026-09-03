@@ -30,7 +30,7 @@ export default function TermsPage() {
       lead="The basis on which we make this website and our enquiry service available to you."
     >
       <p>
-        <strong>Last updated:</strong> <Pending>publication date</Pending>
+        <strong>Last updated:</strong> September 3, 2026
       </p>
 
       <p>

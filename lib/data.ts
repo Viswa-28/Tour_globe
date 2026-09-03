@@ -48,20 +48,21 @@ export type Place = {
 
 /**
  * Provenance for every destination photograph currently in the repo.
- * claude.md makes recording this a legal requirement, and requires real
- * photography before launch.
+ * claude.md makes recording this a legal requirement. Client approved
+ * keeping AI-generated images for launch (2026-09-03) — real photography is
+ * no longer required before launch, but imageLicence below still needs the
+ * generation tool's usage-rights terms confirmed.
  *
  * Supplied by the client 2026-08-22 as five sets — cultural, beaches, hill
  * stations, wildlife and pilgrimage — 45 frames in total. Every README
  * states: 1024x683, AI-generated, upscaled 2x from ~500px source tiles, soft
  * above ~600px display width, place names describe what each frame
- * *resembles* rather than a verified location, and "replace with licensed or
- * client-owned photography before launch".
+ * *resembles* rather than a verified location.
  */
 export const DESTINATION_IMAGE_PROVENANCE = {
-  imageSource: "AI-generated placeholder set supplied by the client",
+  imageSource: "AI-generated set supplied by the client",
   imageLicence:
-    "TODO(client) — placeholder only. Replace with licensed or client-owned photography before launch.",
+    "TODO(client) — client approved keeping these images for launch (2026-09-03); still need the generation tool's usage-rights terms confirmed.",
   maxDisplayWidth: 600,
 } as const;
 

@@ -285,8 +285,10 @@ Images, or another company's site. Every image records `imageSource` and
 stock, Wikimedia Commons (licence checked per file), tourism board media
 libraries.
 
-The current hero images are AI-generated. Fine for build and client approval;
-replace with real photography before launch.
+The hero, About and destination images are AI-generated. **Client approved
+keeping AI-generated images for launch (2026-09-03)** — no longer a
+before-launch blocker. `imageSource`/`imageLicence` should still be recorded
+per the rule above (confirm the generation tool's usage-rights terms).
 
 ---
 
@@ -364,7 +366,8 @@ statistic or response time the client hasn't confirmed.
 ## Before launch
 
 - [ ] Privacy Policy and Terms live and linked
-- [ ] Real photography replacing AI placeholders
+- [x] ~~Real photography replacing AI placeholders~~ — client approved
+      keeping AI-generated images for launch (2026-09-03)
 - [ ] Every image has a recorded source and licence
 - [ ] `sitemap.xml` and `robots.txt` generated
 - [ ] Search Console verified, sitemap submitted

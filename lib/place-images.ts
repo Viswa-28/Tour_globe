@@ -3,10 +3,12 @@ import type { Place } from "./data";
 /**
  * Card artwork for every programme, in one place so the client can audit it.
  *
- * ALL 45 FRAMES ARE AI-GENERATED PLACEHOLDERS and must be replaced with
- * licensed or client-owned photography before launch. Each set's README
- * states that "place names describe what each frame resembles, not a
- * verified location", so alt text here follows one rule:
+ * The original 45 frames are AI-generated. Client approved keeping
+ * AI-generated images for launch (2026-09-03) — no longer a before-launch
+ * blocker, though imageSource/imageLicence still needs confirming (see
+ * DESTINATION_IMAGE_PROVENANCE in lib/data.ts). Each set's README states
+ * that "place names describe what each frame resembles, not a verified
+ * location", so alt text here follows one rule:
  *
  *   `exact: true`   the frame depicts a landmark that is genuinely on this
  *                   programme's route, so the alt text may name it.

@@ -20,8 +20,8 @@ import { Marquee } from "@/components/Marquee";
  *
  * Background: /public/images/hero.avif, re-encoded from the 1.9MB source PNG
  * (claude.md § Performance) and served through next/image.
- * TODO(client): image is AI-generated — replace with licensed photography
- * before launch, imageSource + imageLicence recorded.
+ * AI-generated — client approved keeping it for launch (2026-09-03).
+ * TODO(client): confirm imageSource/imageLicence for the generation tool.
  */
 
 /** Stagger, as a CSS custom property the keyframes read. */

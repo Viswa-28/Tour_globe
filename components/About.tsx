@@ -8,8 +8,9 @@ import { Reveal } from "@/components/Reveal";
  * overlapping the bottom of the image. Copy is the export's, verbatim,
  * per the client's direction (2026-08-22).
  *
- * TODO(client): aboutus.avif is AI-generated — replace with licensed
- * photography before launch, imageSource + imageLicence recorded.
+ * aboutus.avif is AI-generated — client approved keeping it for launch
+ * (2026-09-03). TODO(client): confirm imageSource/imageLicence for the
+ * generation tool.
  */
 export function About() {
   return (
