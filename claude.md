@@ -329,11 +329,14 @@ Use only these.
 - Coordinates 9.9252° N, 78.1198° E
 - 7/826, GVN Complex, Theni Main Road, Opp. SVN College,
   Nagamalaipudukottai, Madurai, Tamil Nadu 625 019
-- +91 95000 78189 · +91 93334 93333 · info@tourglobe.in · www.tourglobe.in
+- +91 93420 78189 · +91 95000 78189 · info@tourglobe.in · www.tourglobe.in
+  (updated 2026-09-03, replacing the previous +91 93334 93333 as the second
+  number)
 - Tagline in the export: "Buenas Memorias" — **confirm this is intentional**
 - Brands: Tourindias.com, Vayoaura.com (https://vayoaura.com/), and
-  "Rajasthan Specialist" — a specialization credential, not a linked site.
-  TODO(client): confirm exact wording and whether it should link anywhere.
+  "Tour Rajasthan" (renamed from "Rajasthan Specialist" 2026-09-04) — a
+  specialization credential, not a linked site. TODO(client): confirm
+  whether it should link anywhere.
 - Services: Tours — Outbound, Incoming, Domestic; MICE; Events; Vehicle
   Rentals; Destination Weddings; Concept Holidays
 - 11 themes as listed in Aspiration & Focus, plus "& much more"

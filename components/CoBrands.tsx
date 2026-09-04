@@ -7,6 +7,9 @@ import { Reveal } from "@/components/Reveal";
  * "·"-joined line, each linked entry an arrow-reveal link (same hover/focus
  * pattern as Services and PlaceCard).
  *
+ * Per-brand contact lives in the footer (Footer.tsx), not here — tried here
+ * 2026-09-03, moved back to the footer the same day.
+ *
  * Text stays --cream throughout: --gold is only verified safe on --navy
  * (see Services.tsx), and this ground is --brown, so hover/focus brighten to
  * cream rather than reaching for gold on an unverified pairing.

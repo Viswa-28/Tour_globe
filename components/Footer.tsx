@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EmailLink } from "@/components/EmailLink";
-import { COMPANY } from "@/lib/site";
+import { CO_BRANDS, COMPANY } from "@/lib/site";
 
 /**
  * Footer, following the export's three-column layout.
@@ -73,6 +73,33 @@ export function Footer() {
             </address>
           </div>
         </div>
+
+        {/* Only brands with confirmed contact info render a row here —
+            no placeholder text for the ones still pending (claude.md
+            forbids shipping TODO(client) as visible copy). */}
+        {CO_BRANDS.some((b) => b.contact) && (
+          <div className="mt-14 border-t border-on-navy/15 pt-10">
+            <h2 className="eyebrow text-on-navy-mut">Brand contacts</h2>
+            <ul className="mt-4 grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-3">
+              {CO_BRANDS.filter((b) => b.contact).map((b) => (
+                <li key={b.name}>
+                  <p className="font-semibold text-on-navy">{b.name}</p>
+                  {b.contact?.name && (
+                    <p className="mt-1 text-sm text-on-navy-mut">{b.contact.name}</p>
+                  )}
+                  {b.contact?.phone && (
+                    <a
+                      href={`tel:${b.contact.phone.replace(/[\s-]/g, "")}`}
+                      className="mt-1 inline-block text-gold-link underline-offset-4 hover:underline"
+                    >
+                      {b.contact.phone}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-on-navy/15 pt-7 text-xs uppercase tracking-[0.08em] text-on-navy-mut">
           <p>© {year} Tourglobe · Buenas Memorias</p>

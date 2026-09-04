@@ -48,11 +48,13 @@ export const COMPANY = {
     country: "IN",
   },
   geo: { lat: 9.9252, lng: 78.1198 },
-  phones: ["+91 95000 78189", "+91 93334 93333"],
+  // Updated 2026-09-03 at the client's request — replaces the previous
+  // ["+91 95000 78189", "+91 93334 93333"].
+  phones: ["+91 93420 78189", "+91 95000 78189"],
   email: "info@tourglobe.in",
   website: "https://www.tourglobe.in",
   // WhatsApp click-to-chat uses the first phone number, digits only.
-  whatsappNumber: "919500078189",
+  whatsappNumber: "919342078189",
 } as const;
 
 export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(
@@ -62,11 +64,31 @@ export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${enco
 /**
  * Tourindias.com URL inferred from its name. Vayoaura.com URL confirmed by
  * the client directly: https://vayoaura.com/
- * "Rajasthan Specialist" is a specialization credential, not a linked site —
- * TODO(client): confirm wording and whether it should link anywhere.
+ * "Tour Rajasthan" (renamed from "Rajasthan Specialist" 2026-09-04) is a
+ * specialization credential, not a linked site — TODO(client): confirm
+ * whether it should link anywhere.
+ *
+ * `contact` is per-brand contact info for the footer's brand-contacts
+ * section (added 2026-09-03). `null` where the client hasn't supplied it
+ * yet — Footer.tsx skips rendering a contact row for those rather than
+ * showing a placeholder.
  */
 export const CO_BRANDS = [
-  { name: "Tourindias.com", url: "https://www.tourindias.com" },
-  { name: "Vayoaura.com", url: "https://vayoaura.com/" },
-  { name: "Rajasthan Specialist", url: "" },
+  {
+    name: "Tourindias.com",
+    url: "https://www.tourindias.com",
+    // TODO(client): contact name/phone not yet supplied.
+    contact: null,
+  },
+  {
+    name: "Vayoaura.com",
+    url: "https://vayoaura.com/",
+    contact: { name: "Manoj", phone: "+66 96-087-7457" },
+  },
+  {
+    name: "Tour Rajasthan",
+    url: "",
+    // TODO(client): contact name/phone not yet supplied.
+    contact: null,
+  },
 ] as const;
