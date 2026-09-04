@@ -53,8 +53,9 @@ export const COMPANY = {
   phones: ["+91 93420 78189", "+91 95000 78189"],
   email: "info@tourglobe.in",
   website: "https://www.tourglobe.in",
-  // WhatsApp click-to-chat uses the first phone number, digits only.
-  whatsappNumber: "919342078189",
+  // WhatsApp click-to-chat number, digits only — client asked (2026-09-04)
+  // for this to be the second phone number, not the first.
+  whatsappNumber: "919500078189",
 } as const;
 
 export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(
