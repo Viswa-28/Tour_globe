@@ -87,15 +87,6 @@ export default async function CategoryPage({ params }: Props) {
                       Tourglobe
                     </Link>
                   </li>
-                  <li aria-hidden="true">·</li>
-                  <li>
-                    <Link
-                      href="/#themes"
-                      className="underline-offset-4 hover:underline"
-                    >
-                      Aspiration &amp; focus
-                    </Link>
-                  </li>
                 </ol>
               </nav>
               <h1 className="mt-5 font-[family-name:var(--font-fraunces)] text-[clamp(38px,4.6vw,66px)] font-semibold leading-[1.02] tracking-[-0.02em] text-navy">

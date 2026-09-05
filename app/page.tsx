@@ -1,7 +1,6 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
-import { Themes } from "@/components/Themes";
 import { Services } from "@/components/Services";
 import { Commitments } from "@/components/Commitments";
 import { CoBrands } from "@/components/CoBrands";
@@ -19,7 +18,6 @@ export default function HomePage() {
       <main>
         <Hero />
         <About />
-        <Themes />
         <Services />
         <Commitments />
         <CoBrands />

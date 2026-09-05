@@ -142,11 +142,15 @@ Scale, carried over from the export:
 |---|---|---|---|
 | 1 | Hero | navy + `air 2.png` | Headline, sub, two CTAs, marquee strip |
 | 2 | Behind this globe | navy + `tent.png` | Cream card overlaps the image, `margin-top: -9vw` |
-| 3 | Aspiration & focus | sand | 11 travel themes + "& much more" |
-| 4 | What we handle | navy | 8 services |
-| 5 | Demand Excellence | sand-deep | 8 commitments |
-| 6 | Our brands | brown | Two sister sites + one specialization credential |
-| 7 | Footer | navy | Logo, contact, address |
+| 3 | What we handle | navy | 8 services |
+| 4 | Demand Excellence | sand-deep | 8 commitments |
+| 5 | Our brands | brown | Two sister sites + one specialization credential |
+| 6 | Footer | navy | Logo, contact, address |
+
+Aspiration & focus (the 9-tile theme grid, sand ground) was removed from the
+homepage 2026-09-05 at the client's request. `Themes.tsx` was deleted;
+`CATEGORIES`/`getPlacesForCategory` in `lib/data.ts` stay — `/product/[category]`
+pages still use them and remain reachable by URL and from the sitemap.
 
 One `<h1>` (hero). Every other section needs an `<h2>` — several are missing
 one in the export.
@@ -333,13 +337,13 @@ Use only these.
   (updated 2026-09-03, replacing the previous +91 93334 93333 as the second
   number)
 - Tagline in the export: "Buenas Memorias" — **confirm this is intentional**
-- Brands: Tourindias.com, Vayoaura.com (https://vayoaura.com/), and
-  "Tour Rajasthan" (renamed from "Rajasthan Specialist" 2026-09-04) — a
-  specialization credential, not a linked site. TODO(client): confirm
-  whether it should link anywhere.
+- Brands: Tourindias.com, Vayoaura.com (https://vayoaura.com/) — contact
+  Mr. Manoj, +66 96-087-7457, Bangkok, Thailand — and "Tour Rajasthan"
+  (renamed from "Rajasthan Specialist" 2026-09-04) — contact
+  Mr. Krishnamurthy, +91 96729 88705, Jaipur; a specialization credential,
+  not a linked site. TODO(client): confirm whether it should link anywhere.
 - Services: Tours — Outbound, Incoming, Domestic; MICE; Events; Vehicle
   Rentals; Destination Weddings; Concept Holidays
-- 11 themes as listed in Aspiration & Focus, plus "& much more"
 
 **Open with the client:** founding year · "Buenas Memorias" · Brazil /
 Indonesia / Fiji (offices or destinations?) · co-brand one-liners ·

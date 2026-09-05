@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { EmailLink } from "@/components/EmailLink";
@@ -24,6 +25,7 @@ export function Footer() {
               alt="Tourglobe"
               width={720}
               height={242}
+              sizes="166px"
               className="h-14 w-auto"
             />
             <p className="mt-5 text-sm text-on-navy-mut">
@@ -65,11 +67,12 @@ export function Footer() {
               We are available physically @
             </h2>
             <address className="mt-4 not-italic leading-relaxed text-on-navy-mut">
-              {COMPANY.address.street},
-              <br />
-              {COMPANY.address.locality}, {COMPANY.address.region}, India
-              <br />
-              PO Code: {COMPANY.address.postalCode}
+              {COMPANY.address.displayLines.map((line, i) => (
+                <Fragment key={line}>
+                  {i > 0 && <br />}
+                  {line}
+                </Fragment>
+              ))}
             </address>
           </div>
         </div>
@@ -85,7 +88,12 @@ export function Footer() {
                 <li key={b.name}>
                   <p className="font-semibold text-on-navy">{b.name}</p>
                   {b.contact?.name && (
-                    <p className="mt-1 text-sm text-on-navy-mut">{b.contact.name}</p>
+                    <p className="mt-1 text-sm text-on-navy-mut">
+                      {b.contact.name}
+                      {"location" in b.contact && b.contact.location
+                        ? ` — ${b.contact.location}`
+                        : ""}
+                    </p>
                   )}
                   {b.contact?.phone && (
                     <a

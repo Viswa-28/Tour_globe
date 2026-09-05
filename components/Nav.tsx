@@ -52,6 +52,7 @@ export function Nav() {
             width={720}
             height={242}
             priority
+            sizes="(min-width: 768px) 143px, 119px"
             className="h-10 w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] md:h-12"
           />
         </Link>

@@ -46,6 +46,17 @@ export const COMPANY = {
     region: "Tamil Nadu",
     postalCode: "625 019",
     country: "IN",
+    // Fixed 4-line break points for the footer's display block (added
+    // 2026-09-05) — the flowing, comma-joined form wrapped unpredictably
+    // at the footer column's width and read as an oversized gap under the
+    // "We are available physically @" heading. `street`/`locality`/etc.
+    // above stay the source of truth for JSON-LD and the legal pages.
+    displayLines: [
+      "7/826, GVN Complex,",
+      "Theni Main Road, Opp. SVN College,",
+      "Nagamalaipudukottai, Madurai,",
+      "Tamil Nadu 625 019, India",
+    ],
   },
   geo: { lat: 9.9252, lng: 78.1198 },
   // Updated 2026-09-03 at the client's request — replaces the previous
@@ -70,9 +81,11 @@ export const WHATSAPP_URL = `https://wa.me/${COMPANY.whatsappNumber}?text=${enco
  * whether it should link anywhere.
  *
  * `contact` is per-brand contact info for the footer's brand-contacts
- * section (added 2026-09-03). `null` where the client hasn't supplied it
- * yet — Footer.tsx skips rendering a contact row for those rather than
- * showing a placeholder.
+ * section (added 2026-09-03), with an optional `location` (added
+ * 2026-09-05: Vayoaura.com is Bangkok, Thailand; Tour Rajasthan is Jaipur).
+ * `null` where the client hasn't supplied contact info yet — Footer.tsx
+ * skips rendering a contact row for those rather than showing a
+ * placeholder.
  */
 export const CO_BRANDS = [
   {
@@ -84,12 +97,19 @@ export const CO_BRANDS = [
   {
     name: "Vayoaura.com",
     url: "https://vayoaura.com/",
-    contact: { name: "Manoj", phone: "+66 96-087-7457" },
+    contact: {
+      name: "Mr. Manoj",
+      phone: "+66 96-087-7457",
+      location: "Bangkok, Thailand",
+    },
   },
   {
     name: "Tour Rajasthan",
     url: "",
-    // TODO(client): contact name/phone not yet supplied.
-    contact: null,
+    contact: {
+      name: "Mr. Krishnamurthy",
+      phone: "+91 96729 88705",
+      location: "Jaipur",
+    },
   },
 ] as const;
