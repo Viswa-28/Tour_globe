@@ -142,15 +142,11 @@ Scale, carried over from the export:
 |---|---|---|---|
 | 1 | Hero | navy + `air 2.png` | Headline, sub, two CTAs, marquee strip |
 | 2 | Behind this globe | navy + `tent.png` | Cream card overlaps the image, `margin-top: -9vw` |
-| 3 | What we handle | navy | 8 services |
-| 4 | Demand Excellence | sand-deep | 8 commitments |
-| 5 | Our brands | brown | Two sister sites + one specialization credential |
-| 6 | Footer | navy | Logo, contact, address |
-
-Aspiration & focus (the 9-tile theme grid, sand ground) was removed from the
-homepage 2026-09-05 at the client's request. `Themes.tsx` was deleted;
-`CATEGORIES`/`getPlacesForCategory` in `lib/data.ts` stay — `/product/[category]`
-pages still use them and remain reachable by URL and from the sitemap.
+| 3 | Theme grid | sand | 9-tile category grid, `Themes.tsx`. Restored 2026-09-06 after being deleted 2026-09-05 — client wanted the tiles kept, only the "Aspiration & focus" eyebrow label removed. The `<h2>` and grid stay; there is no eyebrow above the heading. |
+| 4 | What we handle | navy | 8 services |
+| 5 | Demand Excellence | sand-deep | 8 commitments |
+| 6 | Our brands | brown | Two sister sites + one specialization credential |
+| 7 | Footer | navy | Logo, contact, address |
 
 One `<h1>` (hero). Every other section needs an `<h2>` — several are missing
 one in the export.
