@@ -11,7 +11,6 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ItineraryCard } from "@/components/ItineraryCard";
 import { Reveal } from "@/components/Reveal";
-import { EnquirySection } from "@/components/EnquiryForm";
 
 export const dynamic = "error";
 
@@ -25,6 +24,9 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}${TOUR_RAJASTHAN.path}` },
   openGraph: { title, description },
 };
+
+const whatsappMessage =
+  "Hello Tour Rajasthan — I'd like help planning a Rajasthan trip.";
 
 export default function TourRajasthanPage() {
   const { contact } = TOUR_RAJASTHAN;
@@ -97,23 +99,41 @@ export default function TourRajasthanPage() {
             </ul>
           </section>
 
-          <p className="mt-14 text-sm text-ink-body">
-            Tour Rajasthan contact: {contact.name},{" "}
-            <a
-              href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-              className="font-semibold text-brown underline-offset-4 hover:underline"
-            >
-              {contact.phone}
-            </a>{" "}
-            · {contact.location}
-          </p>
+          {/* No enquiry form in the Tour Rajasthan section (removed
+              2026-10-05 at the client's request) — contact is direct. */}
+          <section
+            aria-labelledby="contact-heading"
+            className="mt-16 border border-[#E5DCD0] bg-cream p-8 md:p-10"
+          >
+            <h2 id="contact-heading" className="h2 text-ink">
+              Plan your Rajasthan <em className="text-brown">trip</em>
+            </h2>
+            <p className="body-copy mt-4">
+              Talk to {contact.name}, Tour Rajasthan, {contact.location}. No
+              payment needed to get a plan.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href={tourRajasthanWhatsAppUrl(whatsappMessage)}
+                target="_blank"
+                rel="noopener"
+                className="rounded-full bg-brown px-7 py-3 font-semibold text-cream transition-colors hover:bg-ink"
+              >
+                Ask on WhatsApp
+              </a>
+              <a
+                href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
+                className="rounded-full border border-brown px-7 py-3 font-semibold text-brown transition-colors hover:bg-brown hover:text-cream"
+              >
+                Call {contact.phone}
+              </a>
+            </div>
+          </section>
         </div>
-
-        <EnquirySection />
       </main>
       <Footer />
       <WhatsAppButton
-        href={tourRajasthanWhatsAppUrl("Hello Tour Rajasthan — I'd like help planning a Rajasthan trip.")}
+        href={tourRajasthanWhatsAppUrl(whatsappMessage)}
         label="Chat with Tour Rajasthan on WhatsApp"
       />
     </>

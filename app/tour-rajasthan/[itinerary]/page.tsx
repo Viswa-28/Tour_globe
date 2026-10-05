@@ -13,7 +13,6 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ItineraryCard } from "@/components/ItineraryCard";
-import { EnquirySection } from "@/components/EnquiryForm";
 
 export const dynamic = "error";
 export const dynamicParams = false;
@@ -188,19 +187,22 @@ export default async function ItineraryPage({ params }: Props) {
                   </dd>
                 </div>
               </dl>
-              <a
-                href="#enquire"
-                className="mt-8 block rounded-full bg-brown px-6 py-3 text-center font-semibold text-cream transition-colors hover:bg-ink"
-              >
-                Enquire about this tour
-              </a>
+              {/* No enquiry form in the Tour Rajasthan section (removed
+                  2026-10-05 at the client's request) — WhatsApp and phone
+                  go straight to Tour Rajasthan's own contact. */}
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener"
-                className="mt-3 block rounded-full border border-brown px-6 py-3 text-center font-semibold text-brown transition-colors hover:bg-brown hover:text-cream"
+                className="mt-8 block rounded-full bg-brown px-6 py-3 text-center font-semibold text-cream transition-colors hover:bg-ink"
               >
                 Ask on WhatsApp
+              </a>
+              <a
+                href={`tel:${TOUR_RAJASTHAN.contact.phone.replace(/[^\d+]/g, "")}`}
+                className="mt-3 block rounded-full border border-brown px-6 py-3 text-center font-semibold text-brown transition-colors hover:bg-brown hover:text-cream"
+              >
+                Call {TOUR_RAJASTHAN.contact.phone}
               </a>
               <p className="mt-3 text-center text-xs text-ink-body">
                 No payment needed to get a plan.
@@ -223,8 +225,6 @@ export default async function ItineraryPage({ params }: Props) {
             </section>
           )}
         </article>
-
-        <EnquirySection />
       </main>
       <Footer />
       <WhatsAppButton
