@@ -88,10 +88,10 @@ export default function TourRajasthanPage() {
             <h2 id="itineraries-heading" className="h2 text-ink">
               Rajasthan tour <em className="text-brown">itineraries</em>
             </h2>
-            <ul className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            <ul className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-8 xl:grid-cols-4">
               {RAJASTHAN_ITINERARIES.map((t, i) => (
                 <li key={t.slug} className="flex">
-                  <Reveal stagger={i % 3} className="flex w-full [&>a]:w-full">
+                  <Reveal stagger={i % 4} className="flex w-full [&>a]:w-full">
                     <ItineraryCard tour={t} />
                   </Reveal>
                 </li>

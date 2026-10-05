@@ -3,13 +3,14 @@
  * (lib/site.ts CO_BRANDS), contact Mr. Krishnamurthy, Jaipur.
  *
  * Source: rajasthanitineraries.zip (8 .docx files, supplied 2026-10-05).
- * Six are published; the source files were edited as follows:
- * - "08 Days Rajasthan Tour.docx" dropped — near-duplicate of the 09 Days
- *   file, and its heading ("08 Nights – 09 Days") contradicted its 8 days.
- * - "08 Days Rajasthan Tour with Khatu Salasar.docx" dropped — untitled,
- *   fixed dates, "night stay at own arranged": one family's booking, not a
- *   publishable tour.
- * - Fixed dates ("19 Jan", "Feb") replaced with day numbers.
+ * All eight are published (the client asked for all eight, 2026-10-05).
+ * The source files were edited as follows:
+ * - "08 Days Rajasthan Tour.docx": its heading says "08 Nights – 09 Days"
+ *   but it lists 8 days, so it is published as 07 Nights / 08 Days.
+ * - "08 Days Rajasthan Tour with Khatu Salasar.docx" had no title; one was
+ *   written from its route. Its day 1 says "night stay at own arranged" —
+ *   TODO(client): confirm who arranges the Paota night.
+ * - Fixed dates ("19 Jan", "20 Dec", "Feb") replaced with day numbers.
  * - A third-party operator's signature block (name, phones, emails,
  *   websites) removed from the 07 Days Pushkar file. It must never ship.
  * - Its "Vehicle cost includes" list is NOT carried over: inclusions are
@@ -332,6 +333,112 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
         title: "Pushkar – Jaipur departure",
         drive: "Approx. 150 km / 3 hrs",
         text: "Free time by the lake or in the bazaars, then back to Jaipur for your drop at the airport or railway station.",
+      },
+    ],
+  },
+  {
+    slug: "jaipur-pushkar-jaisalmer-jodhpur-udaipur-8-days",
+    name: "Rajasthan Desert & Lakes",
+    nights: 7,
+    days: 8,
+    route: ["Jaipur", "Pushkar", "Jaisalmer", "Sam", "Jodhpur", "Nathdwara", "Udaipur"],
+    summary:
+      "Jaipur, then via Pushkar to the dunes of Jaisalmer, and south through Jodhpur to the lakes of Udaipur.",
+    metaTitle: "8-Day Rajasthan Tour: Jaisalmer to Udaipur",
+    metaDescription:
+      "7 nights / 8 days: Jaipur, Pushkar, Jaisalmer, a Sam desert camp, Jodhpur, Nathdwara and Udaipur. A Tour Rajasthan itinerary.",
+    itinerary: [
+      {
+        title: "Arrival in Jaipur",
+        text: "Pickup and transfer to your hotel. Then Birla Temple, Albert Hall, Hawa Mahal, the City Palace and Jantar Mantar.",
+        overnight: "Jaipur",
+      },
+      {
+        title: "Jaipur heritage sightseeing",
+        text: "Jal Mahal, Amer Fort, Jaigarh Fort and Nahargarh Fort. Evening free for shopping.",
+        overnight: "Jaipur",
+      },
+      {
+        title: "Jaipur – Pushkar – Jaisalmer",
+        text: "Pushkar Lake and the Brahma Temple on the way to Jaisalmer. Then the War Museum, Gadisar Lake and Jaisalmer Fort.",
+        overnight: "Jaisalmer",
+      },
+      {
+        title: "Jaisalmer – Sam",
+        text: "Salim Singh Haveli, Patwon ki Haveli and Nathmal ki Haveli, then to the Sam Sand Dunes after lunch. Camel safari in the evening (jeep safari payable direct), with dinner, folk dance and music at camp.",
+        overnight: "Desert camp, Sam",
+      },
+      {
+        title: "Sam – Jodhpur",
+        text: "Drive to Jodhpur. Mehrangarh Fort, Jaswant Thada and Umaid Bhawan Palace; evening free in the market.",
+        overnight: "Jodhpur",
+      },
+      {
+        title: "Jodhpur – Nathdwara – Udaipur",
+        text: "Nathdwara temple on the way to Udaipur, then an evening walk at Fateh Sagar Lake.",
+        overnight: "Udaipur",
+      },
+      {
+        title: "Udaipur sightseeing",
+        text: "The City Palace, Jagdish Temple, a boat ride on Lake Pichola to Jag Mandir, the Karni Mata Temple, the Vintage Car Museum and Saheliyon ki Bari. Evening free in the market.",
+        overnight: "Udaipur",
+      },
+      {
+        title: "Departure",
+        text: "Drop at Udaipur or Jaipur airport.",
+      },
+    ],
+  },
+  {
+    slug: "khatu-salasar-bikaner-jaisalmer-jodhpur-8-days",
+    name: "Rajasthan with Khatu Shyam Ji & Salasar Balaji",
+    nights: 7,
+    days: 8,
+    route: ["Jaipur", "Paota", "Khatu", "Salasar", "Bikaner", "Sam", "Jaisalmer", "Jodhpur", "Pushkar"],
+    summary:
+      "Temple darshan at Khatu Shyam Ji and Salasar Balaji, then Bikaner, the dunes, Jaisalmer, Jodhpur and Pushkar.",
+    metaTitle: "8-Day Rajasthan Tour with Khatu & Salasar",
+    metaDescription:
+      "7 nights / 8 days: Khatu Shyam Ji, Salasar Balaji, Bikaner, a Sam desert camp, Jaisalmer, Jodhpur and Pushkar. A Tour Rajasthan itinerary.",
+    itinerary: [
+      {
+        title: "Jaipur – Shahpura – Paota",
+        text: "Drive from Jaipur via Shahpura to Paota and visit the Kuldevi temple.",
+        overnight: "Paota",
+      },
+      {
+        title: "Paota – Khatu – Salasar",
+        text: "Morning darshan at Khatu Shyam Ji, then on to Salasar. Evening visit to Salasar Balaji Temple.",
+        overnight: "Salasar",
+      },
+      {
+        title: "Salasar – Bikaner",
+        text: "Drive to Bikaner. Junagarh Fort and its museum, the Karni Mata Temple and the camel research farm.",
+        overnight: "Bikaner",
+      },
+      {
+        title: "Bikaner – Sam",
+        text: "Drive to the desert camp at Sam, Jaisalmer. Camel safari and jeep safari, then dinner with folk dance and music at camp.",
+        overnight: "Desert camp, Sam",
+      },
+      {
+        title: "Sam – Jaisalmer",
+        text: "Into Jaisalmer for the fort, Gadisar, Salim Singh Haveli and the War Museum.",
+        overnight: "Jaisalmer",
+      },
+      {
+        title: "Jaisalmer – Jodhpur",
+        text: "Drive to Jodhpur. Jaswant Thada, Mehrangarh Fort and Umaid Bhawan Palace; evening free in the market.",
+        overnight: "Jodhpur",
+      },
+      {
+        title: "Jodhpur – Pushkar – Jaipur",
+        text: "Pushkar Lake and the Brahma Temple on the way back to Jaipur.",
+        overnight: "Jaipur",
+      },
+      {
+        title: "Jaipur departure",
+        text: "Drop at Jaipur airport.",
       },
     ],
   },
