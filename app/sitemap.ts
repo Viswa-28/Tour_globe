@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { CATEGORIES, PLACES } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
+import { RAJASTHAN_ITINERARIES, TOUR_RAJASTHAN } from "@/lib/rajasthan-itineraries";
 
 export const dynamic = "force-static";
 
@@ -14,6 +15,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...PLACES.map((p) => ({
       url: `${SITE_URL}/product/${p.categorySlug}/${p.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    {
+      url: `${SITE_URL}${TOUR_RAJASTHAN.path}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    ...RAJASTHAN_ITINERARIES.map((t) => ({
+      url: `${SITE_URL}${TOUR_RAJASTHAN.path}/${t.slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

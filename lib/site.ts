@@ -106,6 +106,10 @@ export const CO_BRANDS = [
   {
     name: "Tour Rajasthan",
     url: "",
+    // Internal page (added 2026-10-05) listing the Tour Rajasthan
+    // itineraries — see lib/rajasthan-itineraries.ts. Kept separate from
+    // `url`, which feeds the TravelAgency `sameAs` list of external sites.
+    page: "/tour-rajasthan",
     contact: {
       name: "Mr. Krishnamurthy",
       phone: "+91 96729 88705",

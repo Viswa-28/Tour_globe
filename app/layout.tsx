@@ -72,7 +72,7 @@ const travelAgencyJsonLd = {
   // Derived from CO_BRANDS so this can't drift when a co-brand is added or
   // removed there (it previously still listed a co-brand dropped from that
   // list).
-  sameAs: CO_BRANDS.map((b) => b.url),
+  sameAs: CO_BRANDS.map((b) => b.url).filter(Boolean),
 };
 
 export default function RootLayout({

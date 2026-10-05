@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { COMPANY } from "@/lib/site";
+import { TOUR_RAJASTHAN } from "@/lib/rajasthan-itineraries";
 import {
   EMAIL_RE,
   FIELD_LIMITS,
@@ -81,11 +82,31 @@ function clientIp(req: Request): string {
   return fwd?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
 }
 
+/**
+ * One form, two inboxes. Enquiries sent from /tour-rajasthan pages go to
+ * Tour Rajasthan's inbox when TOUR_RAJASTHAN_ENQUIRY_TO_EMAIL is set, and
+ * fall back to the main inbox when it isn't — so a missing variable can
+ * never lose an enquiry, only send it to Tourglobe instead.
+ *
+ * sourcePath is client-supplied, so this is routing, not a security
+ * boundary: spoofing it only changes which of the business's own inboxes
+ * receives the message.
+ */
+function isTourRajasthan(e: Enquiry): boolean {
+  return e.sourcePath.startsWith(TOUR_RAJASTHAN.path);
+}
+
+function recipientFor(e: Enquiry): string {
+  // The main inbox is a verified fact, so it needs no configuration.
+  // ENQUIRY_TO_EMAIL only exists to redirect enquiries elsewhere.
+  const main = process.env.ENQUIRY_TO_EMAIL?.trim() || COMPANY.email;
+  if (!isTourRajasthan(e)) return main;
+  return process.env.TOUR_RAJASTHAN_ENQUIRY_TO_EMAIL?.trim() || main;
+}
+
 async function sendEmail(e: Enquiry): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
-  // The destination inbox is a verified fact, so it needs no configuration.
-  // ENQUIRY_TO_EMAIL only exists to redirect enquiries elsewhere.
-  const to = process.env.ENQUIRY_TO_EMAIL?.trim() || COMPANY.email;
+  const to = recipientFor(e);
   // No default: the sender must sit on a domain verified in Resend, and
   // guessing it would fail silently at send time instead of loudly here.
   const from = process.env.ENQUIRY_FROM_EMAIL?.trim();
@@ -116,7 +137,9 @@ async function sendEmail(e: Enquiry): Promise<void> {
       // otherwise Reply goes to ENQUIRY_FROM_EMAIL, which is only a sending
       // identity and may not be a mailbox at all, so the reply would bounce.
       replyTo: EMAIL_RE.test(e.email) ? e.email : COMPANY.email,
-      subject: `Enquiry from ${e.name} — tourglobe.in`,
+      subject: isTourRajasthan(e)
+        ? `Tour Rajasthan enquiry from ${e.name} — tourglobe.in`
+        : `Enquiry from ${e.name} — tourglobe.in`,
       text: body,
     }),
     8000,
@@ -171,6 +194,8 @@ export async function GET() {
     from,
     to,
     toIsDefault: !toOverride,
+    tourRajasthanTo:
+      process.env.TOUR_RAJASTHAN_ENQUIRY_TO_EMAIL?.trim() || `${to} (fallback)`,
     ready: problems.length === 0,
     problems,
   });

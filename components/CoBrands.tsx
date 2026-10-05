@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { CO_BRANDS } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Section 6 — Our brands. Brown ground, the export's sister brands (plus one
- * unlinked specialization credential) as a divided row instead of one
+ * Section 6 — Our brands. Brown ground, the export's sister brands (plus the
+ * Tour Rajasthan specialization, which links to its own itineraries page on
+ * this site rather than an external one) as a divided row instead of one
  * "·"-joined line, each linked entry an arrow-reveal link (same hover/focus
  * pattern as Services and PlaceCard).
  *
@@ -14,6 +16,18 @@ import { Reveal } from "@/components/Reveal";
  * (see Services.tsx), and this ground is --brown, so hover/focus brighten to
  * cream rather than reaching for gold on an unverified pairing.
  */
+const linkCls =
+  "group inline-flex items-center gap-2 font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.4vw,30px)] font-semibold leading-tight text-cream/90 transition-colors hover:text-cream focus-visible:text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream";
+
+const arrow = (
+  <span
+    aria-hidden="true"
+    className="opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:group-hover:translate-x-0"
+  >
+    →
+  </span>
+);
+
 export function CoBrands() {
   return (
     <section
@@ -33,25 +47,21 @@ export function CoBrands() {
                 i > 0 ? "border-t border-cream/20 sm:border-t-0 sm:border-l sm:pl-8" : ""
               }`}
             >
-              {b.url ? (
+              {"page" in b ? (
+                <Link href={b.page} className={linkCls}>
+                  {b.name}
+                  {arrow}
+                </Link>
+              ) : (
                 <a
                   href={b.url}
                   target="_blank"
                   rel="noopener"
-                  className="group inline-flex items-center gap-2 font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.4vw,30px)] font-semibold leading-tight text-cream/90 transition-colors hover:text-cream focus-visible:text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
+                  className={linkCls}
                 >
                   {b.name}
-                  <span
-                    aria-hidden="true"
-                    className="opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:group-hover:translate-x-0"
-                  >
-                    →
-                  </span>
+                  {arrow}
                 </a>
-              ) : (
-                <span className="font-[family-name:var(--font-fraunces)] text-[clamp(22px,2.4vw,30px)] font-semibold leading-tight text-cream/90">
-                  {b.name}
-                </span>
               )}
             </div>
           ))}

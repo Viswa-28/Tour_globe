@@ -1,10 +1,17 @@
 import { WHATSAPP_URL } from "@/lib/site";
 
-/** Persistent WhatsApp click-to-chat — real number from Verified Facts. */
-export function WhatsAppButton() {
+/**
+ * Persistent WhatsApp click-to-chat — real number from Verified Facts.
+ * `href`/`label` let a section with its own contact (Tour Rajasthan) point
+ * the button elsewhere; the default is Tourglobe's number.
+ */
+export function WhatsAppButton({
+  href = WHATSAPP_URL,
+  label = "Chat with Tourglobe on WhatsApp",
+}: { href?: string; label?: string } = {}) {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={href}
       target="_blank"
       rel="noopener"
       className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-1.5 transition-transform hover:scale-105 motion-reduce:hover:scale-100"
@@ -20,7 +27,7 @@ export function WhatsAppButton() {
       >
         Chat with us
       </span>
-      <span className="sr-only">Chat with Tourglobe on WhatsApp</span>
+      <span className="sr-only">{label}</span>
     </a>
   );
 }
