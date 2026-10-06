@@ -41,8 +41,9 @@ export const metadata: Metadata = {
     description:
       "Travel counselling and consultancy in Madurai, Tamil Nadu — journeys planned worldwide, starting from why you travel.",
     url: SITE_URL,
-    // TODO(client): supply a real 1200×630 OG image before launch.
-    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    // Share image: app/opengraph-image.png (Next file convention, applied to
+    // every route). It replaced a reference to /og.png, which never existed
+    // and returned 404. TODO(client): swap in a photographic card if wanted.
   },
   twitter: {
     card: "summary_large_image",
@@ -54,6 +55,8 @@ const travelAgencyJsonLd = {
   "@type": "TravelAgency",
   name: COMPANY.name,
   url: COMPANY.website,
+  logo: `${SITE_URL}/images/logo.png`,
+  image: `${SITE_URL}/images/logo.png`,
   email: COMPANY.email,
   telephone: COMPANY.phones[0],
   address: {

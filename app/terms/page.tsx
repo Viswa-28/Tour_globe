@@ -3,14 +3,18 @@ import Link from "next/link";
 import { EmailLink } from "@/components/EmailLink";
 import { LegalPage, Pending } from "@/components/LegalPage";
 import { COMPANY, SITE_URL } from "@/lib/site";
+import { pageOpenGraph } from "@/lib/seo";
 
 export const dynamic = "error";
 
+const description =
+  "The terms on which Tourglobe, travel consultants in Madurai, Tamil Nadu, makes this website and its enquiry service available.";
+
 export const metadata: Metadata = {
   title: "Terms of Use",
-  description:
-    "The terms on which Tourglobe, travel consultants in Madurai, Tamil Nadu, makes this website and its enquiry service available.",
+  description,
   alternates: { canonical: `${SITE_URL}/terms` },
+  openGraph: pageOpenGraph("/terms", "Terms of Use", description),
 };
 
 /**

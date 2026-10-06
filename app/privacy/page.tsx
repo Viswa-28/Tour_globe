@@ -3,14 +3,18 @@ import Link from "next/link";
 import { EmailLink } from "@/components/EmailLink";
 import { LegalPage, Pending } from "@/components/LegalPage";
 import { COMPANY, SITE_URL } from "@/lib/site";
+import { pageOpenGraph } from "@/lib/seo";
 
 export const dynamic = "error";
 
+const description =
+  "How Tourglobe, travel consultants in Madurai, Tamil Nadu, collects and handles the personal information you send through the enquiry form.";
+
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description:
-    "How Tourglobe, travel consultants in Madurai, Tamil Nadu, collects and handles the personal information you send through the enquiry form.",
+  description,
   alternates: { canonical: `${SITE_URL}/privacy` },
+  openGraph: pageOpenGraph("/privacy", "Privacy Policy", description),
 };
 
 /**

@@ -9,6 +9,7 @@ import {
   tourRajasthanWhatsAppUrl,
 } from "@/lib/rajasthan-itineraries";
 import { COMPANY, SITE_URL } from "@/lib/site";
+import { pageOpenGraph } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -31,7 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t.metaTitle,
     description: t.metaDescription,
     alternates: { canonical: `${SITE_URL}${TOUR_RAJASTHAN.path}/${t.slug}` },
-    openGraph: { title: t.metaTitle, description: t.metaDescription },
+    openGraph: pageOpenGraph(
+      `${TOUR_RAJASTHAN.path}/${t.slug}`,
+      t.metaTitle,
+      t.metaDescription,
+    ),
   };
 }
 

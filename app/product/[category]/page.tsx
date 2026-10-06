@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CATEGORIES, getCategory, getPlacesForCategory } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
+import { pageOpenGraph } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${cat.name} Tours & Packages`,
     description,
     alternates: { canonical: `${SITE_URL}/product/${cat.slug}` },
-    openGraph: { title: `${cat.name} Tours & Packages`, description },
+    openGraph: pageOpenGraph(`/product/${cat.slug}`, `${cat.name} Tours & Packages`, description),
   };
 }
 

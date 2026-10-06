@@ -6,6 +6,7 @@ import {
   tourRajasthanWhatsAppUrl,
 } from "@/lib/rajasthan-itineraries";
 import { SITE_URL } from "@/lib/site";
+import { pageOpenGraph } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${SITE_URL}${TOUR_RAJASTHAN.path}` },
-  openGraph: { title, description },
+  openGraph: pageOpenGraph(TOUR_RAJASTHAN.path, title, description),
 };
 
 const whatsappMessage =

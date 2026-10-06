@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { PLACES, formatDuration, getCategory, getPlace } from "@/lib/data";
 import { getPlaceImage } from "@/lib/place-images";
+import { getPlaceDescription } from "@/lib/place-descriptions";
 import { SITE_URL } from "@/lib/site";
+import { pageOpenGraph } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -14,6 +16,34 @@ export const dynamic = "error";
 export const dynamicParams = false;
 
 type Props = { params: Promise<{ category: string; place: string }> };
+
+const placeLabel = (p: { name: string; country?: string }) =>
+  p.country ? `${p.name}, ${p.country}` : p.name;
+
+/** Labels used by more than one programme ("Thailand" is in three themes).
+ *  Those titles get the theme added, so no two pages share a <title>. */
+const SHARED_LABELS = new Set(
+  PLACES.map(placeLabel).filter((l, i, all) => all.indexOf(l) !== i),
+);
+
+/** As many whole sentences as fit, then the duration if there's room —
+ *  never over 155 chars, and cut at a word boundary only when whole
+ *  sentences would give fewer than 100 chars. */
+function metaDescription(description: string, duration: string): string {
+  const sentences = description.match(/[^.!?]+[.!?]+(\s|$)/g) ?? [description];
+  let text = "";
+  for (const s of sentences) {
+    const next = `${text} ${s.trim()}`.trim();
+    if (next.length > 155) break;
+    text = next;
+  }
+  const withDuration = `${text} ${duration}.`;
+  if (text && withDuration.length <= 155 && withDuration.length >= 100) return withDuration;
+  if (text.length >= 100) return text;
+  // A short opening sentence followed by a long one: take the full text up
+  // to a word boundary instead of shipping a 60-character description.
+  return `${description.slice(0, 152).replace(/\s+\S*$/, "").replace(/[,;:—-]$/, "")}…`;
+}
 
 export function generateStaticParams() {
   return PLACES.map((p) => ({ category: p.categorySlug, place: p.slug }));
@@ -25,14 +55,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cat = getCategory(category);
   if (!p || !cat) return {};
 
-  const label = p.country ? `${p.name}, ${p.country}` : p.name;
-  const title = `${label} Tour Package`;
+  const label = placeLabel(p);
+  const title = SHARED_LABELS.has(label)
+    ? `${label} ${cat.name} Tour`
+    : `${label} Tour Package`;
+  const duration = formatDuration(p.nights, p.days);
+  const written = getPlaceDescription(p.categorySlug, p.slug);
   const stops = p.itinerary.length ? ` Covering ${p.itinerary.join(", ")}.` : "";
-  const description =
-    `${formatDuration(p.nights, p.days)}.${stops} A ${cat.name.toLowerCase()} programme planned by Tourglobe, travel consultants in Madurai.`.slice(
-      0,
-      155,
-    );
+  const description = written
+    ? metaDescription(written, duration)
+    : `${duration}.${stops} A ${cat.name.toLowerCase()} programme planned by Tourglobe, travel consultants in Madurai.`.slice(
+        0,
+        155,
+      );
 
   return {
     title,
@@ -40,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${SITE_URL}/product/${p.categorySlug}/${p.slug}`,
     },
-    openGraph: { title, description },
+    openGraph: pageOpenGraph(`/product/${p.categorySlug}/${p.slug}`, title, description),
   };
 }
 
@@ -52,6 +87,7 @@ export default async function PlacePage({ params }: Props) {
 
   const duration = formatDuration(p.nights, p.days);
   const image = getPlaceImage(p);
+  const written = getPlaceDescription(p.categorySlug, p.slug);
   const related = PLACES.filter(
     (x) => x.categorySlug === cat.slug && x.slug !== p.slug,
   ).slice(0, 3);
@@ -133,6 +169,10 @@ export default async function PlacePage({ params }: Props) {
                 </div>
               )}
 
+              {written && (
+                <p className="body-copy mb-12 text-lg">{written}</p>
+              )}
+
               <h2 className="h2 text-ink">
                 Where you&apos;ll <em className="text-brown">go</em>
               </h2>
@@ -165,9 +205,8 @@ export default async function PlacePage({ params }: Props) {
                 </p>
               )}
 
-              {/* TODO(client): a written description and licensed photography
-                  for each programme. The catalogue supplies destination,
-                  stops and duration only, so nothing further is stated. */}
+              {/* The description above is lib/place-descriptions.ts — our
+                  draft, TODO(client) to approve. */}
               <p className="body-copy mt-8 text-sm">
                 Our programmes are research-based and tailor-made to
                 travellers&apos; interests, designed by different
