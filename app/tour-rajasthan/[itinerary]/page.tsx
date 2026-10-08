@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { formatDuration } from "@/lib/data";
 import {
   RAJASTHAN_ITINERARIES,
   TOUR_RAJASTHAN,
   getRajasthanItinerary,
-  tourRajasthanWhatsAppUrl,
+  tourWhatsAppUrl,
 } from "@/lib/rajasthan-itineraries";
 import { COMPANY, SITE_URL } from "@/lib/site";
 import { pageOpenGraph } from "@/lib/seo";
@@ -19,6 +20,8 @@ export const dynamic = "error";
 export const dynamicParams = false;
 
 type Props = { params: Promise<{ itinerary: string }> };
+
+const tel = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
 export function generateStaticParams() {
   return RAJASTHAN_ITINERARIES.map((t) => ({ itinerary: t.slug }));
@@ -48,8 +51,8 @@ export default async function ItineraryPage({ params }: Props) {
   const url = `${SITE_URL}${TOUR_RAJASTHAN.path}/${t.slug}`;
   const duration = formatDuration(t.nights, t.days);
   const others = RAJASTHAN_ITINERARIES.filter((x) => x.slug !== t.slug).slice(0, 3);
-  const whatsappUrl = tourRajasthanWhatsAppUrl(
-    `Hello Tour Rajasthan — I'd like help planning the ${t.days}-day Rajasthan tour (${t.name}).`,
+  const whatsappUrl = tourWhatsAppUrl(
+    `Hello Tourglobe — I'd like help planning the ${duration} Rajasthan tour (${t.name}).`,
   );
 
   const jsonLd = [
@@ -59,6 +62,7 @@ export default async function ItineraryPage({ params }: Props) {
       name: `${t.name} — ${duration}`,
       description: t.metaDescription,
       url,
+      image: `${SITE_URL}${t.image.src}`,
       itinerary: {
         "@type": "ItemList",
         itemListElement: t.route.map((city, i) => ({
@@ -125,6 +129,41 @@ export default async function ItineraryPage({ params }: Props) {
         <article className="mx-auto max-w-[1240px] px-5 py-16 md:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
             <div className="lg:col-span-2">
+              <figure className="mb-12">
+                <div className="relative aspect-[3/2] overflow-hidden bg-sand">
+                  <Image
+                    src={t.image.src}
+                    alt={t.image.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 780px, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                {/* Visible credit — a CC BY-SA licence condition. */}
+                <figcaption className="mt-2 text-xs text-ink-body">
+                  Photo:{" "}
+                  <a
+                    href={t.image.source}
+                    target="_blank"
+                    rel="noopener"
+                    className="underline underline-offset-2 hover:text-brown"
+                  >
+                    {t.image.author}
+                  </a>
+                  ,{" "}
+                  <a
+                    href={t.image.licenceUrl}
+                    target="_blank"
+                    rel="noopener license"
+                    className="underline underline-offset-2 hover:text-brown"
+                  >
+                    {t.image.licence}
+                  </a>
+                  , via Wikimedia Commons
+                </figcaption>
+              </figure>
+
               <h2 className="h2 text-ink">
                 Day by <em className="text-brown">day</em>
               </h2>
@@ -179,22 +218,25 @@ export default async function ItineraryPage({ params }: Props) {
                   <dd className="text-ink-body">{t.route.join(" – ")}</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-ink">Tour Rajasthan contact</dt>
+                  <dt className="font-semibold text-ink">Enquiries</dt>
                   <dd className="text-ink-body">
-                    {TOUR_RAJASTHAN.contact.name},{" "}
-                    <a
-                      href={`tel:${TOUR_RAJASTHAN.contact.phone.replace(/[^\d+]/g, "")}`}
-                      className="text-brown underline-offset-4 hover:underline"
-                    >
-                      {TOUR_RAJASTHAN.contact.phone}
-                    </a>
-                    , {TOUR_RAJASTHAN.contact.location}
+                    Tourglobe,{" "}
+                    {COMPANY.phones.map((phone, i) => (
+                      <span key={phone}>
+                        {i > 0 && " · "}
+                        <a
+                          href={tel(phone)}
+                          className="text-brown underline-offset-4 hover:underline"
+                        >
+                          {phone}
+                        </a>
+                      </span>
+                    ))}
                   </dd>
                 </div>
               </dl>
-              {/* No enquiry form in the Tour Rajasthan section (removed
-                  2026-10-05 at the client's request) — WhatsApp and phone
-                  go straight to Tour Rajasthan's own contact. */}
+              {/* All enquiries are routed through Tourglobe (client,
+                  2026-10-08), so both buttons use Tourglobe's numbers. */}
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -204,10 +246,10 @@ export default async function ItineraryPage({ params }: Props) {
                 Ask on WhatsApp
               </a>
               <a
-                href={`tel:${TOUR_RAJASTHAN.contact.phone.replace(/[^\d+]/g, "")}`}
+                href={tel(COMPANY.phones[0])}
                 className="mt-3 block rounded-full border border-brown px-6 py-3 text-center font-semibold text-brown transition-colors hover:bg-brown hover:text-cream"
               >
-                Call {TOUR_RAJASTHAN.contact.phone}
+                Call {COMPANY.phones[0]}
               </a>
               <p className="mt-3 text-center text-xs text-ink-body">
                 No payment needed to get a plan.
@@ -232,10 +274,7 @@ export default async function ItineraryPage({ params }: Props) {
         </article>
       </main>
       <Footer />
-      <WhatsAppButton
-        href={whatsappUrl}
-        label="Chat with Tour Rajasthan on WhatsApp"
-      />
+      <WhatsAppButton href={whatsappUrl} />
     </>
   );
 }

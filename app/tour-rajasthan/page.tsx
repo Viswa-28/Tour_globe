@@ -3,9 +3,9 @@ import Link from "next/link";
 import {
   RAJASTHAN_ITINERARIES,
   TOUR_RAJASTHAN,
-  tourRajasthanWhatsAppUrl,
+  tourWhatsAppUrl,
 } from "@/lib/rajasthan-itineraries";
-import { SITE_URL } from "@/lib/site";
+import { COMPANY, SITE_URL } from "@/lib/site";
 import { pageOpenGraph } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -17,7 +17,7 @@ export const dynamic = "error";
 
 const title = "Tour Rajasthan — Rajasthan Tour Packages";
 const description =
-  "Rajasthan tour itineraries from 6 to 9 days — Jaipur, Jodhpur, Udaipur, Jaisalmer, Bikaner and Pushkar. Tour Rajasthan, Jaipur, with Tourglobe, Madurai.";
+  "Rajasthan tour itineraries from 06 to 09 days — Jaipur, Jodhpur, Udaipur, Jaisalmer, Bikaner and Pushkar. Tour Rajasthan, Jaipur, with Tourglobe, Madurai.";
 
 export const metadata: Metadata = {
   title,
@@ -27,11 +27,11 @@ export const metadata: Metadata = {
 };
 
 const whatsappMessage =
-  "Hello Tour Rajasthan — I'd like help planning a Rajasthan trip.";
+  "Hello Tourglobe — I'd like help planning a Rajasthan trip (Tour Rajasthan).";
+
+const tel = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
 export default function TourRajasthanPage() {
-  const { contact } = TOUR_RAJASTHAN;
-
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -80,7 +80,7 @@ export default function TourRajasthanPage() {
 
           <p className="body-copy mt-8">
             Tour Rajasthan is Tourglobe&apos;s Rajasthan specialization, with
-            its contact on the ground in Jaipur. Each route below is a starting
+            a channel partner on the ground in Jaipur. Each route below is a starting
             point — a counsellor adjusts the pace, the stops and the hotels to
             suit your trip.
           </p>
@@ -93,7 +93,10 @@ export default function TourRajasthanPage() {
               {RAJASTHAN_ITINERARIES.map((t, i) => (
                 <li key={t.slug} className="flex">
                   <Reveal stagger={i % 4} className="flex w-full [&>a]:w-full">
-                    <ItineraryCard tour={t} />
+                    <ItineraryCard
+                      tour={t}
+                      invert={i === RAJASTHAN_ITINERARIES.length - 1}
+                    />
                   </Reveal>
                 </li>
               ))}
@@ -101,7 +104,10 @@ export default function TourRajasthanPage() {
           </section>
 
           {/* No enquiry form in the Tour Rajasthan section (removed
-              2026-10-05 at the client's request) — contact is direct. */}
+              2026-10-05 at the client's request). All enquiries are routed
+              through Tourglobe (client, 2026-10-08): the buttons use
+              Tourglobe's numbers. The partner's number is in the footer
+              only. */}
           <section
             aria-labelledby="contact-heading"
             className="mt-16 border border-[#E5DCD0] bg-cream p-8 md:p-10"
@@ -110,33 +116,65 @@ export default function TourRajasthanPage() {
               Plan your Rajasthan <em className="text-brown">trip</em>
             </h2>
             <p className="body-copy mt-4">
-              Talk to {contact.name}, Tour Rajasthan, {contact.location}. No
-              payment needed to get a plan.
+              Talk to a Tourglobe counsellor. No payment needed to get a plan.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href={tourRajasthanWhatsAppUrl(whatsappMessage)}
+                href={tourWhatsAppUrl(whatsappMessage)}
                 target="_blank"
                 rel="noopener"
                 className="rounded-full bg-brown px-7 py-3 font-semibold text-cream transition-colors hover:bg-ink"
               >
                 Ask on WhatsApp
               </a>
-              <a
-                href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                className="rounded-full border border-brown px-7 py-3 font-semibold text-brown transition-colors hover:bg-brown hover:text-cream"
-              >
-                Call {contact.phone}
-              </a>
+              {COMPANY.phones.map((phone) => (
+                <a
+                  key={phone}
+                  href={tel(phone)}
+                  className="rounded-full border border-brown px-7 py-3 font-semibold text-brown transition-colors hover:bg-brown hover:text-cream"
+                >
+                  Call {phone}
+                </a>
+              ))}
             </div>
+          </section>
+
+          {/* CC BY-SA requires a visible credit for every photo shown on
+              this page. */}
+          <section aria-labelledby="credits-heading" className="mt-12">
+            <h2 id="credits-heading" className="eyebrow text-brown">
+              Photo credits
+            </h2>
+            <ul className="mt-3 space-y-1 text-xs leading-relaxed text-ink-body">
+              {RAJASTHAN_ITINERARIES.map((t) => (
+                <li key={t.slug}>
+                  {t.name}:{" "}
+                  <a
+                    href={t.image.source}
+                    target="_blank"
+                    rel="noopener"
+                    className="underline underline-offset-2 hover:text-brown"
+                  >
+                    {t.image.author}
+                  </a>
+                  ,{" "}
+                  <a
+                    href={t.image.licenceUrl}
+                    target="_blank"
+                    rel="noopener license"
+                    className="underline underline-offset-2 hover:text-brown"
+                  >
+                    {t.image.licence}
+                  </a>
+                  , via Wikimedia Commons
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </main>
       <Footer />
-      <WhatsAppButton
-        href={tourRajasthanWhatsAppUrl(whatsappMessage)}
-        label="Chat with Tour Rajasthan on WhatsApp"
-      />
+      <WhatsAppButton href={tourWhatsAppUrl(whatsappMessage)} />
     </>
   );
 }

@@ -1,3 +1,5 @@
+import { COMPANY } from "@/lib/site";
+
 /**
  * Tour Rajasthan itineraries — the "Tour Rajasthan" brand in Our brands
  * (lib/site.ts CO_BRANDS), contact Mr. Krishnamurthy, Jaipur.
@@ -11,6 +13,8 @@
  *   written from its route. Its day 1 says "night stay at own arranged" —
  *   TODO(client): confirm who arranges the Paota night.
  * - Fixed dates ("19 Jan", "20 Dec", "Feb") replaced with day numbers.
+ * - Railway-station pickups and drops removed; airport only (client,
+ *   2026-10-08).
  * - A third-party operator's signature block (name, phones, emails,
  *   websites) removed from the 07 Days Pushkar file. It must never ship.
  * - Its "Vehicle cost includes" list is NOT carried over: inclusions are
@@ -46,29 +50,108 @@ export type RajasthanItinerary = {
   metaTitle: string;
   /** ≤155 chars. */
   metaDescription: string;
+  image: TourImage;
   itinerary: ItineraryDay[];
 };
 
 /**
- * Tour Rajasthan's own contact. Every page under /tour-rajasthan uses this
- * instead of Tourglobe's: the phone link, both WhatsApp buttons, and (via
- * app/api/enquiry) the inbox enquiries from these pages are sent to.
+ * Tour photographs, 1500x1000 JPG crops (2x display) in
+ * public/images/rajasthan/. All from Wikimedia Commons under CC BY-SA 4.0,
+ * licence checked per file (2026-10-08), as claude.md § Images allows.
+ * CC BY-SA requires a visible credit wherever the photo is shown — the
+ * itinerary page captions it and the landing page lists every credit.
+ * A dunes photo whose author asks to be contacted before commercial use
+ * was rejected for that reason.
+ */
+export type TourImage = {
+  src: string;
+  alt: string;
+  author: string;
+  licence: string;
+  licenceUrl: string;
+  /** Commons file page — the attribution link. */
+  source: string;
+};
+
+const BY_SA = {
+  licence: "CC BY-SA 4.0",
+  licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+};
+
+const IMG = {
+  udaipur: {
+    src: "/images/rajasthan/udaipur-lake-pichola.jpg",
+    alt: "Sunset over Lake Pichola in Udaipur, with the Lake Palace on the water",
+    author: "UnpetitproleX",
+    source: "https://commons.wikimedia.org/wiki/File:Lake_Pichola_at_sunset,_Udaipur,_Rajasthan,_India.jpg",
+    ...BY_SA,
+  },
+  pushkar: {
+    src: "/images/rajasthan/pushkar-ghats.jpg",
+    alt: "Pilgrims on the stone ghats beside Pushkar Lake",
+    author: "Jakub Hałun",
+    source: "https://commons.wikimedia.org/wiki/File:20191214_Ghats_in_Pushkar_1713_8593.jpg",
+    ...BY_SA,
+  },
+  jaisalmer: {
+    src: "/images/rajasthan/jaisalmer-fort.jpg",
+    alt: "The golden sandstone bastions of Jaisalmer Fort",
+    author: "Clément Bardot",
+    source: "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort,_India.jpg",
+    ...BY_SA,
+  },
+  dunes: {
+    src: "/images/rajasthan/sam-sand-dunes.jpg",
+    alt: "Wind-rippled sand dunes in the Thar Desert",
+    author: "Clément Bardot",
+    source: "https://commons.wikimedia.org/wiki/File:Dunes,_D%C3%A9sert_du_Thar.jpg",
+    ...BY_SA,
+  },
+  chittorgarh: {
+    src: "/images/rajasthan/chittorgarh-fort.jpg",
+    alt: "A carved stone temple framed by an archway inside Chittorgarh Fort",
+    author: "Navneet Sharma",
+    source: "https://commons.wikimedia.org/wiki/File:Shiva_Temple_Chittaurgarh_Fort.jpg",
+    ...BY_SA,
+  },
+  jodhpur: {
+    src: "/images/rajasthan/jodhpur-mehrangarh.jpg",
+    alt: "Carved sandstone palaces inside Mehrangarh Fort, Jodhpur",
+    author: "Jakub Hałun",
+    source: "https://commons.wikimedia.org/wiki/File:20191210_Mehrangarh_Fort,_Jodhpur_1016_7834.jpg",
+    ...BY_SA,
+  },
+  bikaner: {
+    src: "/images/rajasthan/bikaner-junagarh.jpg",
+    alt: "A red sandstone arcade at Junagarh Fort, Bikaner",
+    author: "Jakub Hałun",
+    source: "https://commons.wikimedia.org/wiki/File:20191212_Junagarh_Fort,_Bikaner,_India_1524_8206.jpg",
+    ...BY_SA,
+  },
+  jaipur: {
+    src: "/images/rajasthan/jaipur-amber-fort.jpg",
+    alt: "The courtyard and palace walls of Amber Fort, Jaipur, below the Aravalli hills",
+    author: "Jakub Hałun",
+    source: "https://commons.wikimedia.org/wiki/File:Amber_Fort,_Jaipur,_20191219_1011_9509.jpg",
+    ...BY_SA,
+  },
+} satisfies Record<string, TourImage>;
+
+/**
+ * All enquiries are routed through Tourglobe (client, 2026-10-08): the
+ * call and WhatsApp buttons on every /tour-rajasthan page use Tourglobe's
+ * numbers (COMPANY in lib/site.ts). The Jaipur channel partner's number
+ * (Mr. Krishnamurthy) appears only in the footer's brand contacts, from
+ * CO_BRANDS in lib/site.ts — never on these pages (client, 2026-10-08).
  */
 export const TOUR_RAJASTHAN = {
   name: "Tour Rajasthan",
   path: "/tour-rajasthan",
-  contact: {
-    name: "Mr. Krishnamurthy",
-    phone: "+91 96729 88705",
-    location: "Jaipur",
-    // Digits only, for wa.me. Client confirmed (2026-10-05) this number for
-    // Tour Rajasthan's phone and WhatsApp.
-    whatsappNumber: "919672988705",
-  },
 } as const;
 
-export function tourRajasthanWhatsAppUrl(message: string) {
-  return `https://wa.me/${TOUR_RAJASTHAN.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;
+/** WhatsApp click-to-chat to Tourglobe, with a tour-specific message. */
+export function tourWhatsAppUrl(message: string) {
+  return `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
 export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
@@ -80,13 +163,14 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Ajmer", "Pushkar", "Jodhpur", "Nathdwara", "Udaipur"],
     summary:
       "The Pink City, the Blue City and the City of Lakes, with Ajmer, Pushkar and Nathdwara on the way.",
-    metaTitle: "6-Day Rajasthan Tour: Jaipur, Jodhpur, Udaipur",
+    metaTitle: "06 Days Rajasthan Tour: Jaipur, Jodhpur, Udaipur",
     metaDescription:
       "5 nights / 6 days through Jaipur, Ajmer, Pushkar, Jodhpur, Nathdwara and Udaipur. A Tour Rajasthan itinerary, planned with Tourglobe.",
+    image: IMG.udaipur,
     itinerary: [
       {
         title: "Arrival in Jaipur",
-        text: "Met at the airport or railway station and transferred to your hotel. Time permitting, an easy first look at the city: Patrika Gate, Birla Temple, Albert Hall Museum, and the bazaars around Bapu and Johari Bazaar for textiles, jewellery and handicrafts.",
+        text: "Met at Jaipur airport and transferred to your hotel. Time permitting, an easy first look at the city: Patrika Gate, Birla Temple, Albert Hall Museum, and the bazaars around Bapu and Johari Bazaar for textiles, jewellery and handicrafts.",
         overnight: "Jaipur",
       },
       {
@@ -113,7 +197,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       },
       {
         title: "Departure from Udaipur",
-        text: "After breakfast, transfer to Udaipur airport or railway station for your onward journey.",
+        text: "After breakfast, drop off at Udaipur airport for your onward journey.",
       },
     ],
   },
@@ -125,13 +209,14 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Jodhpur", "Nathdwara", "Udaipur", "Chittorgarh", "Ajmer", "Pushkar"],
     summary:
       "A loop from Jaipur through Jodhpur and Udaipur, returning via Chittorgarh Fort, Ajmer and Pushkar.",
-    metaTitle: "7-Day Rajasthan Tour with Udaipur & Pushkar",
+    metaTitle: "07 Days Rajasthan Tour with Udaipur & Pushkar",
     metaDescription:
       "6 nights / 7 days: Jaipur, Jodhpur, Nathdwara, Udaipur, Chittorgarh, Ajmer and Pushkar, returning to Jaipur. A Tour Rajasthan itinerary.",
+    image: IMG.pushkar,
     itinerary: [
       {
         title: "Arrival & Jaipur city sights",
-        text: "Pickup from Jaipur railway station or airport and transfer to your hotel. Then Patrika Gate, Birla Temple, Albert Hall Museum, Hawa Mahal, the City Palace, Jantar Mantar and Govind Dev Ji Temple.",
+        text: "Pickup from Jaipur airport and transfer to your hotel. Then Patrika Gate, Birla Temple, Albert Hall Museum, Hawa Mahal, the City Palace, Jantar Mantar and Govind Dev Ji Temple.",
         overnight: "Jaipur",
       },
       {
@@ -163,7 +248,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       },
       {
         title: "Pushkar – Jaipur departure",
-        text: "Drive back to Jaipur, with time in the market before your drop at the railway station or airport.",
+        text: "Drive back to Jaipur, with time in the market before drop off at Jaipur airport.",
       },
     ],
   },
@@ -175,9 +260,10 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Bikaner", "Jaisalmer", "Sam", "Jodhpur"],
     summary:
       "West into the Thar: Bikaner, the golden fort of Jaisalmer, a night in a desert camp at Sam, and Jodhpur.",
-    metaTitle: "7-Day Rajasthan Desert Tour with Jaisalmer",
+    metaTitle: "07 Days Rajasthan Desert Tour with Jaisalmer",
     metaDescription:
       "6 nights / 7 days: Jaipur, Bikaner, Jaisalmer, a Sam desert camp and Jodhpur, returning to Jaipur. A Tour Rajasthan itinerary.",
+    image: IMG.jaisalmer,
     itinerary: [
       {
         title: "Arrival in Jaipur",
@@ -215,7 +301,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       {
         title: "Jodhpur – Jaipur departure",
         drive: "Approx. 340 km / 6 hrs",
-        text: "Drive back to Jaipur, with stops on the way, for your drop at the airport, railway station or another point you choose.",
+        text: "Drive back to Jaipur, with stops on the way, for drop off at Jaipur airport.",
       },
     ],
   },
@@ -227,9 +313,10 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Bikaner", "Jaisalmer", "Sam", "Jodhpur", "Pushkar"],
     summary:
       "The desert circuit at an easier pace, ending with a quiet night by the lake in Pushkar.",
-    metaTitle: "8-Day Rajasthan Tour: Desert, Jodhpur & Pushkar",
+    metaTitle: "08 Days Rajasthan Tour: Desert & Pushkar",
     metaDescription:
       "7 nights / 8 days: Jaipur, Bikaner, Jaisalmer, a Sam desert camp, Jodhpur and Pushkar, returning to Jaipur. A Tour Rajasthan itinerary.",
+    image: IMG.dunes,
     itinerary: [
       {
         title: "Arrival in Jaipur",
@@ -274,7 +361,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       {
         title: "Pushkar – Jaipur departure",
         drive: "Approx. 150 km / 3 hrs",
-        text: "A slow morning by the lake, then back to Jaipur for your drop at the airport or railway station.",
+        text: "A slow morning by the lake, then back to Jaipur for drop off at Jaipur airport.",
       },
     ],
   },
@@ -286,9 +373,10 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Khatu", "Jaisalmer", "Sam", "Jodhpur", "Udaipur", "Chittorgarh", "Pushkar"],
     summary:
       "Darshan at Khatu Shyam Ji, then the full circle: Jaisalmer, the dunes, Jodhpur, Udaipur, Chittorgarh and Pushkar.",
-    metaTitle: "8-Day Rajasthan Tour with Khatu Shyam Ji",
+    metaTitle: "08 Days Rajasthan Tour with Khatu Shyam Ji",
     metaDescription:
       "7 nights / 8 days: Jaipur, Khatu Shyam Ji, Jaisalmer, Sam, Jodhpur, Udaipur, Chittorgarh and Pushkar. A Tour Rajasthan itinerary.",
+    image: IMG.chittorgarh,
     itinerary: [
       {
         title: "Arrival in Jaipur",
@@ -332,7 +420,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       {
         title: "Pushkar – Jaipur departure",
         drive: "Approx. 150 km / 3 hrs",
-        text: "Free time by the lake or in the bazaars, then back to Jaipur for your drop at the airport or railway station.",
+        text: "Free time by the lake or in the bazaars, then back to Jaipur for drop off at Jaipur airport.",
       },
     ],
   },
@@ -344,9 +432,10 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Pushkar", "Jaisalmer", "Sam", "Jodhpur", "Nathdwara", "Udaipur"],
     summary:
       "Jaipur, then via Pushkar to the dunes of Jaisalmer, and south through Jodhpur to the lakes of Udaipur.",
-    metaTitle: "8-Day Rajasthan Tour: Jaisalmer to Udaipur",
+    metaTitle: "08 Days Rajasthan Tour: Jaisalmer to Udaipur",
     metaDescription:
       "7 nights / 8 days: Jaipur, Pushkar, Jaisalmer, a Sam desert camp, Jodhpur, Nathdwara and Udaipur. A Tour Rajasthan itinerary.",
+    image: IMG.jodhpur,
     itinerary: [
       {
         title: "Arrival in Jaipur",
@@ -385,7 +474,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       },
       {
         title: "Departure",
-        text: "Drop at Udaipur or Jaipur airport.",
+        text: "Drop off at Udaipur or Jaipur airport.",
       },
     ],
   },
@@ -397,9 +486,10 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Paota", "Khatu", "Salasar", "Bikaner", "Sam", "Jaisalmer", "Jodhpur", "Pushkar"],
     summary:
       "Temple darshan at Khatu Shyam Ji and Salasar Balaji, then Bikaner, the dunes, Jaisalmer, Jodhpur and Pushkar.",
-    metaTitle: "8-Day Rajasthan Tour with Khatu & Salasar",
+    metaTitle: "08 Days Rajasthan Tour with Khatu & Salasar",
     metaDescription:
       "7 nights / 8 days: Khatu Shyam Ji, Salasar Balaji, Bikaner, a Sam desert camp, Jaisalmer, Jodhpur and Pushkar. A Tour Rajasthan itinerary.",
+    image: IMG.bikaner,
     itinerary: [
       {
         title: "Jaipur – Shahpura – Paota",
@@ -438,7 +528,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       },
       {
         title: "Jaipur departure",
-        text: "Drop at Jaipur airport.",
+        text: "Drop off at Jaipur airport.",
       },
     ],
   },
@@ -450,9 +540,10 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
     route: ["Jaipur", "Bikaner", "Jaisalmer", "Sam", "Jodhpur", "Nathdwara", "Udaipur"],
     summary:
       "The longest route: Jaipur across the desert to Jaisalmer, then south through Jodhpur to finish in Udaipur.",
-    metaTitle: "9-Day Rajasthan Tour: Jaipur to Udaipur",
+    metaTitle: "09 Days Rajasthan Tour: Jaipur to Udaipur",
     metaDescription:
       "8 nights / 9 days: Jaipur, Bikaner, Jaisalmer, a Sam desert camp, Jodhpur, Nathdwara and Udaipur. A Tour Rajasthan itinerary.",
+    image: IMG.jaipur,
     itinerary: [
       {
         title: "Arrival in Jaipur",
@@ -496,7 +587,7 @@ export const RAJASTHAN_ITINERARIES: RajasthanItinerary[] = [
       },
       {
         title: "Departure from Udaipur",
-        text: "Drop at Udaipur airport.",
+        text: "Drop off at Udaipur airport.",
       },
     ],
   },
