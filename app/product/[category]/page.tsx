@@ -68,7 +68,7 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <>
       <Nav />
-      <main className="bg-sand-deep pb-28 pt-32 md:pt-36">
+      <main id="main" className="bg-sand-deep pb-28 pt-32 md:pt-36">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
@@ -111,6 +111,10 @@ export default async function CategoryPage({ params }: Props) {
               you&apos;re dreaming of and a counsellor will plan from there.
             </p>
           ) : (
+            <>
+            {/* Visually hidden: keeps the outline h1 → h2 → h3 (cards are
+                h3). Audit 2026-10-08. */}
+            <h2 className="sr-only">{cat.name} programmes</h2>
             <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {places.map((p, i) => (
                 <li key={p.slug} className="flex">
@@ -126,6 +130,7 @@ export default async function CategoryPage({ params }: Props) {
                 </li>
               ))}
             </ul>
+            </>
           )}
 
           {/* Footer CTA */}

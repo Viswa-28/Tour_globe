@@ -24,7 +24,7 @@ export default function HomePage() {
   return (
     <>
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Themes />

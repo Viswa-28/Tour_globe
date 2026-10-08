@@ -28,7 +28,7 @@ export default function Error({
   return (
     <>
       <Nav />
-      <main
+      <main id="main"
         data-ground="dark"
         className="flex min-h-[70vh] flex-col items-center justify-center bg-navy px-5 text-center text-on-navy"
       >

@@ -30,7 +30,12 @@ export function Marquee() {
       className="marquee-track items-center"
     >
       {Array.from({ length: REPEATS_PER_TRACK }, (_, i) => (
-        <span key={i} className="flex items-center gap-14 pr-14">
+        <span
+          key={i}
+          // Screen readers hear the line once, not once per visual repeat.
+          aria-hidden={i > 0 || undefined}
+          className="flex items-center gap-14 pr-14"
+        >
           <span className="italic text-on-navy">{LINE}</span>
           <span
             aria-hidden="true"

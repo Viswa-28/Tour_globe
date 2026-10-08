@@ -92,7 +92,7 @@ export default async function ItineraryPage({ params }: Props) {
   return (
     <>
       <Nav />
-      <main className="bg-sand-deep">
+      <main id="main" className="bg-sand-deep">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

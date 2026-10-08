@@ -116,7 +116,9 @@ async function sendEmail(e: Enquiry): Promise<void> {
       // otherwise Reply goes to ENQUIRY_FROM_EMAIL, which is only a sending
       // identity and may not be a mailbox at all, so the reply would bounce.
       replyTo: EMAIL_RE.test(e.email) ? e.email : COMPANY.email,
-      subject: `Enquiry from ${e.name} — tourglobe.in`,
+      // Control characters stripped: the name is visitor input and must
+      // never be able to break the subject line.
+      subject: `Enquiry from ${e.name.replace(/[\r\n\t]+/g, " ")} — tourglobe.in`,
       text: body,
     }),
     8000,
@@ -137,7 +139,18 @@ async function sendEmail(e: Enquiry): Promise<void> {
  * value. The addresses are already public — info@tourglobe.in is in the
  * footer and the JSON-LD.
  */
-export async function GET() {
+export async function GET(req: Request) {
+  // Public in development; in production only with ?key=<ENQUIRY_HEALTH_KEY>
+  // (audit 2026-10-08: it described the mail setup to anyone). With the
+  // variable unset, production answers 404.
+  if (process.env.NODE_ENV === "production") {
+    const expected = process.env.ENQUIRY_HEALTH_KEY?.trim();
+    const given = new URL(req.url).searchParams.get("key");
+    if (!expected || given !== expected) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+  }
+
   const from = process.env.ENQUIRY_FROM_EMAIL?.trim() || null;
   const toOverride = process.env.ENQUIRY_TO_EMAIL?.trim() || null;
   const to = toOverride || COMPANY.email;
@@ -218,10 +231,12 @@ export async function POST(req: Request) {
     return value.slice(0, FIELD_LIMITS[k]);
   };
 
-  // Honeypot filled or form submitted inhumanly fast → pretend success.
-  const elapsedMs = Number(body.elapsedMs ?? 0);
+  // Honeypot filled, or submitted inhumanly fast → pretend success. A
+  // missing or non-numeric elapsedMs counts as a bot too: the real form
+  // always sends it, so leaving it out must not skip the check.
+  const elapsedMs = Number(body.elapsedMs);
   const honeypot = String(body.company ?? "").trim();
-  if (honeypot !== "" || (elapsedMs > 0 && elapsedMs < 3000)) {
+  if (honeypot !== "" || !Number.isFinite(elapsedMs) || elapsedMs < 3000) {
     return NextResponse.json({ ok: true });
   }
 

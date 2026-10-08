@@ -79,8 +79,11 @@ export default function PrivacyPolicyPage() {
       </p>
       <p>
         Our host, Vercel, records anonymous page performance measurements
-        (loading speed and responsiveness) through Vercel Speed Insights.
-        These are aggregated and are not used to identify individual visitors.
+        (loading speed and responsiveness) through Vercel Speed Insights, and
+        counts page visits through Vercel Web Analytics — which pages are
+        viewed, the referring site, and the country and device type. Neither
+        uses cookies; both are aggregated and are not used to identify
+        individual visitors.
       </p>
 
       <h3>Cookies</h3>

@@ -19,7 +19,7 @@ export function LegalPage({
   return (
     <>
       <Nav />
-      <main className="bg-sand-deep">
+      <main id="main" className="bg-sand-deep">
         <div
           data-ground="dark"
           className="bg-navy pb-14 pt-32 text-on-navy md:pt-36"

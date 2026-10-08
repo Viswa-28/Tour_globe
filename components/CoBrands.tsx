@@ -36,7 +36,7 @@ export function CoBrands() {
       className="bg-brown py-20 text-cream md:py-24"
     >
       <Reveal className="mx-auto max-w-6xl px-5 md:px-8">
-        <h2 className="eyebrow text-cream/60" id="cobrands-heading">
+        <h2 className="eyebrow text-cream/80" id="cobrands-heading">
           Our brands
         </h2>
         <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap">

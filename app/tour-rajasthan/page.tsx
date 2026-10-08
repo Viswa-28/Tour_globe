@@ -49,7 +49,7 @@ export default function TourRajasthanPage() {
   return (
     <>
       <Nav />
-      <main className="bg-sand-deep pt-32 md:pt-36">
+      <main id="main" className="bg-sand-deep pt-32 md:pt-36">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
@@ -96,6 +96,7 @@ export default function TourRajasthanPage() {
                     <ItineraryCard
                       tour={t}
                       invert={i === RAJASTHAN_ITINERARIES.length - 1}
+                      priority={i < 2}
                     />
                   </Reveal>
                 </li>

@@ -24,6 +24,40 @@ const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
 
   /**
+   * Security headers on every response (audit 2026-10-08 — there were
+   * none). The CSP is deliberately limited to directives that cannot break
+   * the page: it blocks framing (clickjacking), plugins, <base> hijacking
+   * and off-site form posts, but does not restrict scripts/styles — Next's
+   * inline hydration scripts and the static JSON-LD would need nonces or
+   * hashes first. Tighten to a full script-src policy later if wanted.
+   */
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+          },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains",
+          },
+        ],
+      },
+    ];
+  },
+
+  /**
    * Theme slugs changed on 2026-08-24: "Pilgrimage Tourism" was renamed, and
    * "Wellness" and "Yoga" were merged. `dynamicParams = false` makes the old
    * paths hard 404s, so redirect them — cheap insurance for any preview link

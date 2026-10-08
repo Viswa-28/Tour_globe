@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Bricolage_Grotesque, Archivo } from "next/font/google";
 import "./globals.css";
 import { CO_BRANDS, COMPANY, SITE_URL } from "@/lib/site";
+import { CATEGORIES } from "@/lib/data";
 import { MotionProvider } from "@/components/MotionProvider";
 import { LenisProvider } from "@/components/LenisProvider";
 import { BackToTop } from "@/components/BackToTop";
@@ -76,6 +77,25 @@ const travelAgencyJsonLd = {
   // removed there (it previously still listed a co-brand dropped from that
   // list).
   sameAs: CO_BRANDS.map((b) => b.url).filter(Boolean),
+  // Added 2026-10-08 for GEO: explicit, machine-readable answers to "where
+  // do they work, what do they know, how do I reach them". Verified facts
+  // only. TODO(client): openingHoursSpecification once hours are confirmed;
+  // add the Google Business Profile URL to sameAs once it exists.
+  areaServed: [
+    { "@type": "City", name: "Madurai" },
+    { "@type": "State", name: "Tamil Nadu" },
+    { "@type": "Country", name: "India" },
+    "Worldwide",
+  ],
+  knowsAbout: CATEGORIES.map((c) => c.name),
+  contactPoint: COMPANY.phones.map((telephone) => ({
+    "@type": "ContactPoint",
+    telephone,
+    email: COMPANY.email,
+    contactType: "customer service",
+    areaServed: "Worldwide",
+    // TODO(client): availableLanguage (e.g. English, Tamil) — unconfirmed.
+  })),
 };
 
 export default function RootLayout({
@@ -88,6 +108,10 @@ export default function RootLayout({
           hydrates, which reads as a mismatch. This suppresses the warning for
           <body>'s own attributes only — children still hydrate strictly. */}
       <body suppressHydrationWarning>
+        {/* Every page's <main> carries id="main". */}
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(travelAgencyJsonLd) }}

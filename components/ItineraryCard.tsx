@@ -20,9 +20,13 @@ import { TOUR_RAJASTHAN, type RajasthanItinerary } from "@/lib/rajasthan-itinera
 export function ItineraryCard({
   tour,
   invert = false,
+  priority = false,
 }: {
   tour: RajasthanItinerary;
   invert?: boolean;
+  /** Above-the-fold cards: load eagerly. Lighthouse found the first card's
+   *  photo was the LCP element but lazily loaded (3.3s LCP). */
+  priority?: boolean;
 }) {
   return (
     <Link
@@ -39,6 +43,7 @@ export function ItineraryCard({
           src={tour.image.src}
           alt={tour.image.alt}
           fill
+          priority={priority}
           sizes="(min-width: 1280px) 300px, (min-width: 768px) 50vw, 100vw"
           className="object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:group-hover:scale-100"
         />

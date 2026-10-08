@@ -166,13 +166,22 @@ export function EnquiryForm() {
   }
 
   const labelCls = "block text-sm font-semibold text-ink";
+  // Audit 2026-10-08: --rule borders measured 1.27:1 on cream (fields need
+  // 3:1 to be seen) and /50 placeholders 2.6:1. ink-body/60 ≈ 3.3:1,
+  // ink-body/75 ≈ 5.1:1.
   const inputCls =
-    "mt-2 w-full rounded-lg border border-rule bg-cream px-4 py-3 text-ink placeholder:text-ink-body/50 aria-[invalid=true]:border-brown";
+    "mt-2 w-full rounded-lg border border-ink-body/60 bg-cream px-4 py-3 text-ink placeholder:text-ink-body/75 aria-[invalid=true]:border-brown";
   const errCls = "mt-1 text-sm text-brown";
 
   /** Everything an input needs to be wired up correctly and accessibly. */
   const field = (name: string, errKey: keyof FieldErrors = name as keyof FieldErrors) => {
     const message = visible(errKey);
+    // The "phone or email" error belongs to both fields, so both point at it.
+    const contact =
+      (name === "phone" || name === "email") && visible("contact");
+    const describedBy = [message && `${name}-error`, contact && "contact-error"]
+      .filter(Boolean)
+      .join(" ");
     return {
       id: name,
       name,
@@ -180,8 +189,8 @@ export function EnquiryForm() {
       maxLength: FIELD_LIMITS[name as keyof typeof FIELD_LIMITS],
       onBlur: onBlur(name),
       onChange: onChange(name),
-      "aria-invalid": Boolean(message),
-      "aria-describedby": message ? `${name}-error` : undefined,
+      "aria-invalid": Boolean(message || contact),
+      "aria-describedby": describedBy || undefined,
     };
   };
 
@@ -193,8 +202,10 @@ export function EnquiryForm() {
     errKey?: keyof FieldErrors;
   }) => {
     const message = visible(errKey ?? (name as keyof FieldErrors));
+    // role="alert" so an error that appears on blur is announced — before,
+    // screen readers only heard it on returning to the field.
     return message ? (
-      <p id={`${name}-error`} className={errCls}>
+      <p id={`${name}-error`} role="alert" className={errCls}>
         {message}
       </p>
     ) : null;
@@ -248,7 +259,7 @@ export function EnquiryForm() {
           {/* The "give us at least one way to reach you" message belongs
               under the pair, not under either field alone. */}
           {visible("contact") && (
-            <p id="phone-error" className={errCls}>
+            <p id="contact-error" role="alert" className={errCls}>
               {errors.contact}
             </p>
           )}
