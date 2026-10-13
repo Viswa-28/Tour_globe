@@ -93,6 +93,12 @@ export default function PrivacyPolicyPage() {
         nothing in your browser. That is why you are not asked to accept a
         cookie banner.
       </p>
+      <p>
+        The office map in the footer is the one exception, and only if you
+        choose it: nothing from Google loads until you press
+        &ldquo;Show map&rdquo;. Once you do, the map is served by Google Maps,
+        which may set its own cookies under Google&apos;s privacy policy.
+      </p>
 
       <h2>Why we use it</h2>
       <p>

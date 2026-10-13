@@ -129,7 +129,7 @@ export default async function ItineraryPage({ params }: Props) {
         <article className="mx-auto max-w-[1240px] px-5 py-16 md:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <figure className="mb-12">
+              <div className="mb-12">
                 <div className="relative aspect-[3/2] overflow-hidden bg-sand">
                   <Image
                     src={t.image.src}
@@ -140,29 +140,7 @@ export default async function ItineraryPage({ params }: Props) {
                     className="object-cover"
                   />
                 </div>
-                {/* Visible credit — a CC BY-SA licence condition. */}
-                <figcaption className="mt-2 text-xs text-ink-body">
-                  Photo:{" "}
-                  <a
-                    href={t.image.source}
-                    target="_blank"
-                    rel="noopener"
-                    className="underline underline-offset-2 hover:text-brown"
-                  >
-                    {t.image.author}
-                  </a>
-                  ,{" "}
-                  <a
-                    href={t.image.licenceUrl}
-                    target="_blank"
-                    rel="noopener license"
-                    className="underline underline-offset-2 hover:text-brown"
-                  >
-                    {t.image.licence}
-                  </a>
-                  , via Wikimedia Commons
-                </figcaption>
-              </figure>
+              </div>
 
               <h2 className="h2 text-ink">
                 Day by <em className="text-brown">day</em>

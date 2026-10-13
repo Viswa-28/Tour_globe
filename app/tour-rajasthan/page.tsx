@@ -139,39 +139,6 @@ export default function TourRajasthanPage() {
               ))}
             </div>
           </section>
-
-          {/* CC BY-SA requires a visible credit for every photo shown on
-              this page. */}
-          <section aria-labelledby="credits-heading" className="mt-12">
-            <h2 id="credits-heading" className="eyebrow text-brown">
-              Photo credits
-            </h2>
-            <ul className="mt-3 space-y-1 text-xs leading-relaxed text-ink-body">
-              {RAJASTHAN_ITINERARIES.map((t) => (
-                <li key={t.slug}>
-                  {t.name}:{" "}
-                  <a
-                    href={t.image.source}
-                    target="_blank"
-                    rel="noopener"
-                    className="underline underline-offset-2 hover:text-brown"
-                  >
-                    {t.image.author}
-                  </a>
-                  ,{" "}
-                  <a
-                    href={t.image.licenceUrl}
-                    target="_blank"
-                    rel="noopener license"
-                    className="underline underline-offset-2 hover:text-brown"
-                  >
-                    {t.image.licence}
-                  </a>
-                  , via Wikimedia Commons
-                </li>
-              ))}
-            </ul>
-          </section>
         </div>
       </main>
       <Footer />

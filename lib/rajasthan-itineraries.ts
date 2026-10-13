@@ -58,8 +58,12 @@ export type RajasthanItinerary = {
  * Tour photographs, 1500x1000 JPG crops (2x display) in
  * public/images/rajasthan/. All from Wikimedia Commons under CC BY-SA 4.0,
  * licence checked per file (2026-10-08), as claude.md § Images allows.
- * CC BY-SA requires a visible credit wherever the photo is shown — the
- * itinerary page captions it and the landing page lists every credit.
+ * LICENCE GAP: CC BY-SA requires crediting each photographer (author,
+ * licence, link — the `author`/`source`/`licenceUrl` fields below). The
+ * credits page was removed on 2026-10-13 at the client's request, so
+ * the site currently does not meet that condition. TODO(client): either
+ * restore a credit (a footer-linked page is enough) or replace these
+ * photos with CC0 / public-domain / client-owned images.
  * A dunes photo whose author asks to be contacted before commercial use
  * was rejected for that reason.
  */

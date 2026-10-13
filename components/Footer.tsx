@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { EmailLink } from "@/components/EmailLink";
+import { MapEmbed } from "@/components/MapEmbed";
 import { CO_BRANDS, COMPANY } from "@/lib/site";
 
 /**
@@ -74,6 +75,7 @@ export function Footer() {
                 </Fragment>
               ))}
             </address>
+            <MapEmbed />
           </div>
         </div>
 
@@ -133,6 +135,10 @@ export function Footer() {
           </nav>
           <p>Madurai · Tamil Nadu · India</p>
         </div>
+
+        <p className="mt-6 text-center text-xs tracking-[0.04em] text-on-navy-mut md:text-left">
+          Designed &amp; developed by luno_lap_
+        </p>
       </div>
     </footer>
   );
